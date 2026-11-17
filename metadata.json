@@ -1,0 +1,8 @@
+{
+  "name": "Remix Blank Page",
+  "description": "A clean blank page.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
