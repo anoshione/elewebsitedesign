@@ -58,12 +58,27 @@ const VIDEO_SUCCESS_STORIES: VideoSuccessStory[] = [
   {
     id: 'v-story-5',
     title: 'ওয়েব ডেভেলপমেন্টের মাধ্যমে ইউরোপীয় ক্লায়েন্টের সাথে ফুল-টাইম রিমোট কাজ',
-    thumbnail: '/assets/stories/video_story_2.jpg',
+    thumbnail: '/assets/stories/video_story_5.jpg',
   },
   {
     id: 'v-story-6',
     title: 'জিরো থেকে সাইবার সিকিউরিটি স্পেশালিস্ট ও বাগ বাউন্টি আর্নিং',
+    thumbnail: '/assets/stories/video_story_6.jpg',
+  },
+  {
+    id: 'v-story-7',
+    title: 'বিশ্ববিদ্যালয় ড্রপআউট থেকে মাল্টিন্যাশনাল এজেন্সির লিড ইউআই ডিজাইনার',
     thumbnail: '/assets/stories/video_story_3.jpg',
+  },
+  {
+    id: 'v-story-8',
+    title: 'বগুড়া ক্যাম্পাস থেকে ফুল-স্ট্যাক শিখে আন্তর্জাতিক ক্লায়েন্ট প্রজেক্ট',
+    thumbnail: '/assets/stories/video_story_5.jpg',
+  },
+  {
+    id: 'v-story-9',
+    title: 'সোশ্যাল মিডিয়া মার্কেটিং থেকে নিজের ডিজিটাল ব্র্যান্ড এজেন্সি প্রতিষ্ঠা',
+    thumbnail: '/assets/stories/video_story_4.jpg',
   },
 ];
 
@@ -75,19 +90,22 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
   const [showAllVideos, setShowAllVideos] = useState(false);
   const [activeVideoModal, setActiveVideoModal] = useState<VideoSuccessStory | null>(null);
 
+  const PAGE_SIZE = 6;
   const totalVideos = VIDEO_SUCCESS_STORIES.length;
 
   const handlePrevVideo = () => {
-    setVideoStartIndex((prev) => (prev - 1 + totalVideos) % totalVideos);
+    setVideoStartIndex((prev) => (prev - 3 + totalVideos) % totalVideos);
   };
 
   const handleNextVideo = () => {
-    setVideoStartIndex((prev) => (prev + 1) % totalVideos);
+    setVideoStartIndex((prev) => (prev + 3) % totalVideos);
   };
 
   const visibleVideos = showAllVideos
     ? VIDEO_SUCCESS_STORIES
-    : Array.from({ length: 3 }).map((_, i) => VIDEO_SUCCESS_STORIES[(videoStartIndex + i) % totalVideos]);
+    : Array.from({ length: Math.min(PAGE_SIZE, totalVideos) }).map(
+        (_, i) => VIDEO_SUCCESS_STORIES[(videoStartIndex + i) % totalVideos]
+      );
 
   const [weeklyHours, setWeeklyHours] = useState<WeeklyHoursChoice>('moderate');
   const [shift, setShift] = useState<ShiftChoice>('Evening / Weekend');
@@ -172,7 +190,7 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
                 onClick={() => setShowAllVideos((prev) => !prev)}
                 className="inline-flex items-center justify-center h-10 px-5 text-sm font-semibold text-slate-800 glass-btn rounded-full transition-all whitespace-nowrap cursor-pointer hover:text-emerald-800"
               >
-                {showAllVideos ? 'Show Carousel' : 'See All'}
+                {showAllVideos ? 'Show 6 Stories' : 'See All'}
               </button>
 
               <div className="flex items-center gap-2">
