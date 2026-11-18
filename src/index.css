@@ -1,17 +1,23 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Outfit", system-ui, sans-serif;
-  --font-sans: "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-display: "Poppins", system-ui, -apple-system, sans-serif;
+  --font-sans: "Poppins", system-ui, -apple-system, sans-serif;
+  --font-body: "Poppins", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --color-slate-900: #1D1D1D;
+  --color-slate-950: #1D1D1D;
+  --color-slate-800: #1D1D1D;
+  --color-black: #1D1D1D;
 }
 
 @layer base {
-  html {
+  html,
+  body {
     scroll-behavior: smooth;
     font-family: var(--font-sans);
-    color: #0f172a;
-    background-color: #eef5f9;
+    color: #1D1D1D;
+    background-color: #FBFCF8;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -20,9 +26,21 @@
   h1,
   h2,
   h3,
-  h4 {
+  h4,
+  h5,
+  h6 {
     font-family: var(--font-display);
+    color: #1D1D1D;
   }
+}
+
+/* User requirement: All pure black ink / dark text across website mapped to #1D1D1D */
+.text-slate-900,
+.text-slate-950,
+.text-slate-800,
+.text-black,
+.card-title {
+  color: #1D1D1D !important;
 }
 
 .container-1520 {
@@ -44,6 +62,26 @@
   padding-bottom: 40px;
 }
 
+/* Green section rhythm: ensures green background fully covers from title to bottom of content, then fades off in top/bottom padding */
+.section-band-green {
+  padding-top: 56px;
+  padding-bottom: 56px;
+}
+
+@media (min-width: 640px) {
+  .section-band-green {
+    padding-top: 68px;
+    padding-bottom: 68px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section-band-green {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+}
+
 /* Unified typographic scale across all sections */
 .section-kicker {
   font-size: 0.75rem;
@@ -51,6 +89,99 @@
   letter-spacing: 0.06em;
   text-transform: uppercase;
   line-height: 1.35;
+}
+
+/* Seamless Infinite Marquee Animations */
+@keyframes marquee-scroll-right {
+  0% {
+    transform: translate3d(-50%, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(0%, 0, 0);
+  }
+}
+
+@keyframes marquee-scroll-left {
+  0% {
+    transform: translate3d(0%, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee-right {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll-right 50s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-left {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll-left 50s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-right:hover,
+.animate-marquee-left:hover {
+  animation-play-state: paused;
+}
+
+/* Simple 1-2 word section tag on top (no icons, uppercase, #545454) */
+.section-tag {
+  font-family: var(--font-sans);
+  font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #545454;
+  margin-bottom: 0.5rem;
+  display: block;
+  line-height: 1.25;
+}
+
+/* Unified 36px 1-line green gradient title (#008F2F to lighter green) */
+.heading-gradient-green {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.18;
+  background-image: linear-gradient(135deg, #008F2F 0%, #16B84A 55%, #2AD568 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  display: inline-block;
+  font-size: 25px;
+}
+
+@media (min-width: 640px) {
+  .heading-gradient-green {
+    font-size: 30px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .heading-gradient-green {
+    font-size: 36px;
+    white-space: nowrap;
+  }
+}
+
+/* Section subtitle strictly max 2 lines, < 20px */
+.section-subtitle-max2 {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #475569;
+  max-width: 48rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .section-heading {
@@ -131,19 +262,38 @@
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.17);
-  -webkit-backdrop-filter: blur(19px) saturate(100%);
-  backdrop-filter: blur(19px) saturate(100%);
-  border: 1px solid rgba(255, 255, 255, 0);
+  background: rgba(255, 255, 255, 0.22);
+  -webkit-backdrop-filter: blur(20px) saturate(115%);
+  backdrop-filter: blur(20px) saturate(115%);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.08),
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.8),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.25);
+  transition: all 0.25s ease;
+}
+
+.glass:hover {
+  background: rgba(255, 255, 255, 0.32);
+  border-color: rgba(255, 255, 255, 0.75);
+  box-shadow:
+    0 14px 40px rgba(0, 0, 0, 0.12),
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+}
+
+/* Same exact drop shadow as .glass for cards with media/image backgrounds */
+.card-glass-drop {
+  border: 1px solid rgba(255, 255, 255, 0.75);
   box-shadow:
     0 8px 32px rgba(0, 0, 0, 0.13),
     inset 0 1px 0 rgba(255, 255, 255, 0.6),
     inset 0 -1px 0 rgba(255, 255, 255, 0.15);
-  transition: all 0.2s ease;
+  transition: all 0.25s ease;
 }
 
-.glass:hover {
-  background: rgba(255, 255, 255, 0.22);
+.card-glass-drop:hover {
+  border-color: rgba(255, 255, 255, 0.95);
   box-shadow:
     0 12px 36px rgba(0, 0, 0, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.75),
@@ -167,6 +317,124 @@
     0 8px 32px rgba(0, 0, 0, 0.13),
     inset 0 1px 0 rgba(255, 255, 255, 0.6),
     inset 0 -1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Circular arrow action and carousel buttons across the entire website - True Translucent Frosted Glass */
+.arrow-btn,
+.card-arrow-btn {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.30) 0%, rgba(255, 255, 255, 0.05) 100%) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 4px 14px -2px rgba(0, 30, 15, 0.08),
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.8),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.15) !important;
+  color: #1B2668;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hover: Keep translucent glass background like when not hovered (subtle specular lift & scale) */
+.arrow-btn:hover,
+.card-arrow-btn:hover,
+.group:hover .card-arrow-btn,
+.group:hover .arrow-btn {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.40) 0%, rgba(255, 255, 255, 0.10) 100%) !important;
+  border-color: rgba(255, 255, 255, 0.7) !important;
+  box-shadow:
+    0 8px 22px -2px rgba(0, 30, 15, 0.12),
+    inset 0 1.5px 1px rgba(255, 255, 255, 0.95),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.25) !important;
+  transform: scale(1.05);
+}
+
+/* Arrow icon stroke default */
+.arrow-btn svg,
+.card-arrow-btn svg {
+  stroke: #1B2668;
+  color: #1B2668;
+  transition: stroke 0.25s ease;
+  transform: none !important;
+}
+
+/* Hover: Arrow stroke changes to gradient blue to green, like the footer */
+.arrow-btn:hover svg,
+.arrow-btn:hover svg *,
+.card-arrow-btn:hover svg,
+.card-arrow-btn:hover svg *,
+.group:hover .card-arrow-btn svg,
+.group:hover .card-arrow-btn svg *,
+.group:hover .arrow-btn svg,
+.group:hover .arrow-btn svg * {
+  stroke: url(#arrow-blue-green) !important;
+  color: transparent;
+  transform: none !important;
+}
+
+/* 3D Soft Glass Department Icons: Interactive Pop, Enlarge & 3D Levitation Effect */
+.dept-icon-wrapper {
+  perspective: 800px;
+  transform-style: preserve-3d;
+}
+
+.dept-3d-icon {
+  transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+  filter: drop-shadow(0 8px 14px rgba(10, 40, 20, 0.12));
+  transition:
+    transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform, filter;
+}
+
+.group:hover .dept-3d-icon,
+.dept-3d-icon:hover {
+  transform: translate3d(-8px, -18px, 40px) scale(1.22) rotate(-3deg);
+  filter:
+    drop-shadow(0 26px 28px rgba(5, 30, 15, 0.28)) drop-shadow(0 10px 18px rgba(0, 143, 47, 0.24)) brightness(1.08) contrast(1.04);
+}
+
+/* 3D Glass Ambient Glow */
+.dept-icon-glow {
+  transform: scale(0.85);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.group:hover .dept-icon-glow {
+  transform: scale(1.35) translate3d(-8px, -14px, 0);
+  opacity: 0.85;
+}
+
+/* Nationwide Campus Branch Card: Translucent White Frosted Glass */
+.branch-glass-card {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.86) 0%,
+    rgba(255, 255, 255, 0.72) 100%
+  );
+  -webkit-backdrop-filter: blur(24px) saturate(140%);
+  backdrop-filter: blur(24px) saturate(140%);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 16px 36px -6px rgba(0, 40, 15, 0.14),
+    0 4px 12px -2px rgba(0, 0, 0, 0.05),
+    inset 0 1.5px 1px rgba(255, 255, 255, 1),
+    inset 0 -1px 1px rgba(255, 255, 255, 0.4);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.branch-glass-card:hover,
+.group:hover .branch-glass-card {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.94) 0%,
+    rgba(255, 255, 255, 0.82) 100%
+  );
+  border-color: rgba(255, 255, 255, 1);
+  box-shadow:
+    0 20px 42px -6px rgba(0, 40, 15, 0.20),
+    0 6px 16px -2px rgba(0, 0, 0, 0.08),
+    inset 0 1.5px 1px rgba(255, 255, 255, 1);
 }
 
 .glass-btn {
@@ -301,16 +569,77 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
 }
 
+/* Signature #008F2F Title-Matched Gradient for all Green CTA Buttons with Sleek Glass Sheen (No 3D Bevel) */
+.btn-gradient-green {
+  background: linear-gradient(135deg, #008F2F 0%, #16B84A 55%, #2AD568 100%) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 8px 22px -4px rgba(0, 143, 47, 0.38) !important;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+.btn-gradient-green::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 75px;
+  height: 420%;
+  transform-origin: center center;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.05) 15%,
+    rgba(255, 255, 255, 0.30) 35%,
+    rgba(255, 255, 255, 0.85) 48%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(255, 255, 255, 0.85) 52%,
+    rgba(255, 255, 255, 0.30) 65%,
+    rgba(255, 255, 255, 0.05) 85%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  /* Sweeps diagonally UPWARDS at -40deg angle */
+  transform: translate(calc(-50% - 130px), calc(-50% + 95px)) rotate(-40deg);
+  pointer-events: none;
+  mix-blend-mode: screen;
+  z-index: 10;
+  opacity: 0;
+  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.25, 1), opacity 0.25s ease;
+}
+
+.btn-gradient-green:hover::before {
+  opacity: 1;
+  transform: translate(calc(-50% + 130px), calc(-50% - 95px)) rotate(-40deg);
+}
+
+.btn-gradient-green:hover {
+  background: linear-gradient(135deg, #00A638 0%, #18C650 55%, #34E573 100%) !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  box-shadow: 0 12px 28px -4px rgba(0, 143, 47, 0.5) !important;
+  transform: translateY(-1px);
+}
+
+.btn-gradient-green:active {
+  transform: translateY(0);
+}
+
 .btn-emerald-glow {
-  background: linear-gradient(135deg, #16a34a 0%, #059669 100%);
+  background: linear-gradient(135deg, #008F2F 0%, #16B84A 55%, #2AD568 100%);
   color: #ffffff;
-  border: 1px solid rgba(110, 231, 183, 0.35);
-  box-shadow: 0 8px 24px -6px rgba(16, 185, 129, 0.45);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 10px 24px -6px rgba(0, 143, 47, 0.45);
+  transition: all 0.25s ease;
 }
 
 .btn-emerald-glow:hover {
-  background: linear-gradient(135deg, #22c55e 0%, #10b981 100%);
-  box-shadow: 0 10px 28px -4px rgba(16, 185, 129, 0.6);
+  background: linear-gradient(135deg, #00A638 0%, #18C650 55%, #34E573 100%);
+  box-shadow: 0 14px 30px -4px rgba(0, 143, 47, 0.6);
+  transform: translateY(-1px);
 }
 
 @media (prefers-reduced-motion: reduce) {

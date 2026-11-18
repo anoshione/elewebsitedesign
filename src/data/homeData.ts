@@ -99,6 +99,16 @@ export interface FaqItem {
   answer: string;
 }
 
+export interface BranchItem {
+  id: string;
+  city: string;
+  address: string;
+  phones: string[];
+  email: string;
+  mapImage: string;
+  mapUrl: string;
+}
+
 export interface MemberItem {
   id: string;
   shortCode: string;
@@ -906,4 +916,62 @@ export const STUDENT_TESTIMONIALS: StudentTestimonialItem[] = [
     avatarImage: '/assets/students/rakibul-hasan.png',
   },
 ];
+
+export const BRANCH_ITEMS: BranchItem[] = [
+  {
+    id: 'dhaka',
+    city: 'Dhaka',
+    address: 'Khaja IT Park (2nd - 6th Floor), 07 South Kallyanpur, Kallyanpur Bus Stand, Mirpur Road, Dhaka-1207',
+    phones: ['01550-666800', '01550-666900'],
+    email: 'dhaka.elel@gmail.com',
+    mapImage: '/assets/branches/branch_dhaka.jpg',
+    mapUrl: 'https://maps.google.com/?q=Khaja+IT+Park+Dhaka',
+  },
+  {
+    id: 'gazipur',
+    city: 'Gazipur',
+    address: 'Habiba Sharkar Complex (4th Floor), Tongi College Gate, Dhaka Maymensingh Road, Tangi, Gazipur',
+    phones: ['01515611602'],
+    email: 'gazipur.elel@gmail.com',
+    mapImage: '/assets/branches/branch_gazipur.jpg',
+    mapUrl: 'https://maps.google.com/?q=Tongi+College+Gate+Gazipur',
+  },
+  {
+    id: 'chattogram',
+    city: 'Chattogram',
+    address: 'Johor Tower (5th Floor), Sheikh Mujib Road, Double Mooring, Agrabad, Chattogram',
+    phones: ['01332852610', '01332852611'],
+    email: 'chattogram.elel@gmail.com',
+    mapImage: '/assets/branches/branch_chattogram.jpg',
+    mapUrl: 'https://maps.google.com/?q=Johor+Tower+Agrabad+Chattogram',
+  },
+  {
+    id: 'brahmanbaria',
+    city: 'Brahmanbaria',
+    address: '437/1, Asma Mahal (Ground Floor), Shyamoli Barir Mor, Fulbaria, Brahmanbaria',
+    phones: ['8801332852645'],
+    email: 'b_baria.elel@gmail.com',
+    mapImage: '/assets/branches/branch_brahmanbaria.jpg',
+    mapUrl: 'https://maps.google.com/?q=Fulbaria+Brahmanbaria',
+  },
+  {
+    id: 'sylhet',
+    city: 'Sylhet',
+    address: 'Al-Hamra Shopping City (8th Floor), Hazrat Shahjalal Road, Zindabazar, Sylhet-3100',
+    phones: ['01332852620', '01332852621'],
+    email: 'sylhet.elel@gmail.com',
+    mapImage: '/assets/branches/branch_sylhet.jpg',
+    mapUrl: 'https://maps.google.com/?q=Al+Hamra+Shopping+City+Sylhet',
+  },
+  {
+    id: 'rajshahi',
+    city: 'Rajshahi',
+    address: 'Natore Road, Shaheb Bazar Commercial Zone, Boalia, Rajshahi-6000',
+    phones: ['01332852630', '01332852631'],
+    email: 'rajshahi.elel@gmail.com',
+    mapImage: '/assets/branches/branch_rajshahi.jpg',
+    mapUrl: 'https://maps.google.com/?q=Shaheb+Bazar+Rajshahi',
+  },
+];
+
 

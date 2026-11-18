@@ -1,32 +1,40 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
-  CalendarClock,
-  CheckCircle2,
-  Compass,
+  Check,
+  ChevronDown,
+  Clock,
   Play,
-  RotateCcw,
-  Sparkles,
+  Star,
   X,
 } from 'lucide-react';
 import { COURSES, CourseItem } from '../data/homeData';
+import { CoursePosterBanner, SilkBackdrop } from './Graphics';
 
 interface SuccessAndFinderProps {
-  onEnrollCourse: (course: CourseItem, actionType: 'enroll' | 'discount') => void;
+  onEnrollCourse: (course: CourseItem, actionType: 'enroll' | 'discount' | 'seminar') => void;
   onInspectCourse: (course: CourseItem) => void;
 }
 
-type WeeklyHoursChoice = 'light' | 'moderate' | 'intensive';
-type ShiftChoice = 'Morning' | 'Afternoon' | 'Evening / Weekend';
-type ModeChoice = 'Any Mode' | 'Campus Lab' | 'Live Online';
-type GoalChoice =
-  | 'Any Track'
-  | 'Design & Creative'
-  | 'Coding & Web'
-  | 'Cyber & Networking'
-  | 'Marketing & Freelancing';
-type LevelChoice = 'Any Level' | 'Beginner' | 'Intermediate';
+const TOPIC_OPTIONS = [
+  { id: 'design', label: 'Graphic Design & UI/UX' },
+  { id: 'development', label: 'Web & Software Development' },
+  { id: 'marketing', label: 'Digital Marketing & Growth' },
+  { id: 'cyber-security', label: 'Cyber Security & Ethical Hacking' },
+  { id: 'animation-video', label: '3D Animation & Video Editing' },
+  { id: 'ai', label: 'AI & Data Science' },
+] as const;
+
+type TopicOptionId = (typeof TOPIC_OPTIONS)[number]['id'];
+
+const EXPERIENCE_OPTIONS = [
+  { id: 'beginner', label: 'Complete Beginner (No prior experience)' },
+  { id: 'some-exp', label: 'Some Experience (Know the basics)' },
+  { id: 'pro', label: 'Working Professional (Upskilling)' },
+] as const;
+
+type ExperienceOptionId = (typeof EXPERIENCE_OPTIONS)[number]['id'];
 
 interface VideoSuccessStory {
   id: string;
@@ -104,83 +112,126 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
   const visibleVideos = showAllVideos
     ? VIDEO_SUCCESS_STORIES
     : Array.from({ length: Math.min(PAGE_SIZE, totalVideos) }).map(
-        (_, i) => VIDEO_SUCCESS_STORIES[(videoStartIndex + i) % totalVideos]
-      );
+      (_, i) => VIDEO_SUCCESS_STORIES[(videoStartIndex + i) % totalVideos]
+    );
 
-  const [weeklyHours, setWeeklyHours] = useState<WeeklyHoursChoice>('moderate');
-  const [shift, setShift] = useState<ShiftChoice>('Evening / Weekend');
-  const [studyMode, setStudyMode] = useState<ModeChoice>('Any Mode');
-  const [goal, setGoal] = useState<GoalChoice>('Any Track');
-  const [level, setLevel] = useState<LevelChoice>('Beginner');
+  const [selectedTopic, setSelectedTopic] = useState<TopicOptionId | null>(null);
+  const [selectedExperience, setSelectedExperience] = useState<ExperienceOptionId | null>(null);
+  const [openDropdown, setOpenDropdown] = useState<'topic' | 'experience' | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!openDropdown) return;
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setOpenDropdown(null);
+      }
+    };
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpenDropdown(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [openDropdown]);
 
   const matchedCourses = useMemo(() => {
-    const targetHours =
-      weeklyHours === 'light' ? 5 : weeklyHours === 'moderate' ? 8 : 12;
+    if (!selectedTopic || !selectedExperience) {
+      return [];
+    }
 
-    return COURSES.map((course) => {
-      let score = 50;
-      const reasons: string[] = [];
+    let courses = [...COURSES];
 
-      if (course.shifts.includes(shift)) {
-        score += 20;
-        reasons.push(`${shift} batch available`);
-      }
+    switch (selectedTopic) {
+      case 'design':
+        courses = courses.filter(
+          (c) =>
+            c.goalTag === 'Design & Creative' ||
+            c.departmentId === 'graphics' ||
+            c.id === 'wordpress-theme'
+        );
+        break;
+      case 'development':
+        courses = courses.filter(
+          (c) =>
+            c.goalTag === 'Coding & Web' ||
+            c.departmentId === 'web-dev' ||
+            c.id === 'web-app-laravel' ||
+            c.id === 'wordpress-theme'
+        );
+        break;
+      case 'marketing':
+        courses = courses.filter(
+          (c) =>
+            c.goalTag === 'Marketing & Freelancing' ||
+            c.departmentId === 'marketing' ||
+            c.id === 'digital-marketing'
+        );
+        break;
+      case 'cyber-security':
+        courses = courses.filter(
+          (c) =>
+            c.goalTag === 'Cyber & Networking' ||
+            c.departmentId === 'cyber-security' ||
+            c.departmentId === 'networking' ||
+            c.id === 'ethical-hacker' ||
+            c.id === 'it-support-cctv'
+        );
+        break;
+      case 'animation-video':
+        courses = courses.filter(
+          (c) =>
+            c.categoryLabel.toLowerCase().includes('animation') ||
+            c.categoryLabel.toLowerCase().includes('video') ||
+            c.departmentId === 'graphics'
+        );
+        break;
+      case 'ai':
+        courses = courses.filter(
+          (c) =>
+            c.title.toLowerCase().includes('ai') ||
+            c.subtitle.toLowerCase().includes('ai') ||
+            c.posterSub.toLowerCase().includes('ai') ||
+            c.id === 'ethical-hacker' ||
+            c.id === 'web-app-laravel'
+        );
+        break;
+      default:
+        break;
+    }
 
-      if (targetHours >= course.weeklyHoursMin) {
-        score += 15;
-        reasons.push(`Fits ${course.weeklyHoursMin}–${course.weeklyHoursMax} hrs/wk pace`);
-      } else {
-        score -= 10;
-      }
+    if (selectedExperience === 'beginner') {
+      courses = [...courses].sort((a, b) => (a.level === 'Beginner' ? -1 : 1));
+    } else if (selectedExperience === 'pro') {
+      courses = [...courses].sort((a, b) => (a.level === 'Intermediate' || a.level === 'Advanced' ? -1 : 1));
+    }
 
-      if (goal === 'Any Track' || course.goalTag === goal) {
-        score += 15;
-        if (goal !== 'Any Track') reasons.push(`Matches ${goal}`);
-      }
-
-      if (level === 'Any Level' || course.level === level) {
-        score += 10;
-        if (level !== 'Any Level') reasons.push(`${level}-friendly track`);
-      }
-
-      if (studyMode !== 'Any Mode') {
-        reasons.push(studyMode === 'Campus Lab' ? 'Offline Campus Lab' : 'Live Online Studio');
-      }
-
-      return {
-        course,
-        score: Math.min(99, Math.max(45, score)),
-        reasons: reasons.slice(0, 3),
-      };
-    })
-      .sort((a, b) => b.score - a.score)
-      .slice(0, 2);
-  }, [weeklyHours, shift, studyMode, goal, level]);
-
-  const handleResetFinder = () => {
-    setWeeklyHours('moderate');
-    setShift('Evening / Weekend');
-    setStudyMode('Any Mode');
-    setGoal('Any Track');
-    setLevel('Beginner');
-  };
+    return courses.slice(0, 3);
+  }, [selectedTopic, selectedExperience]);
 
   return (
     <>
-      {/* SECTION 6: SUCCESS STORIES (3 Videos in 1 Line, Reference-Matched Layout) */}
+      {/* SECTION 6: SUCCESS STORIES (Silk Backdrop + 3 Videos in 1 Line) */}
       <section
         id="success-story"
-        className="section-band bg-glass-silk text-slate-900"
+        className="relative overflow-hidden section-band-green text-slate-900"
       >
-        <div className="container-1520">
+        <SilkBackdrop />
+        <div className="container-1520 relative z-10">
           {/* Header Row: Left-Aligned Title & Subtitle + Top-Right Controls */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
             <div className="max-w-3xl text-left">
-              <h2 className="font-display text-2xl sm:text-3xl lg:text-[2.35rem] font-bold tracking-tight text-[#16A34A] leading-tight">
-                Success Stories
+              <p className="section-tag">SUCCESS STORIES</p>
+              <h2 className="heading-gradient-green">
+                Real Journeys, Measurable Career Outcomes
               </h2>
-              <p className="mt-2 text-sm sm:text-[15px] leading-relaxed text-slate-600 text-left">
-                See All 450+ Success Stories — Real students across all 64 district branches who transformed their careers through hands-on practical lab training.
+              <p className="section-subtitle-max2 mt-2">
+                Real students across all 64 district branches who transformed their careers through hands-on practical lab training.
               </p>
             </div>
 
@@ -197,18 +248,18 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
                 <button
                   type="button"
                   onClick={handlePrevVideo}
-                  className="w-10 h-10 rounded-full glass-btn flex items-center justify-center shrink-0 aspect-square text-[#1B2668] hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                  className="w-10 h-10 rounded-full arrow-btn flex items-center justify-center shrink-0 aspect-square cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                   aria-label="Previous success stories"
                 >
-                  <ArrowLeft className="w-4 h-4" strokeWidth={2} />
+                  <ArrowLeft className="w-4 h-4" strokeWidth={2.2} />
                 </button>
                 <button
                   type="button"
                   onClick={handleNextVideo}
-                  className="w-10 h-10 rounded-full glass-btn flex items-center justify-center shrink-0 aspect-square text-[#1B2668] hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                  className="w-10 h-10 rounded-full arrow-btn flex items-center justify-center shrink-0 aspect-square cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                   aria-label="Next success stories"
                 >
-                  <ArrowRight className="w-4 h-4" strokeWidth={2} />
+                  <ArrowRight className="w-4 h-4" strokeWidth={2.2} />
                 </button>
               </div>
             </div>
@@ -294,232 +345,225 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
         )}
       </section>
 
-      {/* SECTION 7: COURSE FINDER CARD (Light Prism Background + Translucent Glass Shell) */}
-      <section id="course-finder" className="section-band bg-[#F4F7FA] text-slate-900">
+      {/* SECTION 7: COURSE FINDER (Wireframe: Left Column Title/Subtitle/Visual + Right Column Dropdowns & Glass Course Cards) */}
+      <section id="course-finder" className="section-band bg-[#FBFCF8] text-slate-900 relative">
         <div className="container-1520">
-          <div className="rounded-[32px] glass p-6 sm:p-8 lg:p-9 shadow-[0_16px_40px_-20px_rgba(23,80,40,0.18)]">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-7">
-                <div className="inline-flex items-center gap-2 section-kicker text-emerald-700">
-                  <Compass className="w-4 h-4" strokeWidth={1.75} />
-                  Interactive Schedule &amp; Career Matcher
+          <div className="relative rounded-[32px] sm:rounded-[36px] bg-white border border-slate-200/80 p-6 sm:p-9 lg:p-12 shadow-[0_16px_40px_-20px_rgba(0,0,0,0.06)] overflow-hidden">
+            {/* Top-right subtle green ambient glow */}
+            <div className="absolute -top-24 -right-24 w-96 h-96 bg-emerald-100/35 rounded-full blur-3xl pointer-events-none" />
+
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-14 items-start relative z-10">
+              {/* Left Column (5 cols on lg, 4 cols on xl): Card with Background Visual, Title, Subtitle */}
+              <div className="lg:col-span-5 xl:col-span-4 relative rounded-[28px] sm:rounded-[32px] overflow-hidden p-7 sm:p-9 lg:p-10 flex flex-col justify-between min-h-[520px] lg:min-h-[580px] h-full border border-emerald-100/70 shadow-[0_20px_45px_-15px_rgba(0,143,47,0.12)] bg-white">
+                {/* Background Visual Image starting below the subtitle at user's marked position */}
+                <div className="absolute left-0 right-0 bottom-0 top-[40%] sm:top-[38%] z-0 overflow-hidden pointer-events-none">
+                  <img
+                    src="/assets/course_finder_visual.jpg"
+                    alt="Find the course that suits you"
+                    className="w-full h-full object-cover object-center select-none"
+                  />
+                  {/* Seamless white fade at top edge to blend into white card background */}
+                  <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white via-white/80 to-transparent pointer-events-none" />
                 </div>
-                <h2 className="mt-1.5 section-heading text-slate-900" style={{ textWrap: 'balance' }}>
-                  Find Your Ideal Course by Availability
-                </h2>
-                <p className="mt-2 section-subtitle text-slate-600">
-                  Select your weekly study hours, preferred shift, and career track to match with
-                  upcoming mentor-led cohorts.
-                </p>
 
-                <div className="mt-6 space-y-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-slate-700 mb-2">
-                      01. Weekly Study Availability
-                    </label>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                      {[
-                        { id: 'light' as const, label: '4–6 hrs / week', sub: 'Flexible Pace' },
-                        { id: 'moderate' as const, label: '6–10 hrs / week', sub: 'Standard Track' },
-                        { id: 'intensive' as const, label: '10+ hrs / week', sub: 'Fast-Track Lab' },
-                      ].map((opt) => {
-                        const active = weeklyHours === opt.id;
-                        return (
-                          <button
-                            key={opt.id}
-                            type="button"
-                            onClick={() => setWeeklyHours(opt.id)}
-                            className={`text-left px-4 py-3 rounded-2xl border transition-all cursor-pointer ${active
-                              ? 'bg-emerald-600 text-white border-emerald-600 shadow-md shadow-emerald-600/25'
-                              : 'glass text-slate-800 border-white/60 hover:bg-white/60'
-                              }`}
-                          >
-                            <div className="text-sm font-bold tabular-nums">{opt.label}</div>
-                            <div
-                              className={`text-xs ${active ? 'text-emerald-100' : 'text-slate-500'
-                                }`}
-                            >
-                              {opt.sub}
-                            </div>
-                          </button>
-                        );
-                      })}
-                    </div>
+                {/* Top: Title & Description Section */}
+                <div className="relative z-10">
+                  <div className="mb-2.5">
+                    <p className="section-tag">COURSE FINDER</p>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-2">
-                        02. Preferred Batch Time
-                      </label>
-                      <div className="flex flex-wrap gap-2">
-                        {(['Morning', 'Afternoon', 'Evening / Weekend'] as const).map((item) => (
-                          <button
-                            key={item}
-                            type="button"
-                            onClick={() => setShift(item)}
-                            className={`h-9 px-4 text-xs font-semibold rounded-full border transition-colors whitespace-nowrap cursor-pointer ${shift === item
-                              ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
-                              : 'glass text-slate-700 border-white/60 hover:bg-white/60'
-                              }`}
-                          >
-                            {item}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
+                  <h2
+                    className="heading-gradient-green !whitespace-normal mb-3.5"
+                    style={{ textWrap: 'balance' }}
+                  >
+                    Find the course that suits you
+                  </h2>
 
-                    <div>
-                      <label className="block text-xs font-semibold text-slate-700 mb-2">
-                        03. Learning Mode &amp; Level
-                      </label>
-                      <div className="flex flex-wrap gap-2">
-                        {(['Any Mode', 'Campus Lab', 'Live Online'] as const).map((m) => (
-                          <button
-                            key={m}
-                            type="button"
-                            onClick={() => setStudyMode(m)}
-                            className={`h-9 px-4 text-xs font-semibold rounded-full border transition-colors whitespace-nowrap cursor-pointer ${studyMode === m
-                              ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
-                              : 'glass text-slate-700 border-white/60 hover:bg-white/60'
-                              }`}
-                          >
-                            {m}
-                          </button>
-                        ))}
-                        {(['Beginner', 'Intermediate'] as const).map((lv) => (
-                          <button
-                            key={lv}
-                            type="button"
-                            onClick={() => setLevel(lv === level ? 'Any Level' : lv)}
-                            className={`h-9 px-4 text-xs font-semibold rounded-full border transition-colors whitespace-nowrap cursor-pointer ${level === lv
-                              ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
-                              : 'glass text-slate-700 border-white/60 hover:bg-white/60'
-                              }`}
-                          >
-                            {lv}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <div className="flex items-center justify-between mb-2">
-                      <label className="text-xs font-semibold text-slate-700">
-                        04. Career Interest Area
-                      </label>
-                      <button
-                        type="button"
-                        onClick={handleResetFinder}
-                        className="inline-flex items-center gap-1 text-xs font-medium text-emerald-700 hover:text-emerald-900 cursor-pointer"
-                      >
-                        <RotateCcw className="w-3.5 h-3.5" strokeWidth={1.75} />
-                        Reset
-                      </button>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      {(
-                        [
-                          'Any Track',
-                          'Design & Creative',
-                          'Coding & Web',
-                          'Cyber & Networking',
-                          'Marketing & Freelancing',
-                        ] as const
-                      ).map((g) => (
-                        <button
-                          key={g}
-                          type="button"
-                          onClick={() => setGoal(g)}
-                          className={`h-9 px-4 text-xs font-semibold rounded-full border transition-colors whitespace-nowrap cursor-pointer ${goal === g
-                            ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
-                            : 'glass text-slate-700 border-white/60 hover:bg-white/60'
-                            }`}
-                        >
-                          {g}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
+                  <p className="text-xs sm:text-sm lg:text-[15px] leading-relaxed text-slate-600">
+                    Tell us what you enjoy and how much experience you have, and we&apos;ll suggest the courses that fit you best. If you&apos;d like a second opinion, you can talk to one of our advisors right away.
+                  </p>
                 </div>
               </div>
 
-              <div className="lg:col-span-5 rounded-[26px] glass p-5 space-y-3.5 shadow-sm">
-                <div className="flex items-center justify-between border-b border-slate-900/10 pb-3">
-                  <div>
-                    <div className="inline-flex items-center gap-1.5 text-xs font-semibold text-emerald-700">
-                      <Sparkles className="w-3.5 h-3.5" strokeWidth={1.75} />
-                      Recommended For Your Schedule
-                    </div>
-                    <h3 className="card-title text-slate-900 mt-0.5">Top Matching Courses</h3>
-                  </div>
-                  <span className="text-xs font-semibold text-emerald-800 bg-emerald-500/15 px-2.5 py-1 rounded-full tabular-nums">{shift}</span>
-                </div>
-
-                <div className="space-y-3">
-                  {matchedCourses.map(({ course, score, reasons }, idx) => (
-                    <div
-                      key={course.id}
-                      className={`rounded-2xl p-4 border transition-colors ${idx === 0
-                        ? 'bg-white/80 border-emerald-500/40 shadow-md ring-1 ring-emerald-500/30'
-                        : 'bg-white/60 border-white/80 shadow-sm'
+              {/* Right Column (7 cols on lg, 8 cols on xl): 2 Questions with Glass Dropdowns + Matching Course Cards */}
+              <div className="lg:col-span-7 xl:col-span-8 flex flex-col justify-between h-full">
+                <div>
+                  {/* Two Questions with Glass Dropdown Fields */}
+                  <div ref={dropdownRef} className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-6">
+                    {/* Question 01: What do you want to learn? */}
+                    <div className={`relative ${openDropdown === 'topic' ? 'z-40' : 'z-20'}`}>
+                      <label className="block text-xs sm:text-sm font-bold text-slate-900 mb-2">
+                        <span className="text-[#008F2F] font-bold mr-1.5 tabular-nums">01</span>
+                        What do you want to learn?
+                      </label>
+                      {/* Glass Dropdown Trigger */}
+                      <button
+                        type="button"
+                        onClick={() => setOpenDropdown(openDropdown === 'topic' ? null : 'topic')}
+                        className={`w-full h-[50px] px-4 rounded-2xl bg-white/70 backdrop-blur-xl border shadow-[0_4px_16px_-4px_rgba(0,0,0,0.06)] transition-all flex items-center justify-between text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/40 relative z-30 ${
+                          openDropdown === 'topic'
+                            ? 'border-emerald-500 bg-white shadow-md'
+                            : 'border-slate-200/90 hover:bg-white hover:border-emerald-400/60'
                         }`}
-                    >
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <div className="text-xs font-semibold text-emerald-700">
-                            {course.categoryLabel} · {course.durationMonths} Months
-                          </div>
-                          <h4 className="font-display text-base font-bold text-slate-900 mt-0.5">
-                            {course.title}
-                          </h4>
-                        </div>
-                        <div className="text-right shrink-0">
-                          <div className="font-display text-sm font-extrabold text-emerald-700 tabular-nums">
-                            {score}% Match
-                          </div>
-                          <div className="text-[11px] font-semibold text-slate-500 tabular-nums">
-                            {studyMode === 'Live Online' ? course.onlineFee : course.offlineFee}
-                          </div>
-                        </div>
-                      </div>
+                      >
+                        <span className={`text-xs sm:text-sm font-medium truncate pr-2 ${selectedTopic ? 'text-slate-900 font-semibold' : 'text-slate-500'}`}>
+                          {TOPIC_OPTIONS.find((t) => t.id === selectedTopic)?.label || 'Select what you want to learn...'}
+                        </span>
+                        <ChevronDown
+                          className={`w-4 h-4 text-slate-500 transition-transform duration-200 shrink-0 ${
+                            openDropdown === 'topic' ? 'rotate-180 text-emerald-700' : ''
+                          }`}
+                          strokeWidth={2}
+                        />
+                      </button>
 
-                      <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-slate-600">
-                        {reasons.map((reason) => (
-                          <span key={reason} className="inline-flex items-center gap-1">
-                            <CheckCircle2
-                              className="w-3.5 h-3.5 text-emerald-600 shrink-0"
-                              strokeWidth={1.75}
-                            />
-                            {reason}
-                          </span>
-                        ))}
-                      </div>
-
-                      <div className="mt-3 flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={() => onEnrollCourse(course, 'enroll')}
-                          className="flex-1 h-9 px-4 text-xs font-semibold btn-emerald-glow rounded-full transition-all cursor-pointer shadow-md shadow-emerald-700/20"
-                        >
-                          Reserve Batch Seat
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => onInspectCourse(course)}
-                          className="h-9 px-4 text-xs font-semibold text-slate-800 glass-btn rounded-full transition-colors cursor-pointer"
-                        >
-                          Syllabus
-                        </button>
-                      </div>
+                      {/* Glass Blurred Dropdown Menu */}
+                      {openDropdown === 'topic' && (
+                        <div className="absolute top-[calc(100%+6px)] left-0 right-0 z-50 rounded-2xl bg-white/75 backdrop-blur-2xl border border-white/80 shadow-[0_20px_45px_-10px_rgba(0,0,0,0.16)] ring-1 ring-black/5 p-1.5 flex flex-col gap-0.5 animate-in fade-in zoom-in-95 duration-150 max-h-[280px] overflow-y-auto">
+                          {TOPIC_OPTIONS.map((opt) => {
+                            const isSelected = selectedTopic === opt.id;
+                            return (
+                              <button
+                                key={opt.id}
+                                type="button"
+                                onClick={() => {
+                                  setSelectedTopic(opt.id);
+                                  setOpenDropdown(null);
+                                }}
+                                className={`w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all flex items-center justify-between text-left cursor-pointer ${
+                                  isSelected
+                                    ? 'bg-[#008F2F] text-white shadow-xs font-semibold'
+                                    : 'text-slate-700 hover:bg-white/90 hover:text-emerald-700'
+                                }`}
+                              >
+                                <span>{opt.label}</span>
+                                {isSelected && <Check className="w-4 h-4 text-white shrink-0" strokeWidth={2.5} />}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
                     </div>
-                  ))}
+
+                    {/* Question 02: Where are you starting from? */}
+                    <div className={`relative ${openDropdown === 'experience' ? 'z-40' : 'z-20'}`}>
+                      <label className="block text-xs sm:text-sm font-bold text-slate-900 mb-2">
+                        <span className="text-[#008F2F] font-bold mr-1.5 tabular-nums">02</span>
+                        Where are you starting from?
+                      </label>
+                      {/* Glass Dropdown Trigger */}
+                      <button
+                        type="button"
+                        onClick={() => setOpenDropdown(openDropdown === 'experience' ? null : 'experience')}
+                        className={`w-full h-[50px] px-4 rounded-2xl bg-white/70 backdrop-blur-xl border shadow-[0_4px_16px_-4px_rgba(0,0,0,0.06)] transition-all flex items-center justify-between text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/40 relative z-30 ${
+                          openDropdown === 'experience'
+                            ? 'border-emerald-500 bg-white shadow-md'
+                            : 'border-slate-200/90 hover:bg-white hover:border-emerald-400/60'
+                        }`}
+                      >
+                        <span className={`text-xs sm:text-sm font-medium truncate pr-2 ${selectedExperience ? 'text-slate-900 font-semibold' : 'text-slate-500'}`}>
+                          {EXPERIENCE_OPTIONS.find((e) => e.id === selectedExperience)?.label || 'Select your experience level...'}
+                        </span>
+                        <ChevronDown
+                          className={`w-4 h-4 text-slate-500 transition-transform duration-200 shrink-0 ${
+                            openDropdown === 'experience' ? 'rotate-180 text-emerald-700' : ''
+                          }`}
+                          strokeWidth={2}
+                        />
+                      </button>
+
+                      {/* Glass Blurred Dropdown Menu */}
+                      {openDropdown === 'experience' && (
+                        <div className="absolute top-[calc(100%+6px)] left-0 right-0 z-50 rounded-2xl bg-white/75 backdrop-blur-2xl border border-white/80 shadow-[0_20px_45px_-10px_rgba(0,0,0,0.16)] ring-1 ring-black/5 p-1.5 flex flex-col gap-0.5 animate-in fade-in zoom-in-95 duration-150 max-h-[280px] overflow-y-auto">
+                          {EXPERIENCE_OPTIONS.map((opt) => {
+                            const isSelected = selectedExperience === opt.id;
+                            return (
+                              <button
+                                key={opt.id}
+                                type="button"
+                                onClick={() => {
+                                  setSelectedExperience(opt.id);
+                                  setOpenDropdown(null);
+                                }}
+                                className={`w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all flex items-center justify-between text-left cursor-pointer ${
+                                  isSelected
+                                    ? 'bg-[#008F2F] text-white shadow-xs font-semibold'
+                                    : 'text-slate-700 hover:bg-white/90 hover:text-emerald-700'
+                                }`}
+                              >
+                                <span>{opt.label}</span>
+                                {isSelected && <Check className="w-4 h-4 text-white shrink-0" strokeWidth={2.5} />}
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Suggested Courses: Blank until user selects both dropdowns, then shows max 3 courses */}
+                  {selectedTopic && selectedExperience && matchedCourses.length > 0 && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                      {matchedCourses.map((course) => (
+                        <article
+                          key={course.id}
+                          onClick={() => onInspectCourse(course)}
+                          className="group rounded-[22px] bg-white/70 backdrop-blur-xl border border-white/80 p-3.5 sm:p-4 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_-10px_rgba(0,143,47,0.18)] hover:border-emerald-400/60 hover:bg-white/90 transition-all duration-300 hover:-translate-y-1 cursor-pointer flex items-center gap-3.5 sm:gap-4 relative overflow-hidden"
+                        >
+                          {/* Left: Course icon / mini thumbnail */}
+                          <div className="w-16 h-16 sm:w-[70px] sm:h-[70px] rounded-2xl overflow-hidden shrink-0 bg-gradient-to-br from-emerald-50 via-white to-emerald-100/50 border border-emerald-100/80 p-2 flex items-center justify-center relative shadow-xs group-hover:scale-105 transition-transform duration-300">
+                            <img
+                              src={`/assets/departments/${course.departmentId}.png`}
+                              alt=""
+                              className="w-full h-full object-contain filter drop-shadow-[0_4px_6px_rgba(0,0,0,0.08)] select-none"
+                              onError={(e) => {
+                                (e.currentTarget as HTMLImageElement).src = '/assets/departments/graphics.png';
+                              }}
+                            />
+                          </div>
+
+                          {/* Middle: Title, Length, Fee */}
+                          <div className="flex-1 min-w-0 pr-1">
+                            <h4 className="font-display font-bold text-slate-900 text-sm sm:text-[15px] leading-snug group-hover:text-emerald-700 transition-colors truncate">
+                              {course.title}
+                            </h4>
+                            <p className="text-xs text-slate-500 font-medium mt-1 flex items-center gap-1.5">
+                              <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" strokeWidth={1.8} />
+                              <span>{course.durationMonths} Months</span>
+                            </p>
+                            <div className="mt-1 font-display text-sm sm:text-[15px] font-bold text-[#008F2F] tabular-nums">
+                              {course.offlineFee}
+                            </div>
+                          </div>
+
+                          {/* Right: Signature Glass Arrow Action matching rest of website */}
+                          <span className="w-9 h-9 sm:w-10 sm:h-10 rounded-full arrow-btn card-arrow-btn shrink-0 aspect-square flex items-center justify-center cursor-pointer">
+                            <ArrowRight className="w-4 h-4 shrink-0" strokeWidth={2.2} />
+                          </span>
+                        </article>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
-                <div className="pt-1 flex items-center gap-2 text-xs text-slate-500">
-                  <CalendarClock className="w-4 h-4 text-emerald-600 shrink-0" strokeWidth={1.75} />
-                  <span>New cohorts start every 1st and 15th of the month.</span>
+                {/* Bottom Advisor CTA Row */}
+                <div className="mt-7 pt-5 border-t border-slate-200/60 flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                    <button
+                      type="button"
+                      onClick={() => onEnrollCourse(matchedCourses[0] || COURSES[0], 'seminar')}
+                      className="inline-flex items-center justify-center h-[46px] px-6 text-sm font-semibold text-white btn-gradient-green rounded-full transition-all cursor-pointer hover:scale-[1.02]"
+                    >
+                      Talk to an advisor
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => onEnrollCourse(matchedCourses[0] || COURSES[0], 'seminar')}
+                      className="text-xs sm:text-sm font-medium text-slate-700 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-600 transition-colors cursor-pointer"
+                    >
+                      Free seminars run every week — join one.
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

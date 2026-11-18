@@ -32,7 +32,7 @@ export type ModalState =
   | { type: 'blog'; item: BlogItem }
   | { type: 'video' }
   | { type: 'search' }
-  | { type: 'login' };
+  | { type: 'login'; defaultTab?: 'login' | 'verify' };
 
 interface ModalsProps {
   modal: ModalState;
@@ -83,6 +83,7 @@ export const Modals: React.FC<ModalsProps> = ({
       setSearchQuery('');
     }
     if (modal.type === 'login') {
+      setLoginTab(modal.defaultTab || 'login');
       setLoginStatus({ type: 'idle', message: '' });
     }
   }, [modal]);
@@ -390,7 +391,7 @@ export const Modals: React.FC<ModalsProps> = ({
 
               <button
                 type="submit"
-                className="w-full py-3.5 text-sm font-semibold btn-emerald-glow rounded-full transition-all cursor-pointer"
+                className="w-full h-[52px] flex items-center justify-center text-sm font-semibold btn-emerald-glow rounded-full transition-all cursor-pointer"
               >
                 {loginTab === 'login' ? 'Sign In to Student Portal' : 'Verify Certificate'}
               </button>
@@ -539,7 +540,7 @@ export const Modals: React.FC<ModalsProps> = ({
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 text-sm font-semibold btn-emerald-glow rounded-full transition-all cursor-pointer shadow-lg shadow-emerald-950/30"
+                  className="w-full h-[52px] flex items-center justify-center text-sm font-semibold btn-emerald-glow rounded-full transition-all cursor-pointer shadow-lg shadow-emerald-950/30"
                 >
                   Confirm Submission
                 </button>

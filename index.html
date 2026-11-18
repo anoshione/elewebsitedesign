@@ -12,11 +12,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+Bengali:wght@400;500;600;700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap"
       rel="stylesheet"
     />
   </head>
   <body>
+    <!-- Global SVG Gradients for UI Elements -->
+    <svg width="0" height="0" style="position:absolute;width:0;height:0;pointer-events:none;overflow:hidden;" aria-hidden="true">
+      <defs>
+        <!-- Blue to green gradient matching footer background: deep blue to teal to vibrant green -->
+        <linearGradient id="arrow-blue-green" gradientUnits="userSpaceOnUse" x1="4" y1="4" x2="20" y2="20">
+          <stop offset="0%" stop-color="#0A256B" />
+          <stop offset="45%" stop-color="#044E38" />
+          <stop offset="100%" stop-color="#008F2F" />
+        </linearGradient>
+      </defs>
+    </svg>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

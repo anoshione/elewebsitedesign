@@ -28,3 +28,5 @@ Thumbs.db
 .vercel
 .gemini
 .aistudio
+scratch/
+*_backup.*

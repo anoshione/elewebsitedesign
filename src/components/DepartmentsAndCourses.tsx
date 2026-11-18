@@ -16,19 +16,100 @@ interface DepartmentsAndCoursesProps {
   onInspectCourse: (course: CourseItem) => void;
 }
 
+interface DeptVisualConfig {
+  canvasWidth: number;
+  canvasHeight: number;
+  bottomOffset: number;
+  rightOffset: number;
+  shadowWidth: number;
+  shadowRight: number;
+  hoverScale: number;
+}
+
+const DEPT_VISUALS: Record<DepartmentId, DeptVisualConfig> = {
+  'cyber-security': {
+    canvasWidth: 181,
+    canvasHeight: 101,
+    bottomOffset: 4,
+    rightOffset: -38,
+    shadowWidth: 115,
+    shadowRight: 10,
+    hoverScale: 1.10,
+  },
+  database: {
+    canvasWidth: 116,
+    canvasHeight: 107,
+    bottomOffset: 4,
+    rightOffset: 8,
+    shadowWidth: 96,
+    shadowRight: 14,
+    hoverScale: 1.08,
+  },
+  graphics: {
+    canvasWidth: 138,
+    canvasHeight: 138,
+    bottomOffset: -14,
+    rightOffset: 6,
+    shadowWidth: 100,
+    shadowRight: 12,
+    hoverScale: 1.10,
+  },
+  networking: {
+    canvasWidth: 180,
+    canvasHeight: 100,
+    bottomOffset: 4,
+    rightOffset: -38,
+    shadowWidth: 115,
+    shadowRight: 10,
+    hoverScale: 1.10,
+  },
+  marketing: {
+    canvasWidth: 194,
+    canvasHeight: 194,
+    bottomOffset: -36,
+    rightOffset: -6,
+    shadowWidth: 125,
+    shadowRight: 12,
+    hoverScale: 1.08,
+  },
+  government: {
+    canvasWidth: 181,
+    canvasHeight: 101,
+    bottomOffset: 4,
+    rightOffset: -8,
+    shadowWidth: 125,
+    shadowRight: 10,
+    hoverScale: 1.08,
+  },
+};
+
 /**
- * Per-department 3D icon. Drop the icon PNGs into `public/assets/departments/`
- * named by department id: cyber-security.png, database.png, graphics.png,
- * networking.png, marketing.png, government.png.
- * Falls back to the built-in vector illustration while a file is missing.
+ * Per-department 3D icon with optical normalization, ground floor shadow,
+ * dynamic elevation, specular sheen, and parallax tilt.
  */
-const DeptArt: React.FC<{ id: DepartmentId }> = ({ id }) => {
+const DeptArt: React.FC<{
+  id: DepartmentId;
+  isHovered: boolean;
+  tiltRx: number;
+  tiltRy: number;
+  parallaxX: number;
+  parallaxY: number;
+}> = ({ id, isHovered, tiltRx, tiltRy, parallaxX, parallaxY }) => {
   const [failed, setFailed] = useState(false);
+  const cfg = DEPT_VISUALS[id] || {
+    canvasWidth: 140,
+    canvasHeight: 110,
+    bottomOffset: 4,
+    rightOffset: 6,
+    shadowWidth: 100,
+    shadowRight: 10,
+    hoverScale: 1.1,
+  };
 
   if (failed) {
     return (
       <div
-        className="absolute bottom-3 right-3 w-[132px] h-[104px] flex items-end justify-end pointer-events-none opacity-90"
+        className="absolute bottom-3 right-3 w-[132px] h-[104px] flex items-end justify-end pointer-events-none opacity-90 transition-all duration-400 ease-out group-hover:scale-115 group-hover:-translate-y-2"
         aria-hidden="true"
       >
         <DepartmentIllustration id={id} />
@@ -37,14 +118,149 @@ const DeptArt: React.FC<{ id: DepartmentId }> = ({ id }) => {
   }
 
   return (
-    <img
-      src={`/assets/departments/${id}.png`}
-      alt=""
+    <div
+      className="absolute pointer-events-none select-none z-10 dept-icon-scene"
+      style={{
+        bottom: `${cfg.bottomOffset}px`,
+        right: `${cfg.rightOffset}px`,
+        width: `${cfg.canvasWidth}px`,
+        height: `${cfg.canvasHeight}px`,
+        perspective: '600px',
+      }}
       aria-hidden="true"
-      draggable={false}
-      onError={() => setFailed(true)}
-      className="absolute bottom-3 right-3 w-[150px] h-[112px] object-contain object-bottom-right pointer-events-none select-none mix-blend-multiply drop-shadow-[0_12px_20px_rgba(30,90,50,0.28)]"
-    />
+    >
+      {/* 1. Independent Ground Floor Shadow (anchored to card floor) */}
+      <div
+        className="dept-floor-shadow"
+        style={{
+          width: `${cfg.shadowWidth}px`,
+          right: `${cfg.shadowRight}px`,
+          bottom: `${Math.max(6, 12 - cfg.bottomOffset)}px`,
+          transform: isHovered
+            ? 'scale(1.3) translateY(8px)'
+            : 'scale(0.95) translateY(0px)',
+          opacity: isHovered ? 0.55 : 0.22,
+          transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
+        }}
+      />
+
+      {/* 2. Soft Ambient Multi-chromatic Aura */}
+      <div
+        className="absolute rounded-full dept-icon-glow blur-2xl pointer-events-none"
+        style={{
+          width: `${cfg.shadowWidth}px`,
+          height: `${cfg.shadowWidth}px`,
+          right: `${cfg.shadowRight}px`,
+          bottom: '10px',
+          background:
+            'radial-gradient(circle, rgba(34, 197, 94, 0.42) 0%, rgba(168, 85, 247, 0.25) 50%, transparent 75%)',
+          opacity: isHovered ? 0.95 : 0.25,
+          transform: isHovered
+            ? 'scale(1.4) translate3d(-6px, -14px, 0)'
+            : 'scale(0.9) translate3d(0, 0, 0)',
+          transition: 'all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1)',
+        }}
+      />
+
+      {/* 3. 3D Floating Icon with Dynamic Elevation, Popout & Parallax Tilt */}
+      <div
+        className="relative w-full h-full flex items-end justify-end dept-3d-floating-icon"
+        style={{
+          transform: isHovered
+            ? `perspective(600px) rotateX(${tiltRx.toFixed(1)}deg) rotateY(${tiltRy.toFixed(1)}deg) translate3d(${(-6 + parallaxX).toFixed(1)}px, ${(-16 + parallaxY).toFixed(1)}px, 45px) scale(${cfg.hoverScale * 1.08})`
+            : 'perspective(600px) rotateX(0deg) rotateY(0deg) translate3d(0px, 0px, 0px) scale(1)',
+          transformStyle: 'preserve-3d',
+          filter: isHovered
+            ? 'drop-shadow(0 20px 24px rgba(5, 30, 15, 0.30)) drop-shadow(0 8px 14px rgba(0, 143, 47, 0.24)) brightness(1.08) contrast(1.04)'
+            : 'drop-shadow(0 8px 14px rgba(10, 40, 20, 0.12))',
+          transition: isHovered
+            ? 'transform 0.08s ease-out, filter 0.3s ease'
+            : 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.45s ease',
+        }}
+      >
+        <img
+          src={`/assets/departments/${id}.png`}
+          alt=""
+          draggable={false}
+          onError={() => setFailed(true)}
+          style={{
+            width: `${cfg.canvasWidth}px`,
+            height: `${cfg.canvasHeight}px`,
+          }}
+          className="object-contain pointer-events-none select-none"
+        />
+
+        {/* 4. Specular Light Sheen Sweeping Across the Glass */}
+        <div className="dept-glass-shimmer" />
+      </div>
+    </div>
+  );
+};
+
+const DeptCard: React.FC<{
+  dept: (typeof DEPARTMENTS)[number];
+  onJump: (id: DepartmentId) => void;
+}> = ({ dept, onJump }) => {
+  const cardRef = React.useRef<HTMLButtonElement>(null);
+  const [logoTilt, setLogoTilt] = useState({ rx: 0, ry: 0, px: 0, py: 0 });
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    // 3D tilt & parallax applied strictly to the logo
+    const rx = ((y - cy) / cy) * -8;
+    const ry = ((x - cx) / cx) * 8;
+    const px = ((x - cx) / cx) * 8;
+    const py = ((y - cy) / cy) * 8;
+    setLogoTilt({ rx, ry, px, py });
+  };
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setLogoTilt({ rx: 0, ry: 0, px: 0, py: 0 });
+  };
+
+  return (
+    <button
+      ref={cardRef}
+      type="button"
+      onClick={() => onJump(dept.id)}
+      onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className="group relative text-left rounded-[24px] glass pt-5 px-6 pb-6 min-h-[248px] flex flex-col overflow-hidden cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition-all duration-300 hover:border-emerald-500/40 hover:shadow-lg"
+    >
+      <div>
+        <h3 className="text-slate-900 text-[26px] font-bold tracking-tight leading-snug">{dept.title}</h3>
+        <p className="mt-2 text-sm text-slate-500 leading-[1.5] max-w-[65%]">
+          {dept.subtitle}
+        </p>
+      </div>
+
+      <span
+        className="relative z-20 mt-auto shrink-0 aspect-square inline-flex w-11 h-11 min-w-[44px] min-h-[44px] rounded-full card-arrow-btn arrow-btn items-center justify-center"
+      >
+        <ArrowRight className="w-4.5 h-4.5 shrink-0" strokeWidth={2.2} />
+      </span>
+
+      <DeptArt
+        id={dept.id}
+        isHovered={isHovered}
+        tiltRx={logoTilt.rx}
+        tiltRy={logoTilt.ry}
+        parallaxX={logoTilt.px}
+        parallaxY={logoTilt.py}
+      />
+    </button>
   );
 };
 
@@ -73,19 +289,18 @@ export const DepartmentsAndCourses: React.FC<DepartmentsAndCoursesProps> = ({
   return (
     <>
       {/* SECTION 3: DEPARTMENTS (Silky light-green backdrop + frosted glass cards + pastel 3D icons) */}
-      <section id="departments" className="relative overflow-hidden section-band text-slate-900">
+      <section id="departments" className="relative overflow-hidden section-band-green text-slate-900">
         <SilkBackdrop />
 
         <div className="container-1520 relative z-10">
           <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-9">
             <div className="max-w-3xl">
-              <h2 className="font-display text-3xl lg:text-[2.5rem] font-bold tracking-tight text-[#1CA24A]">
-                Explore Our Departments &amp; Build Your Career Path
+              <p className="section-tag">DEPARTMENTS</p>
+              <h2 className="heading-gradient-green">
+                Explore Our Career Departments
               </h2>
-              <p className="mt-3 text-[15px] leading-[1.65] text-slate-500 max-w-2xl">
-                Transform your IT potential into global earnings. Master in-demand IT skills at
-                Bangladesh&apos;s top freelancing institute and launch your global career from your
-                hometown.
+              <p className="section-subtitle-max2 mt-2">
+                Master in-demand IT skills across specialized faculties and launch a high-earning global career from your hometown.
               </p>
             </div>
             <button
@@ -99,38 +314,26 @@ export const DepartmentsAndCourses: React.FC<DepartmentsAndCoursesProps> = ({
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {DEPARTMENTS.map((dept) => (
-              <button
+              <DeptCard
                 key={dept.id}
-                type="button"
-                onClick={() => handleDepartmentJump(dept.id)}
-                className="group relative text-left rounded-[24px] glass p-6 min-h-[248px] flex flex-col overflow-hidden transition-all duration-200 hover:-translate-y-1 hover:brightness-105 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
-              >
-                <h3 className="card-title text-slate-900 text-xl">{dept.title}</h3>
-                <p className="mt-2 text-sm text-slate-500 leading-[1.5] max-w-[65%]">
-                  {dept.subtitle}
-                </p>
-
-                <span className="relative z-10 mt-auto shrink-0 aspect-square inline-flex w-11 h-11 min-w-[44px] min-h-[44px] rounded-full glass-btn items-center justify-center text-[#1B2668] group-hover:bg-emerald-600/90 group-hover:border-emerald-400 group-hover:text-white transition-colors">
-                  <ArrowRight className="w-4.5 h-4.5" strokeWidth={2} />
-                </span>
-
-                <DeptArt id={dept.id} />
-              </button>
+                dept={dept}
+                onJump={handleDepartmentJump}
+              />
             ))}
           </div>
         </div>
       </section>
 
-      {/* SECTION 5: POPULAR COURSE (Prism Grid Backdrop + Frosted Glass Course Cards) */}
-      <section id="courses" className="section-band bg-glass-prism">
+      {/* SECTION 5: POPULAR COURSE (Solid #FBFCF8 + Frosted Glass Course Cards) */}
+      <section id="courses" className="section-band bg-[#FBFCF8]">
         <div className="container-1520">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-7">
             <div>
-              <p className="section-kicker text-emerald-700 mb-1.5">Mentor-Led Cohort Programs</p>
-              <h2 className="section-heading text-slate-900" style={{ textWrap: 'balance' }}>
+              <p className="section-tag">COURSES</p>
+              <h2 className="heading-gradient-green">
                 Build the Skills That Shape Your Future
               </h2>
-              <p className="mt-2 section-subtitle text-slate-600">
+              <p className="section-subtitle-max2 mt-2">
                 Every course is project-based, mentor-led, and available both on campus across 42+
                 branches and through live online classes.
               </p>
@@ -140,7 +343,7 @@ export const DepartmentsAndCourses: React.FC<DepartmentsAndCoursesProps> = ({
               onClick={() => onSelectDept('all')}
               className="inline-flex items-center justify-center h-11 px-5 text-sm font-semibold text-slate-800 glass-btn hover:text-emerald-700 rounded-full transition-all whitespace-nowrap shrink-0 cursor-pointer"
             >
-              View All ({COURSES.length})
+              See All
             </button>
           </div>
 
@@ -154,11 +357,10 @@ export const DepartmentsAndCourses: React.FC<DepartmentsAndCoursesProps> = ({
                   role="tab"
                   aria-selected={active}
                   onClick={() => onSelectDept(tab.id)}
-                  className={`h-9 px-4 text-xs sm:text-sm font-semibold rounded-full transition-colors whitespace-nowrap shrink-0 cursor-pointer ${
-                    active
-                      ? 'bg-emerald-600 text-white shadow-sm'
-                      : 'text-slate-700 hover:text-slate-900 hover:bg-white/75'
-                  }`}
+                  className={`h-9 px-4 text-xs sm:text-sm font-semibold rounded-full transition-colors whitespace-nowrap shrink-0 cursor-pointer ${active
+                    ? 'btn-gradient-green text-white shadow-sm'
+                    : 'text-slate-700 hover:text-slate-900 hover:bg-white/75'
+                    }`}
                 >
                   {tab.label}
                 </button>
@@ -268,14 +470,14 @@ export const DepartmentsAndCourses: React.FC<DepartmentsAndCoursesProps> = ({
                     <button
                       type="button"
                       onClick={() => onEnrollCourse(course, 'discount')}
-                      className="h-12 px-3 text-sm font-bold text-rose-600 bg-rose-100/80 hover:bg-rose-200/80 rounded-full transition-colors whitespace-nowrap cursor-pointer"
+                      className="h-[52px] px-3 text-sm font-bold text-rose-600 bg-rose-100/80 hover:bg-rose-200/80 rounded-full transition-colors whitespace-nowrap cursor-pointer"
                     >
                       Get Discount
                     </button>
                     <button
                       type="button"
                       onClick={() => onEnrollCourse(course, 'enroll')}
-                      className="h-12 px-4 text-sm font-bold text-white bg-emerald-600 hover:bg-emerald-700 rounded-full transition-colors whitespace-nowrap cursor-pointer shadow-[0_10px_22px_-8px_rgba(16,185,129,0.55)]"
+                      className="h-[52px] px-4 text-sm font-bold text-white btn-gradient-green rounded-full transition-colors whitespace-nowrap cursor-pointer"
                     >
                       Enroll Now
                     </button>

@@ -20,12 +20,13 @@ export default function App() {
   const [modal, setModal] = useState<ModalState>({ type: 'none' });
 
   return (
-    <div className="min-h-screen w-full bg-[#EEF5F9] text-slate-900 overflow-x-hidden">
+    <div className="min-h-screen w-full bg-[#FBFCF8] text-slate-900 overflow-x-hidden">
       {/* 1. Header */}
       <Header
         onEnrollClick={() => setModal({ type: 'form', mode: 'enroll' })}
         onSearchClick={() => setModal({ type: 'search' })}
-        onLoginClick={() => setModal({ type: 'login' })}
+        onLoginClick={() => setModal({ type: 'login', defaultTab: 'login' })}
+        onVerifyClick={() => setModal({ type: 'login', defaultTab: 'verify' })}
       />
 
       <main>

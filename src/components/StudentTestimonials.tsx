@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ArrowLeft, ArrowRight, Star } from 'lucide-react';
 import { STUDENT_TESTIMONIALS } from '../data/homeData';
-import { CircleStudentAvatar } from './Graphics';
+import { CircleStudentAvatar, SilkBackdrop } from './Graphics';
 
 export const StudentTestimonials: React.FC = () => {
   const total = STUDENT_TESTIMONIALS.length;
@@ -23,16 +23,18 @@ export const StudentTestimonials: React.FC = () => {
   return (
     <section
       id="student-testimonials"
-      className="section-band bg-glass-silk text-slate-900"
+      className="relative overflow-hidden section-band-green text-slate-900"
     >
-      <div className="container-1520">
+      <SilkBackdrop />
+      <div className="container-1520 relative z-10">
         {/* Top Header Row: Left-Aligned Title & Subtitle + Top-Right Controls */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 sm:mb-14">
-          <div className="max-w-2xl text-left">
-            <h2 className="section-heading text-[#1CA24A]" style={{ textWrap: 'balance' }}>
-              What Our Students Say
+          <div className="max-w-3xl text-left">
+            <p className="section-tag">TESTIMONIALS</p>
+            <h2 className="heading-gradient-green">
+              What Our Students Say About Us
             </h2>
-            <p className="mt-2 text-sm sm:text-[15px] leading-relaxed text-slate-600 text-left">
+            <p className="section-subtitle-max2 mt-2">
               Real reviews from our learners across Bangladesh transitioning into successful IT careers.
             </p>
           </div>
@@ -49,18 +51,18 @@ export const StudentTestimonials: React.FC = () => {
               <button
                 type="button"
                 onClick={handlePrev}
-                className="w-10 h-10 rounded-full glass-btn flex items-center justify-center shrink-0 aspect-square text-[#1B2668] hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                className="w-10 h-10 rounded-full arrow-btn flex items-center justify-center shrink-0 aspect-square cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 aria-label="Previous testimonials"
               >
-                <ArrowLeft className="w-4 h-4" strokeWidth={2} />
+                <ArrowLeft className="w-4 h-4" strokeWidth={2.2} />
               </button>
               <button
                 type="button"
                 onClick={handleNext}
-                className="w-10 h-10 rounded-full glass-btn flex items-center justify-center shrink-0 aspect-square text-[#1B2668] hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                className="w-10 h-10 rounded-full arrow-btn flex items-center justify-center shrink-0 aspect-square cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                 aria-label="Next testimonials"
               >
-                <ArrowRight className="w-4 h-4" strokeWidth={2} />
+                <ArrowRight className="w-4 h-4" strokeWidth={2.2} />
               </button>
             </div>
           </div>
@@ -74,7 +76,7 @@ export const StudentTestimonials: React.FC = () => {
               className="group relative rounded-[26px] glass pt-10 pb-6 px-6 sm:px-7 flex flex-col justify-between min-h-[250px] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_16px_36px_-12px_rgba(23,80,40,0.18)]"
             >
               {/* User Image: Floats at the top-left overlapping the card top border */}
-              <div className="absolute -top-7 left-6 sm:left-7">
+              <div className="absolute -top-7 left-6 sm:left-7 z-20">
                 <div className="w-14 h-14 sm:w-15 sm:h-15 rounded-full overflow-hidden shadow-md ring-4 ring-white border border-white/60 bg-emerald-50">
                   <CircleStudentAvatar
                     name={item.name}

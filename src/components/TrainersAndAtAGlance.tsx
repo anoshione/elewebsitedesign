@@ -2,36 +2,18 @@ import React, { useState } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
-  Building2,
-  Compass,
-  Headset,
-  Layers,
-  MapPin,
   ShieldCheck,
   Star,
-  TrendingUp,
-  Users,
 } from 'lucide-react';
-import { AT_A_GLANCE_METRICS, TRAINERS } from '../data/homeData';
+import { TRAINERS } from '../data/homeData';
 import trainerMaleImg from '../assets/images/trainer_male.png';
 import trainerFemaleImg from '../assets/images/trainer_female.png';
 
 interface TrainersAndAtAGlanceProps {
-  onOpenSeminarModal: () => void;
+  onOpenSeminarModal?: () => void;
 }
 
-const GLANCE_ICONS = {
-  branches: Building2,
-  mentors: Users,
-  tracks: Layers,
-  completion: TrendingUp,
-  support: Headset,
-  districts: Compass,
-} as const;
-
-export const TrainersAndAtAGlance: React.FC<TrainersAndAtAGlanceProps> = ({
-  onOpenSeminarModal,
-}) => {
+export const TrainersAndAtAGlance: React.FC<TrainersAndAtAGlanceProps> = () => {
   const [pageIndex, setPageIndex] = useState(0);
   const [showAllTrainers, setShowAllTrainers] = useState(false);
 
@@ -43,16 +25,17 @@ export const TrainersAndAtAGlance: React.FC<TrainersAndAtAGlanceProps> = ({
 
   return (
     <>
-      {/* SECTION 8: TRAINERS (Reference-Matched Pixel-Perfect Blank White Design) */}
-      <section id="trainers" className="section-band bg-white text-slate-900 py-16 lg:py-20">
+      {/* SECTION 8: TRAINERS (Solid #FBFCF8 Design) */}
+      <section id="trainers" className="section-band bg-[#FBFCF8] text-slate-900 py-16 lg:py-20">
         <div className="container-1520">
           <div className="flex flex-col md:flex-row md:items-start justify-between gap-6 mb-10">
             <div className="max-w-3xl">
-              <h2 className="font-display text-2xl sm:text-3xl lg:text-[2.25rem] font-extrabold tracking-tight text-[#16A34A] leading-tight">
+              <p className="section-tag">INSTRUCTORS</p>
+              <h2 className="heading-gradient-green">
                 Learn From Active Industry Professionals
               </h2>
-              <p className="mt-2.5 text-xs sm:text-[13px] lg:text-[14px] text-slate-500 leading-relaxed max-w-3xl">
-                Our instructors practice what they teach every single day. Instead of outdated theory, you gain direct access to real-world workflows, modern toolsets &amp; AI, and current industry standards. Whether mastering React or crafting high-converting copy, you learn the exact skills top employers and international clients demand right now.
+              <p className="section-subtitle-max2 mt-2.5">
+                Our instructors practice what they teach daily, giving you direct access to real-world workflows, modern toolsets &amp; AI, and current industry standards.
               </p>
             </div>
 
@@ -72,18 +55,18 @@ export const TrainersAndAtAGlance: React.FC<TrainersAndAtAGlanceProps> = ({
                     onClick={() =>
                       setPageIndex((prev) => (prev - 1 + totalPages) % totalPages)
                     }
-                    className="w-10 h-10 rounded-full glass-btn text-slate-800 flex items-center justify-center shrink-0 aspect-square transition-colors cursor-pointer"
+                    className="w-10 h-10 rounded-full arrow-btn flex items-center justify-center shrink-0 aspect-square cursor-pointer"
                     aria-label="Previous teachers"
                   >
-                    <ArrowLeft className="w-4 h-4 text-slate-800" strokeWidth={2} />
+                    <ArrowLeft className="w-4 h-4" strokeWidth={2.2} />
                   </button>
                   <button
                     type="button"
                     onClick={() => setPageIndex((prev) => (prev + 1) % totalPages)}
-                    className="w-10 h-10 rounded-full glass-btn text-slate-800 flex items-center justify-center shrink-0 aspect-square transition-colors cursor-pointer"
+                    className="w-10 h-10 rounded-full arrow-btn flex items-center justify-center shrink-0 aspect-square cursor-pointer"
                     aria-label="Next teachers"
                   >
-                    <ArrowRight className="w-4 h-4 text-slate-800" strokeWidth={2} />
+                    <ArrowRight className="w-4 h-4" strokeWidth={2.2} />
                   </button>
                 </div>
               )}
@@ -184,79 +167,6 @@ export const TrainersAndAtAGlance: React.FC<TrainersAndAtAGlanceProps> = ({
                 </article>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* SECTION 9: ELE AT A GLANCE (Light Prism Backdrop + Translucent Glass Metric Cards) */}
-      <section id="at-a-glance" className="section-band bg-glass-prism text-slate-900">
-        <div className="container-1520">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-5">
-              <p className="section-kicker text-emerald-700 mb-1.5">
-                Nationwide Footprint · e-Learning &amp; Earning Ltd.
-              </p>
-              <h2 className="section-heading text-slate-900" style={{ textWrap: 'balance' }}>
-                ELE at a Glance
-              </h2>
-              <p className="mt-3 section-subtitle text-slate-600 max-w-[50ch]">
-                Since 2018, e-Learning &amp; Earning Ltd. has built skilled IT professionals and
-                self-reliant freelancers across all 64 districts of Bangladesh through modern campus
-                labs, industry mentors, and international curricula.
-              </p>
-
-              <div className="mt-5 space-y-2.5 text-sm text-slate-700">
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full glass flex items-center justify-center shrink-0">
-                    <MapPin className="w-4 h-4 text-emerald-600" strokeWidth={1.75} />
-                  </div>
-                  <span>Head Office: Kallyanpur, Mirpur Road, Dhaka-1207</span>
-                </div>
-                <div className="flex items-center gap-2.5">
-                  <div className="w-8 h-8 rounded-full glass flex items-center justify-center shrink-0">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600" strokeWidth={1.75} />
-                  </div>
-                  <span>NSDA Registered Training Provider &amp; ISO 9001:2015 Certified</span>
-                </div>
-              </div>
-
-              <div className="mt-6">
-                <button
-                  type="button"
-                  onClick={onOpenSeminarModal}
-                  className="h-12 px-7 text-sm font-semibold btn-emerald-glow rounded-full transition-all cursor-pointer shadow-lg shadow-emerald-950/20"
-                >
-                  Book Free Career Counseling
-                </button>
-              </div>
-            </div>
-
-            <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5">
-              {AT_A_GLANCE_METRICS.map((item) => {
-                const Icon = GLANCE_ICONS[item.id as keyof typeof GLANCE_ICONS] || Layers;
-                return (
-                  <div
-                    key={item.id}
-                    className="rounded-[24px] glass p-5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-0.5"
-                  >
-                    <div className="flex items-center justify-between gap-2">
-                      <div className="w-10 h-10 rounded-full glass flex items-center justify-center text-emerald-600 shrink-0">
-                        <Icon className="w-5 h-5" strokeWidth={1.75} />
-                      </div>
-                      <div className="font-display text-2xl font-extrabold text-[#16A34A] tabular-nums leading-none">
-                        {item.value}
-                      </div>
-                    </div>
-                    <div className="mt-3.5">
-                      <h3 className="font-display text-base font-bold text-slate-900 leading-snug">
-                        {item.title}
-                      </h3>
-                      <p className="mt-1 text-xs text-slate-600 leading-[1.55]">{item.body}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
           </div>
         </div>
       </section>

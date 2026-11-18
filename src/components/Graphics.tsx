@@ -107,14 +107,26 @@ export const SilkWaveOverlay: React.FC = () => (
  */
 
 /**
- * Soft, silky light-green fabric backdrop — shared by the Departments and
- * News sections so both bands feel like one continuous material.
+ * Soft, silky light-green fabric backdrop.
+ * Restores the original light-green palette (from-[#F2FAF0] via-[#DFEECF] to-[#C8E4BB])
+ * with a progressive angled transition that begins just before the contents end
+ * (cutting diagonally across the lower cards) so the frosted glass blur and specular
+ * refraction effect are distinctly visible.
  */
-export const SilkBackdrop: React.FC = () => (
-  <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+export const SilkBackdrop: React.FC<{
+  topFade?: boolean;
+  bottomFade?: boolean;
+}> = ({ topFade = true, bottomFade = true }) => (
+  <div className="absolute inset-0 pointer-events-none select-none overflow-hidden" aria-hidden="true">
+    {/* Base Green Texture: Original silky light-green gradient */}
     <div className="absolute inset-0 bg-gradient-to-br from-[#F2FAF0] via-[#DFEECF] to-[#C8E4BB]" />
+
+    {/* Original soft radial corner sheen */}
+    <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_8%_0%,rgba(251,252,248,0.92),transparent_60%)]" />
+
+    {/* Silk fabric wave curves */}
     <svg
-      className="absolute inset-0 w-full h-full"
+      className="absolute inset-0 w-full h-full opacity-65"
       viewBox="0 0 1600 900"
       preserveAspectRatio="none"
       fill="none"
@@ -139,17 +151,58 @@ export const SilkBackdrop: React.FC = () => (
       {Array.from({ length: 12 }).map((_, i) => (
         <path
           key={i}
-          d={`M-120 ${120 + i * 78} C 380 ${40 + i * 84}, 760 ${210 + i * 74}, 1720 ${60 + i * 82}`}
+          d={`M-120 ${100 + i * 78} C 380 ${20 + i * 84}, 760 ${190 + i * 74}, 1720 ${40 + i * 82}`}
           stroke="url(#silkStroke)"
           strokeWidth={54}
           filter="url(#silkBlur)"
-          opacity={0.16 + (i % 3) * 0.05}
+          opacity={0.18 + (i % 3) * 0.06}
         />
       ))}
     </svg>
-    {/* Soft white edge fades so the silk melts into the page */}
-    <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_8%_0%,rgba(255,255,255,0.95),transparent_60%)]" />
-    <div className="absolute inset-0 bg-[radial-gradient(80%_70%_at_100%_100%,rgba(255,255,255,0.8),transparent_55%)]" />
+
+    {/* Top blend overlay: smooth melt from previous section (#FBFCF8) */}
+    {topFade && (
+      <div
+        className="absolute top-0 inset-x-0 h-16 sm:h-20 lg:h-24 pointer-events-none"
+        style={{
+          background:
+            'linear-gradient(to bottom, #FBFCF8 0%, rgba(251, 252, 248, 0.75) 45%, rgba(251, 252, 248, 0) 100%)',
+        }}
+      />
+    )}
+
+    {/* Bottom transition: starts just before contents end, sweeping upwards on the right
+        so the gradient passes behind the frosted glass cards to reveal maximum glass refraction */}
+    {bottomFade && (
+      <>
+        {/* Angled transition (sloping up on right) */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-44 sm:h-52 lg:h-60 pointer-events-none"
+          style={{
+            background:
+              'linear-gradient(168deg, transparent 40%, rgba(251, 252, 248, 0.4) 65%, rgba(251, 252, 248, 0.85) 85%, #FBFCF8 100%)',
+          }}
+        />
+
+        {/* Bottom-right swoop curve matching the reference curve */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              'radial-gradient(85% 75% at 100% 100%, #FBFCF8 0%, rgba(251, 252, 248, 0.75) 45%, rgba(251, 252, 248, 0) 80%)',
+          }}
+        />
+
+        {/* Base bottom blend into next #FBFCF8 section */}
+        <div
+          className="absolute inset-x-0 bottom-0 h-24 sm:h-32 lg:h-36 pointer-events-none"
+          style={{
+            background:
+              'linear-gradient(to top, #FBFCF8 0%, rgba(251, 252, 248, 0.9) 35%, rgba(251, 252, 248, 0) 100%)',
+          }}
+        />
+      </>
+    )}
   </div>
 );
 
@@ -422,7 +475,7 @@ export const CoursePosterBanner: React.FC<{
       <div className="absolute -right-8 -top-8 w-40 h-40 rounded-full bg-white/10 blur-xl pointer-events-none" />
       <div className="relative z-10 max-w-[65%]">
         <p className="text-xs font-medium text-emerald-300 tracking-wide">{title}</p>
-        <h4 className="font-display text-xl xl:text-2xl font-extrabold leading-tight tracking-tight mt-0.5">
+        <h4 className="font-display text-xl xl:text-2xl font-extrabold leading-tight tracking-tight mt-0.5 text-white !text-white">
           {highlight}
         </h4>
         <p className="text-xs text-white/80 mt-1.5">{sub}</p>

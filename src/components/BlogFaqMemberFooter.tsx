@@ -16,7 +16,7 @@ import {
   Sparkles,
   Youtube,
 } from 'lucide-react';
-import { BLOG_POSTS, BlogItem, FAQS, PARTNERS_AND_CLIENTS } from '../data/homeData';
+import { BLOG_POSTS, BlogItem, BRANCH_ITEMS, BranchItem, FAQS, PARTNERS_AND_CLIENTS } from '../data/homeData';
 import { EditorialVisual, SilkBackdrop } from './Graphics';
 
 interface BlogFaqMemberFooterProps {
@@ -35,27 +35,37 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
   const [openFaqId, setOpenFaqId] = useState<string>(FAQS[0].id);
   const [blogOffset, setBlogOffset] = useState(0);
   const [showAllBlogs, setShowAllBlogs] = useState(false);
+  const [branchOffset, setBranchOffset] = useState(0);
+  const [showAllBranches, setShowAllBranches] = useState(false);
 
   const blogPageSize = 6;
   const displayedBlogs = showAllBlogs
     ? BLOG_POSTS
     : Array.from({ length: Math.min(blogPageSize, BLOG_POSTS.length) }).map(
-        (_, i) => BLOG_POSTS[(blogOffset + i) % BLOG_POSTS.length]
-      );
+      (_, i) => BLOG_POSTS[(blogOffset + i) % BLOG_POSTS.length]
+    );
+
+  const branchPageSize = 3;
+  const displayedBranches = showAllBranches
+    ? BRANCH_ITEMS
+    : Array.from({ length: Math.min(branchPageSize, BRANCH_ITEMS.length) }).map(
+      (_, i) => BRANCH_ITEMS[(branchOffset + i) % BRANCH_ITEMS.length]
+    );
 
   return (
     <>
       {/* SECTION 12: BLOG (Silk Backdrop + Reference-Matched Glass Cards) */}
-      <section id="blog" className="relative overflow-hidden section-band text-slate-900">
+      <section id="blog" className="relative overflow-hidden section-band-green text-slate-900">
         <SilkBackdrop />
 
         <div className="container-1520 relative z-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-9">
             <div className="min-w-0">
-              <h2 className="font-display text-2xl sm:text-3xl lg:text-[2.25rem] xl:text-[2.5rem] font-bold tracking-tight text-[#1CA24A] leading-tight lg:whitespace-nowrap">
+              <p className="section-tag">BLOGS</p>
+              <h2 className="heading-gradient-green">
                 Insights, Guides &amp; Career Playbooks
               </h2>
-              <p className="mt-2 text-sm sm:text-[15px] leading-relaxed text-slate-600 xl:whitespace-nowrap">
+              <p className="section-subtitle-max2 mt-2">
                 Practical tutorials on freelancing, AI-ready SEO, and modern software engineering written by our lead mentors.
               </p>
             </div>
@@ -74,20 +84,20 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
                   onClick={() =>
                     setBlogOffset((prev) => (prev - 3 + BLOG_POSTS.length) % BLOG_POSTS.length)
                   }
-                  className="w-10 h-10 rounded-full glass-btn flex items-center justify-center shrink-0 aspect-square text-[#1B2668] hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                  className="w-10 h-10 rounded-full arrow-btn flex items-center justify-center shrink-0 aspect-square cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                   aria-label="Previous blog articles"
                 >
-                  <ArrowLeft className="w-4 h-4" strokeWidth={2} />
+                  <ArrowLeft className="w-4 h-4" strokeWidth={2.2} />
                 </button>
                 <button
                   type="button"
                   onClick={() =>
                     setBlogOffset((prev) => (prev + 3) % BLOG_POSTS.length)
                   }
-                  className="w-10 h-10 rounded-full glass-btn flex items-center justify-center shrink-0 aspect-square text-[#1B2668] hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                  className="w-10 h-10 rounded-full arrow-btn flex items-center justify-center shrink-0 aspect-square cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                   aria-label="Next blog articles"
                 >
-                  <ArrowRight className="w-4 h-4" strokeWidth={2} />
+                  <ArrowRight className="w-4 h-4" strokeWidth={2.2} />
                 </button>
               </div>
             </div>
@@ -151,10 +161,10 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
                   <button
                     type="button"
                     onClick={() => onSelectBlog(post)}
-                    className="w-10 h-10 rounded-full glass-btn shrink-0 aspect-square flex items-center justify-center text-[#1B2668] hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                    className="w-10 h-10 rounded-full arrow-btn card-arrow-btn shrink-0 aspect-square flex items-center justify-center cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                     aria-label={`Read article ${post.title}`}
                   >
-                    <ArrowRight className="w-4 h-4" strokeWidth={2} />
+                    <ArrowRight className="w-4 h-4" strokeWidth={2.2} />
                   </button>
                 </div>
               </article>
@@ -163,54 +173,173 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
         </div>
       </section>
 
-      {/* SECTION 13: FAQ (Reference-Matched Layout with Glass Cards & Distinct Arrow Action) */}
-      <section id="faq" className="section-band bg-glass-silk text-slate-900">
+      {/* SECTION 13: OUR BRANCHES (Solid #FBFCF8, left-aligned title & subtitle, frosted glass cards with drop shadow) */}
+      <section id="branches" className="section-band bg-[#FBFCF8] text-slate-900">
         <div className="container-1520">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-14 items-start">
-            {/* Left Column: Heading, Subtitle & "Still have questions?" Card */}
-            <div className="lg:col-span-5 flex flex-col justify-between h-full">
-              <div>
-                {/* Kicker */}
+          {/* Header Row: Left-aligned Title & Subtitle + Right-aligned Controls */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-9">
+            <div className="min-w-0">
+              <p className="section-tag">BRANCHES</p>
+              <h2 className="heading-gradient-green">
+                Our Nationwide Campus Branches
+              </h2>
+              <p className="section-subtitle-max2 mt-2">
+                Find your nearest e-Learning &amp; Earning IT park and hands-on computer lab center across Bangladesh.
+              </p>
+            </div>
+
+            <div className="flex items-center gap-3 shrink-0 self-start md:self-end">
+              <button
+                type="button"
+                onClick={() => setShowAllBranches((prev) => !prev)}
+                className="inline-flex items-center justify-center h-10 px-5 text-sm font-semibold text-slate-800 glass-btn rounded-full transition-all whitespace-nowrap cursor-pointer hover:text-emerald-800"
+              >
+                {showAllBranches ? 'Show 3 Centers' : 'See All'}
+              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() =>
+                    setBranchOffset((prev) => (prev - 3 + BRANCH_ITEMS.length) % BRANCH_ITEMS.length)
+                  }
+                  className="w-10 h-10 rounded-full arrow-btn flex items-center justify-center shrink-0 aspect-square cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                  aria-label="Previous branches"
+                >
+                  <ArrowLeft className="w-4 h-4" strokeWidth={2.2} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setBranchOffset((prev) => (prev + 3) % BRANCH_ITEMS.length)
+                  }
+                  className="w-10 h-10 rounded-full arrow-btn flex items-center justify-center shrink-0 aspect-square cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                  aria-label="Next branches"
+                >
+                  <ArrowRight className="w-4 h-4" strokeWidth={2.2} />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Branches Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 items-stretch">
+            {displayedBranches.map((branch) => (
+              <article
+                key={branch.id}
+                className="group relative rounded-[28px] sm:rounded-[32px] card-glass-drop hover:-translate-y-1 transition-all duration-300 flex flex-col justify-end min-h-[500px] sm:min-h-[530px] overflow-hidden"
+              >
+                {/* Full-Card Height Map Background (with pin in top middle) */}
+                <div className="absolute inset-0 z-0">
+                  <img
+                    src={branch.mapImage}
+                    alt={`${branch.city} branch campus map location`}
+                    className="w-full h-full object-cover object-top select-none transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                  />
+                  {/* Green transparent shade from the bottom background (max height ~30% from bottom) */}
+                  <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#008F2F]/65 via-[#16B84A]/30 to-transparent pointer-events-none" />
+                </div>
+
+                {/* Bottom: Translucent White Frosted Glass Info Card with Drop Shadow */}
+                <div className="relative z-10 p-3 sm:p-3.5">
+                  <div className="rounded-[22px] sm:rounded-[24px] branch-glass-card p-5 sm:p-6 flex flex-col gap-3.5">
+                    {/* Header: Centered Building Icon & Branch Name */}
+                    <div className="flex items-center justify-center gap-2.5 text-center mb-0.5">
+                      <Building2 className="w-5 h-5 text-slate-800 shrink-0" strokeWidth={2.2} />
+                      <h3 className="font-display text-xl sm:text-[22px] font-bold text-slate-900 tracking-tight leading-none drop-shadow-sm">
+                        {branch.city}
+                      </h3>
+                    </div>
+
+                    {/* Address */}
+                    <div className="flex items-start gap-2.5 text-xs sm:text-[13px] text-slate-900 font-medium leading-relaxed">
+                      <MapPin className="w-4.5 h-4.5 text-slate-800 shrink-0 mt-0.5" strokeWidth={1.8} />
+                      <span>{branch.address}</span>
+                    </div>
+
+                    {/* Phone Numbers */}
+                    <div className="flex items-center gap-2.5 text-xs sm:text-[13px] text-slate-900 font-semibold tabular-nums">
+                      <Phone className="w-4.5 h-4.5 text-slate-800 shrink-0" strokeWidth={1.8} />
+                      <div className="flex flex-wrap items-center gap-x-2">
+                        {branch.phones.map((phone, idx) => (
+                          <React.Fragment key={phone}>
+                            <a
+                              href={`tel:${phone.replace(/[^0-9+]/g, '')}`}
+                              className="hover:text-emerald-700 transition-colors"
+                            >
+                              {phone}
+                            </a>
+                            {idx < branch.phones.length - 1 && <span className="text-slate-500">,</span>}
+                          </React.Fragment>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Email */}
+                    <div className="flex items-center gap-2.5 text-xs sm:text-[13px] text-slate-900 font-medium">
+                      <Mail className="w-4.5 h-4.5 text-slate-800 shrink-0" strokeWidth={1.8} />
+                      <a
+                        href={`mailto:${branch.email}`}
+                        className="hover:text-emerald-700 transition-colors truncate"
+                      >
+                        {branch.email}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 14: FAQ (Silk Backdrop + Glass Cards & Distinct Arrow Action) */}
+      <section id="faq" className="relative overflow-hidden section-band-green text-slate-900">
+        <SilkBackdrop />
+        <div className="container-1520 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-14 items-stretch">
+            {/* Left Column: Visual Card with FAQ Title at Top & Just the CTA at Bottom */}
+            <div className="lg:col-span-5 relative rounded-[28px] sm:rounded-[32px] overflow-hidden p-7 sm:p-9 lg:p-10 flex flex-col justify-between min-h-[520px] lg:min-h-[580px] h-full border border-emerald-100/70 shadow-[0_20px_45px_-15px_rgba(0,143,47,0.12)]">
+              {/* Background Visual Image */}
+              <div className="absolute inset-0 z-0">
+                <img
+                  src="/assets/faq/faq_visual.jpg"
+                  alt="FAQ Education & Career Counseling Visual"
+                  className="w-full h-full object-cover object-center select-none"
+                />
+                {/* Soft gradient protective overlay ensuring crisp text readability and gentle blend */}
+                <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/35 to-white/70 pointer-events-none" />
+              </div>
+
+              {/* Top: FAQ Title Section */}
+              <div className="relative z-10">
                 <div className="mb-3">
                   <span className="text-xs font-bold uppercase tracking-wider text-emerald-800">
                     QUESTIONS &amp; ANSWERS
                   </span>
                 </div>
 
-                {/* Main Heading */}
                 <h2 className="font-display text-3xl sm:text-4xl lg:text-[2.65rem] font-bold tracking-tight text-slate-900 leading-[1.15]" style={{ textWrap: 'balance' }}>
                   Clear answers for your learning journey
                 </h2>
 
-                {/* Subtitle */}
                 <p className="mt-3.5 text-sm sm:text-base leading-relaxed text-slate-600 max-w-md">
                   Clear answers on admissions, course curricula, campus lab access, installment fees, and verified freelancing outcomes.
                 </p>
               </div>
 
-              {/* "Still have questions?" Card (Positioned at bottom of left column like reference) */}
-              <div className="mt-10 lg:mt-24 rounded-[26px] glass p-6 sm:p-7 border border-white/60 shadow-sm flex flex-col justify-between">
-                <div>
-                  <h3 className="font-display text-lg sm:text-xl font-bold text-slate-900 leading-snug">
-                    Still have questions?
-                  </h3>
-                  <p className="mt-2 text-sm text-slate-600 leading-relaxed">
-                    Need clarity before moving forward? Speak with our academic counseling team and get direct answers tailored to your career challenges.
-                  </p>
-                </div>
-
-                <div className="mt-6">
-                  <button
-                    type="button"
-                    onClick={onSeminarClick}
-                    className="inline-flex items-center gap-3 p-1.5 pr-6 rounded-full bg-[#16A34A] text-white font-semibold text-sm shadow-md hover:bg-emerald-700 transition-all duration-200 cursor-pointer group"
-                  >
-                    <span className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0 group-hover:translate-x-0.5 transition-transform">
-                      <ArrowRight className="w-4 h-4 text-white" strokeWidth={2.2} />
-                    </span>
-                    <span>Book a consultation</span>
-                  </button>
-                </div>
+              {/* Bottom: JUST the CTA Button */}
+              <div className="relative z-10 mt-auto pt-8">
+                <button
+                  type="button"
+                  onClick={onSeminarClick}
+                  className="inline-flex items-center gap-3 h-[52px] pl-2.5 pr-7 rounded-full btn-gradient-green text-white font-semibold text-[15px] transition-all duration-200 cursor-pointer shadow-[0_10px_24px_-6px_rgba(0,143,47,0.45)] hover:shadow-[0_14px_30px_-4px_rgba(0,143,47,0.6)] group"
+                >
+                  <span className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center shrink-0">
+                    <ArrowRight className="w-4.5 h-4.5 text-white" strokeWidth={2.2} />
+                  </span>
+                  <span>Book a consultation</span>
+                </button>
               </div>
             </div>
 
@@ -221,32 +350,27 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
                 return (
                   <div
                     key={faq.id}
-                    className={`rounded-[22px] transition-all duration-200 glass border ${
-                      isOpen
-                        ? 'border-emerald-500/40 shadow-md bg-white/80'
-                        : 'border-white/60 shadow-sm hover:border-white/90 hover:shadow-md'
-                    }`}
+                    className={`rounded-[22px] transition-all duration-200 glass border ${isOpen
+                      ? 'border-emerald-500/40 shadow-md bg-white/80'
+                      : 'border-white/60 shadow-sm hover:border-white/90 hover:shadow-md'
+                      }`}
                   >
                     <button
                       type="button"
                       aria-expanded={isOpen}
                       onClick={() => setOpenFaqId(isOpen ? '' : faq.id)}
-                      className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                      className="group w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                     >
                       <span className="font-display text-base sm:text-[17px] font-bold text-slate-900 leading-snug pr-2">
                         {faq.question}
                       </span>
                       <div
-                        className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shrink-0 transition-colors duration-200 ${
-                          isOpen
-                            ? 'bg-slate-900 text-white shadow-sm'
-                            : 'bg-slate-200/70 text-slate-700 group-hover:bg-slate-200'
-                        }`}
+                        className="w-9 h-9 sm:w-10 sm:h-10 rounded-full arrow-btn flex items-center justify-center shrink-0"
                       >
                         {isOpen ? (
-                          <ChevronUp className="w-4 h-4" strokeWidth={2.2} />
+                          <ChevronUp className="w-4.5 h-4.5" strokeWidth={2.2} />
                         ) : (
-                          <ChevronDown className="w-4 h-4" strokeWidth={2.2} />
+                          <ChevronDown className="w-4.5 h-4.5" strokeWidth={2.2} />
                         )}
                       </div>
                     </button>
@@ -263,36 +387,79 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
         </div>
       </section>
 
-      {/* SECTION 14: PARTNERS & CLIENTS (Light Glass-Silk Backdrop + 14 Rounded Glass Logo Frames) */}
-      <section id="partners" className="section-band bg-glass-silk text-slate-900">
-        <div className="container-1520">
-          <div className="mb-8 sm:mb-10 text-left">
-            <h2 className="section-heading text-slate-900" style={{ textWrap: 'balance' }}>
-              Our Partners &amp; Clients
-            </h2>
-            <p className="mt-2 text-sm sm:text-[15px] leading-relaxed text-slate-600 max-w-2xl text-left">
-              We&apos;re proud to collaborate with leading government and private organizations.
-            </p>
+      {/* SECTION 15: PARTNERS & CLIENTS (Solid #FBFCF8 + Infinite Dual Marquee) */}
+      <section id="partners" className="section-band bg-[#FBFCF8] text-slate-900 overflow-hidden">
+        <div className="container-1520 mb-8 sm:mb-10 text-left">
+          <p className="section-tag">PARTNERS</p>
+          <h2 className="heading-gradient-green">
+            Our Trusted Partners &amp; Clients
+          </h2>
+          <p className="section-subtitle-max2 mt-2">
+            We&apos;re proud to collaborate with leading government divisions, international NGOs, and technology enterprises.
+          </p>
+        </div>
+
+        {/* Dual Marquee Track Container with Soft Edge Fades & Unclipped Shadow Padding */}
+        <div className="relative w-full overflow-hidden py-4 sm:py-6 space-y-1 sm:space-y-2">
+          {/* Left & Right Edge Fades to #FBFCF8 */}
+          <div
+            className="absolute left-0 top-0 bottom-0 w-16 sm:w-28 lg:w-40 z-20 pointer-events-none"
+            style={{
+              background: 'linear-gradient(to right, #FBFCF8 0%, rgba(251, 252, 248, 0) 100%)',
+            }}
+          />
+          <div
+            className="absolute right-0 top-0 bottom-0 w-16 sm:w-28 lg:w-40 z-20 pointer-events-none"
+            style={{
+              background: 'linear-gradient(to left, #FBFCF8 0%, rgba(251, 252, 248, 0) 100%)',
+            }}
+          />
+
+          {/* Row 1: Top Row animates from Left to Right (--->) */}
+          <div className="flex">
+            <div className="animate-marquee-right flex items-center gap-4 sm:gap-5 py-4 sm:py-5">
+              {[...PARTNERS_AND_CLIENTS, ...PARTNERS_AND_CLIENTS].map((partner, idx) => (
+                <div
+                  key={`top-${partner.id}-${idx}`}
+                  className="group rounded-[22px] sm:rounded-[26px] bg-white border border-slate-200/70 shadow-[0_6px_22px_-6px_rgba(0,0,0,0.06)] p-4 sm:p-5 flex items-center justify-center w-[220px] sm:w-[250px] lg:w-[270px] h-[92px] sm:h-[104px] shrink-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_-8px_rgba(16,185,129,0.2)] hover:border-emerald-300/80 cursor-pointer select-none"
+                  title={partner.name}
+                >
+                  <img
+                    src={partner.logo}
+                    alt={partner.name}
+                    loading="lazy"
+                    draggable={false}
+                    className="max-h-[48px] sm:max-h-[54px] max-w-[130px] sm:max-w-[145px] w-auto h-auto object-contain select-none transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-10 gap-4 sm:gap-5">
-            {PARTNERS_AND_CLIENTS.map((partner, index) => (
-              <div
-                key={partner.id}
-                className={`group rounded-[22px] sm:rounded-[26px] glass p-4 sm:p-5 flex items-center justify-center min-h-[96px] sm:min-h-[112px] col-span-1 lg:col-span-2 ${
-                  index === 10 ? 'lg:col-start-2' : ''
-                } transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_12px_28px_-10px_rgba(16,185,129,0.22)] cursor-pointer`}
-                title={partner.name}
-              >
-                <img
-                  src={partner.logo}
-                  alt={partner.name}
-                  loading="lazy"
-                  draggable={false}
-                  className="max-h-[50px] sm:max-h-[56px] max-w-[130px] sm:max-w-[145px] w-auto h-auto object-contain select-none transition-transform duration-300 group-hover:scale-105"
-                />
-              </div>
-            ))}
+          {/* Row 2: Bottom Row animates in Opposite Direction, Right to Left (<---) */}
+          <div className="flex">
+            <div className="animate-marquee-left flex items-center gap-4 sm:gap-5 py-4 sm:py-5">
+              {[
+                ...PARTNERS_AND_CLIENTS.slice(5),
+                ...PARTNERS_AND_CLIENTS.slice(0, 5),
+                ...PARTNERS_AND_CLIENTS.slice(5),
+                ...PARTNERS_AND_CLIENTS.slice(0, 5),
+              ].map((partner, idx) => (
+                <div
+                  key={`bottom-${partner.id}-${idx}`}
+                  className="group rounded-[22px] sm:rounded-[26px] bg-white border border-slate-200/70 shadow-[0_6px_22px_-6px_rgba(0,0,0,0.06)] p-4 sm:p-5 flex items-center justify-center w-[220px] sm:w-[250px] lg:w-[270px] h-[92px] sm:h-[104px] shrink-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_-8px_rgba(16,185,129,0.2)] hover:border-emerald-300/80 cursor-pointer select-none"
+                  title={partner.name}
+                >
+                  <img
+                    src={partner.logo}
+                    alt={partner.name}
+                    loading="lazy"
+                    draggable={false}
+                    className="max-h-[48px] sm:max-h-[54px] max-w-[130px] sm:max-w-[145px] w-auto h-auto object-contain select-none transition-transform duration-300 group-hover:scale-105"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -314,7 +481,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
             <div className="flex flex-wrap items-center gap-3.5 shrink-0">
               <a
                 href="#courses"
-                className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-full text-xs sm:text-sm font-semibold text-white bg-[#16A34A] hover:bg-[#15803D] transition-colors shadow-lg shadow-emerald-950/40 cursor-pointer whitespace-nowrap"
+                className="inline-flex items-center justify-center gap-2 h-[52px] px-7 rounded-full text-sm font-semibold text-white btn-gradient-green transition-colors cursor-pointer whitespace-nowrap"
               >
                 <span>Browse Course</span>
                 <ArrowRight className="w-4 h-4" strokeWidth={2} />
@@ -322,7 +489,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
               <button
                 type="button"
                 onClick={onSeminarClick}
-                className="inline-flex items-center justify-center gap-2 h-11 px-6 rounded-full text-xs sm:text-sm font-semibold text-white glass-btn transition-colors cursor-pointer whitespace-nowrap"
+                className="inline-flex items-center justify-center gap-2 h-[52px] px-7 rounded-full text-sm font-semibold text-white glass-btn transition-colors cursor-pointer whitespace-nowrap"
               >
                 <Calendar className="w-4 h-4 text-white" strokeWidth={1.75} />
                 <span>Get Discount</span>
@@ -455,7 +622,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
                     </a>
                   </li>
                   <li>
-                    <a href="#at-a-glance" className="hover:text-white transition-colors">
+                    <a href="#branches" className="hover:text-white transition-colors">
                       Branch
                     </a>
                   </li>
@@ -555,7 +722,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
                     </button>
                   </li>
                   <li>
-                    <a href="#at-a-glance" className="hover:text-white transition-colors">
+                    <a href="#branches" className="hover:text-white transition-colors">
                       Exam Centers
                     </a>
                   </li>

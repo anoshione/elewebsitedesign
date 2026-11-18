@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import {
   ArrowLeft,
   ArrowRight,
+  Calendar,
   CheckCircle2,
-  MonitorCheck,
+  MessageSquare,
   Newspaper,
-  Users2,
-  Wifi,
+  Phone,
+  Sparkles,
+  Video,
 } from 'lucide-react';
 import { NEWS_ITEMS, NewsItem } from '../data/homeData';
 import { GENERATED_ASSETS, ResilientPhoto, SilkBackdrop } from './Graphics';
@@ -62,11 +64,10 @@ const GlassArrowButton: React.FC<{
     type="button"
     onClick={onClick}
     aria-label={label}
-    className={`shrink-0 aspect-square inline-flex items-center justify-center rounded-full glass-btn text-[#1B2668] hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${
-      small ? 'w-9 h-9 min-w-[36px] min-h-[36px]' : 'w-11 h-11 min-w-[44px] min-h-[44px]'
-    }`}
+    className={`shrink-0 aspect-square inline-flex items-center justify-center rounded-full arrow-btn card-arrow-btn cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${small ? 'w-9 h-9 min-w-[36px] min-h-[36px]' : 'w-11 h-11 min-w-[44px] min-h-[44px]'
+      }`}
   >
-    <ArrowRight className={small ? 'w-4 h-4' : 'w-4.5 h-4.5'} strokeWidth={2} />
+    <ArrowRight className={small ? 'w-4 h-4' : 'w-4.5 h-4.5'} strokeWidth={2.2} />
   </button>
 );
 
@@ -86,18 +87,18 @@ export const NewsAndEnvironmentCta: React.FC<NewsAndEnvironmentCtaProps> = ({
   return (
     <>
       {/* SECTION 10: NEWS FEED (Silk backdrop + frosted glass cards, reference-matched) */}
-      <section id="news-feed" className="relative overflow-hidden section-band text-slate-900">
+      <section id="news-feed" className="relative overflow-hidden section-band-green text-slate-900">
         <SilkBackdrop />
 
         <div className="container-1520 relative z-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-9">
             <div className="min-w-0">
-              <h2 className="font-display text-2xl sm:text-3xl lg:text-[2.25rem] xl:text-[2.5rem] font-bold tracking-tight text-[#1CA24A] leading-tight lg:whitespace-nowrap">
+              <p className="section-tag">CAMPUS NEWS</p>
+              <h2 className="heading-gradient-green">
                 Campus Updates &amp; Industry News Feed
               </h2>
-              <p className="mt-2 text-sm sm:text-[15px] leading-relaxed text-slate-600 xl:whitespace-nowrap">
-                Latest institutional partnerships, scholarship drives, freelancing workshops, and
-                placement fairs across Bangladesh.
+              <p className="section-subtitle-max2 mt-2">
+                Latest institutional partnerships, scholarship drives, freelancing workshops, and placement fairs across Bangladesh.
               </p>
             </div>
 
@@ -117,18 +118,18 @@ export const NewsAndEnvironmentCta: React.FC<NewsAndEnvironmentCtaProps> = ({
                       (prev) => (prev - 1 + secondaryNews.length) % secondaryNews.length
                     )
                   }
-                  className="w-10 h-10 rounded-full glass-btn flex items-center justify-center shrink-0 aspect-square text-[#1B2668] hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                  className="w-10 h-10 rounded-full arrow-btn flex items-center justify-center shrink-0 aspect-square cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                   aria-label="Previous news items"
                 >
-                  <ArrowLeft className="w-4 h-4" strokeWidth={2} />
+                  <ArrowLeft className="w-4 h-4" strokeWidth={2.2} />
                 </button>
                 <button
                   type="button"
                   onClick={() => setNewsOffset((prev) => (prev + 1) % secondaryNews.length)}
-                  className="w-10 h-10 rounded-full glass-btn flex items-center justify-center shrink-0 aspect-square text-[#1B2668] hover:text-white transition-colors cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
+                  className="w-10 h-10 rounded-full arrow-btn flex items-center justify-center shrink-0 aspect-square cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                   aria-label="Next news items"
                 >
-                  <ArrowRight className="w-4 h-4" strokeWidth={2} />
+                  <ArrowRight className="w-4 h-4" strokeWidth={2.2} />
                 </button>
               </div>
             </div>
@@ -136,7 +137,7 @@ export const NewsAndEnvironmentCta: React.FC<NewsAndEnvironmentCtaProps> = ({
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
             {/* Featured News Story */}
-            <article className="rounded-[26px] glass p-3.5 flex flex-col">
+            <article className="rounded-[26px] glass p-3.5 flex flex-col transition-all duration-300 hover:border-emerald-500/40 hover:shadow-lg">
               <button
                 type="button"
                 onClick={() => onSelectNews(featuredNews)}
@@ -171,7 +172,7 @@ export const NewsAndEnvironmentCta: React.FC<NewsAndEnvironmentCtaProps> = ({
               {orderedSecondary.map((item) => (
                 <article
                   key={item.id}
-                  className="rounded-[24px] glass p-3 flex flex-col"
+                  className="rounded-[24px] glass p-3 flex flex-col transition-all duration-300 hover:border-emerald-500/40 hover:shadow-lg"
                 >
                   <button
                     type="button"
@@ -199,109 +200,69 @@ export const NewsAndEnvironmentCta: React.FC<NewsAndEnvironmentCtaProps> = ({
         </div>
       </section>
 
-      {/* SECTION 11: CTA BANNER (Light Prism Background + Translucent Glass Lab Environment Shell) */}
-      <section id="learning-environment" className="section-band bg-[#EEF5F9] text-slate-900">
+      {/* SECTION 11: 1:1 CAREER CONSULTATION CTA BANNER (Solid #FBFCF8 Band + Brand Green Gradient 3D Banner) */}
+      <section id="career-consultation" className="section-band bg-[#FBFCF8] text-slate-900">
         <div className="container-1520">
-          <div className="relative overflow-hidden rounded-[32px] glass text-slate-900 p-7 sm:p-9 lg:p-10 shadow-[0_16px_40px_-20px_rgba(23,80,40,0.18)]">
-            <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-              <ResilientPhoto
-                src={GENERATED_ASSETS.campusLab}
-                alt="High-spec student workstations at e-Learning & Earning Ltd. campus"
-                className="w-full h-full object-cover opacity-48"
+          <div className="relative overflow-hidden rounded-[32px] sm:rounded-[36px] bg-gradient-to-br from-[#EEFBF4] via-[#DFF4EB] to-[#BFE8CF] border border-[#008F2F]/25 shadow-[0_20px_50px_-20px_rgba(0,143,47,0.22)] text-slate-900">
+            {/* Ambient Brand Emerald Glows */}
+            <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#2AD568]/20 rounded-full blur-3xl pointer-events-none" />
+            <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#008F2F]/16 rounded-full blur-3xl pointer-events-none" />
+
+            {/* Desktop Full-Bleed 3D Visual: Seamlessly integrated into right side */}
+            <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-[47%] h-full pointer-events-none select-none z-0">
+              <img
+                src="/assets/cta/cta_mentor_3d.jpg"
+                alt="1:1 Career Consultation with Lead Mentor"
+                className="w-full h-full object-cover object-left [mask-image:linear-gradient(to_right,transparent_0%,black_16%,black_100%)]"
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-[#F4FBF7]/90 via-[#EBF6F0]/78 to-[#F0F4FA]/70 backdrop-blur-[2px]" />
             </div>
 
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-              <div className="lg:col-span-7">
-                <p className="section-kicker text-emerald-700">
-                  Dedicated Campus &amp; Practice Ecosystem
-                </p>
-                <h2 className="mt-1.5 section-heading text-slate-900" style={{ textWrap: 'balance' }}>
-                  A Conducive Environment Built for Mastery
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-8 sm:p-10 lg:p-12 lg:py-14">
+              {/* Left Column: Title, Subtitle, 1 CTA & Phone with Icon */}
+              <div className="lg:col-span-7 text-left">
+                <p className="section-tag">CONSULTATION</p>
+                <h2 className="heading-gradient-green">
+                  Book a Free 1:1 Session with Lead Mentor
                 </h2>
-                <p className="mt-2.5 section-subtitle text-slate-600 max-w-[54ch]">
-                  Uninterrupted gigabit fiber internet, dual-monitor workstations, and post-class
-                  mentor practice desks—engineered so every learner builds production-ready skills
-                  without distraction.
+
+                <p className="section-subtitle-max2 mt-3">
+                  Discuss your background, technical ambitions, and career roadmap with our lead architect in a private 20-minute session.
                 </p>
 
-                <div className="mt-6 flex flex-wrap items-center gap-3">
+                {/* 1 CTA button and Phone number with icon */}
+                <div className="mt-7 sm:mt-8 flex flex-wrap items-center gap-4 sm:gap-6">
                   <button
                     type="button"
                     onClick={onBookCampusVisit}
-                    className="h-12 px-7 text-sm font-semibold btn-emerald-glow rounded-full transition-all cursor-pointer shadow-lg shadow-emerald-950/20"
+                    className="inline-flex items-center justify-center gap-2.5 h-[52px] px-7 sm:px-8 text-sm sm:text-[15px] font-semibold text-white btn-gradient-green rounded-full transition-all duration-200 cursor-pointer group"
                   >
-                    Book a Campus Visit
+                    <span>Book Free 1:1 Session</span>
+                    <ArrowRight className="w-4 h-4 text-white group-hover:translate-x-0.5 transition-transform" strokeWidth={2.2} />
                   </button>
+
                   <a
-                    href="#courses"
-                    className="inline-flex items-center justify-center h-12 px-7 text-sm font-semibold text-slate-800 glass-btn rounded-full transition-colors"
+                    href="tel:01550666900"
+                    className="inline-flex items-center gap-3 text-slate-900 hover:text-emerald-700 transition-colors group cursor-pointer"
                   >
-                    Explore Lab Tracks
+                    <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full glass bg-white/80 border border-white/80 flex items-center justify-center text-emerald-600 shadow-sm group-hover:scale-105 group-hover:text-emerald-700 transition-all shrink-0">
+                      <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-[#16A34A]" strokeWidth={2} />
+                    </div>
+                    <span className="text-sm sm:text-base font-bold text-slate-900 tracking-tight tabular-nums group-hover:text-[#16A34A] transition-colors">
+                      Call: 01550-666900
+                    </span>
                   </a>
                 </div>
               </div>
 
-              <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {[
-                  {
-                    icon: MonitorCheck,
-                    title: '1:1 Workstations',
-                    desc: 'Dedicated dual-monitor & graphics-ready PCs in every lab.',
-                    tag: 'Hardware',
-                  },
-                  {
-                    icon: Users2,
-                    title: 'In-Person Mentors',
-                    desc: 'Practice beyond class hours with assistant lab instructors.',
-                    tag: 'Mentorship',
-                  },
-                  {
-                    icon: Wifi,
-                    title: 'Fiber & Power Backup',
-                    desc: 'Redundant generator backup and gigabit studio internet.',
-                    tag: 'Infrastructure',
-                  },
-                  {
-                    icon: CheckCircle2,
-                    title: 'Focus Study Zones',
-                    desc: 'Quiet workspaces built for client calls & capstone sprints.',
-                    tag: 'Workspaces',
-                  },
-                ].map((feature, index) => {
-                  const Icon = feature.icon;
-                  return (
-                    <div
-                      key={feature.title}
-                      className="relative overflow-hidden rounded-2xl glass p-4.5 sm:p-5 group transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_32px_-10px_rgba(16,185,129,0.2)] flex flex-col justify-between"
-                    >
-                      {/* Corner ambient glow */}
-                      <div className="absolute -top-10 -right-10 w-28 h-28 bg-emerald-400/15 rounded-full blur-2xl pointer-events-none group-hover:bg-emerald-400/25 transition-colors" />
-
-                      {/* Large Watermark Icon: Bigger, no border, no background, watermark opacity */}
-                      <div className="absolute top-3.5 right-3.5 pointer-events-none text-emerald-600/25 group-hover:text-emerald-600/40 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-300">
-                        <Icon className="w-14 h-14 sm:w-16 sm:h-16" strokeWidth={1.4} />
-                      </div>
-
-                      <div className="relative z-10">
-                        {/* Category pill */}
-                        <div className="flex items-center gap-1.5 mb-2.5">
-                          <span className="text-[10px] font-semibold text-emerald-800/80 uppercase tracking-wider bg-emerald-500/10 border border-emerald-500/20 px-2.5 py-0.5 rounded-full">
-                            {feature.tag}
-                          </span>
-                        </div>
-
-                        <h3 className="font-display text-[15px] sm:text-base font-bold text-slate-900 group-hover:text-emerald-700 transition-colors leading-snug">
-                          {feature.title}
-                        </h3>
-                        <p className="mt-1.5 text-xs text-slate-600 leading-[1.6] pr-8 sm:pr-10">
-                          {feature.desc}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
+              {/* Mobile/Tablet Fallback Visual */}
+              <div className="lg:hidden relative flex items-center justify-center mt-2">
+                <div className="relative w-full max-w-[460px] overflow-hidden rounded-[24px] border border-emerald-300/50 shadow-md">
+                  <img
+                    src="/assets/cta/cta_mentor_3d.jpg"
+                    alt="1:1 Career Consultation with Lead Mentor"
+                    className="w-full h-auto object-cover select-none"
+                  />
+                </div>
               </div>
             </div>
           </div>
