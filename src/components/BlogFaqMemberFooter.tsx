@@ -100,10 +100,10 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
                 className="group rounded-[28px] glass p-4 sm:p-5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1"
               >
                 <div>
-                  {/* News section image for the blog image */}
+                  {/* News section image for the blog image with top-right glass category tag */}
                   <div
                     onClick={() => onSelectBlog(post)}
-                    className="w-full aspect-[16/10] sm:aspect-[16/9] rounded-[20px] overflow-hidden bg-slate-100 cursor-pointer block shadow-sm"
+                    className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-[20px] overflow-hidden bg-slate-100 cursor-pointer block shadow-sm group/img"
                     role="button"
                     tabIndex={0}
                     onKeyDown={(e) => {
@@ -118,6 +118,15 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
                       loading="lazy"
                       className="w-full h-full object-cover select-none transition-transform duration-300 group-hover:scale-105"
                     />
+
+                    {/* Tag badge with blurred glass background on marked spot (top-right) */}
+                    {post.category && (
+                      <div className="absolute top-3 right-3 sm:top-3.5 sm:right-3.5 z-10 pointer-events-none">
+                        <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold tracking-wide bg-white/70 backdrop-blur-md border border-white/60 text-slate-800 shadow-[0_4px_16px_rgba(0,0,0,0.12)]">
+                          {post.category}
+                        </span>
+                      </div>
+                    )}
                   </div>
 
                   {/* Title */}

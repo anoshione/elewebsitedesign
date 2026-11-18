@@ -673,7 +673,7 @@ export const BLOG_POSTS: BlogItem[] = [
     author: 'Nusrat Jahan',
     date: '2026-08-22',
     readTime: '5 min read',
-    category: 'Freelancing Career',
+    category: 'How To Guide',
     visualTone: 'freelance',
     image: '/assets/blogs/blog_cover_2.jpg',
     fullText:
@@ -687,7 +687,7 @@ export const BLOG_POSTS: BlogItem[] = [
     author: 'Mahmudul Hasan',
     date: '2026-08-11',
     readTime: '7 min read',
-    category: 'Web Development',
+    category: 'Web',
     visualTone: 'fullstack',
     image: '/assets/blogs/blog_cover_3.jpg',
     fullText:
@@ -701,7 +701,7 @@ export const BLOG_POSTS: BlogItem[] = [
     author: 'Farhana Akter',
     date: '2026-07-28',
     readTime: '5 min read',
-    category: 'Graphics & Design',
+    category: 'Graphic Design',
     visualTone: 'design',
     image: '/assets/blogs/blog_cover_4.jpg',
     fullText:
