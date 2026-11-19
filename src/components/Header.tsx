@@ -256,7 +256,7 @@ export const Header: React.FC<HeaderProps> = ({
 
                 {item.subItems && item.subItems.length > 0 && (
                   <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto z-50 min-w-[230px]">
-                    <div className="rounded-2xl bg-white/70 backdrop-blur-2xl border border-white/70 p-2 shadow-[0_20px_45px_-10px_rgba(0,0,0,0.12)] ring-1 ring-black/5 flex flex-col gap-0.5">
+                    <div className="rounded-[24px] bg-white/70 backdrop-blur-2xl border border-white/70 p-2 shadow-[0_20px_45px_-10px_rgba(0,0,0,0.12)] ring-1 ring-black/5 flex flex-col gap-0.5">
                       {item.subItems.map((sub) => (
                         <a
                           key={sub.label}

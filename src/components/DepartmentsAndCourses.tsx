@@ -81,6 +81,15 @@ const DEPT_VISUALS: Record<DepartmentId, DeptVisualConfig> = {
     shadowRight: 10,
     hoverScale: 1.08,
   },
+  'web-dev': {
+    canvasWidth: 160,
+    canvasHeight: 110,
+    bottomOffset: 4,
+    rightOffset: -12,
+    shadowWidth: 110,
+    shadowRight: 10,
+    hoverScale: 1.10,
+  },
 };
 
 /**
@@ -237,10 +246,10 @@ const DeptCard: React.FC<{
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="group relative text-left rounded-[24px] glass pt-5 px-6 pb-6 min-h-[248px] flex flex-col overflow-hidden cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition-all duration-300 hover:border-emerald-500/40 hover:shadow-lg"
+      className="group relative text-left rounded-[32px] glass pt-5 px-6 pb-6 min-h-[248px] flex flex-col overflow-hidden cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition-all duration-300 hover:-translate-y-1"
     >
       <div>
-        <h3 className="text-slate-900 text-[26px] font-bold tracking-tight leading-snug">{dept.title}</h3>
+        <h3 className="text-slate-900 text-[26px] font-semibold tracking-tight leading-snug">{dept.title}</h3>
         <p className="mt-2 text-sm text-slate-500 leading-[1.5] max-w-[65%]">
           {dept.subtitle}
         </p>
@@ -369,7 +378,7 @@ export const DepartmentsAndCourses: React.FC<DepartmentsAndCoursesProps> = ({
           </div>
 
           {filteredCourses.length === 0 ? (
-            <div className="rounded-[26px] glass p-10 text-center">
+            <div className="rounded-[32px] glass p-10 text-center">
               <p className="card-body text-slate-700">
                 No courses match this exact filter combination.
               </p>
@@ -386,13 +395,13 @@ export const DepartmentsAndCourses: React.FC<DepartmentsAndCoursesProps> = ({
               {filteredCourses.map((course) => (
                 <article
                   key={course.id}
-                  className="rounded-[26px] glass p-4 sm:p-5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-0.5"
+                  className="rounded-[32px] glass p-3.5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-0.5"
                 >
                   <div>
                     <button
                       type="button"
                       onClick={() => onInspectCourse(course)}
-                      className="w-full text-left cursor-pointer rounded-[18px] block"
+                      className="w-full text-left cursor-pointer rounded-[24px] block overflow-hidden shadow-sm"
                       aria-label={`View syllabus for ${course.title}`}
                     >
                       <CoursePosterBanner
@@ -403,8 +412,8 @@ export const DepartmentsAndCourses: React.FC<DepartmentsAndCoursesProps> = ({
                       />
                     </button>
 
-                    <div className="pt-4">
-                      <div className="text-sm font-bold uppercase tracking-wide text-emerald-700">
+                    <div className="px-1 pt-3.5">
+                      <div className="text-[10px] font-medium uppercase tracking-wider text-emerald-700">
                         {course.categoryLabel}
                       </div>
 
@@ -446,7 +455,7 @@ export const DepartmentsAndCourses: React.FC<DepartmentsAndCoursesProps> = ({
                       </div>
 
                       <div className="mt-3.5 grid grid-cols-2 gap-2.5">
-                        <div className="rounded-2xl bg-white/75 border border-white/90 px-3 py-2 text-center">
+                        <div className="rounded-[24px] bg-white/75 border border-white/90 px-3 py-2 text-center">
                           <div className="text-[11px] font-medium text-slate-500">
                             Offline Fee
                           </div>
@@ -454,7 +463,7 @@ export const DepartmentsAndCourses: React.FC<DepartmentsAndCoursesProps> = ({
                             {course.offlineFee}
                           </div>
                         </div>
-                        <div className="rounded-2xl bg-white/75 border border-white/90 px-3 py-2 text-center">
+                        <div className="rounded-[24px] bg-white/75 border border-white/90 px-3 py-2 text-center">
                           <div className="text-[11px] font-medium text-slate-500">
                             Online Fee
                           </div>

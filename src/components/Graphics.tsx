@@ -69,11 +69,10 @@ export const DepartmentGlassBadge: React.FC<{
 
   return (
     <div
-      className={`w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${
-        dark
+      className={`w-12 h-12 rounded-[24px] flex items-center justify-center shrink-0 ${dark
           ? 'glass-icon-badge text-emerald-300'
           : 'bg-emerald-500/12 border border-emerald-500/25 text-emerald-700'
-      }`}
+        }`}
     >
       <Icon className="w-6 h-6" strokeWidth={1.75} />
     </div>
@@ -117,91 +116,49 @@ export const SilkBackdrop: React.FC<{
   topFade?: boolean;
   bottomFade?: boolean;
 }> = ({ topFade = true, bottomFade = true }) => (
-  <div className="absolute inset-0 pointer-events-none select-none overflow-hidden" aria-hidden="true">
-    {/* Base Green Texture: Original silky light-green gradient */}
-    <div className="absolute inset-0 bg-gradient-to-br from-[#F2FAF0] via-[#DFEECF] to-[#C8E4BB]" />
-
-    {/* Original soft radial corner sheen */}
-    <div className="absolute inset-0 bg-[radial-gradient(90%_70%_at_8%_0%,rgba(251,252,248,0.92),transparent_60%)]" />
-
-    {/* Silk fabric wave curves */}
-    <svg
-      className="absolute inset-0 w-full h-full opacity-65"
-      viewBox="0 0 1600 900"
-      preserveAspectRatio="none"
-      fill="none"
+  <div className="absolute inset-0 pointer-events-none select-none overflow-hidden bg-[#FBFCF8]" aria-hidden="true">
+    {/* Masked Texture Container: Guarantees that the entire green papercut texture and all green tints 
+        fade to 100% transparent well before reaching the top and bottom borders, completely eliminating any hard cutoff */}
+    <div
+      className="absolute inset-0"
+      style={{
+        maskImage:
+          'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 50px, black 150px, black calc(100% - 160px), rgba(0,0,0,0.3) calc(100% - 50px), transparent 100%)',
+        WebkitMaskImage:
+          'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 50px, black 150px, black calc(100% - 160px), rgba(0,0,0,0.3) calc(100% - 50px), transparent 100%)',
+      }}
     >
-      <defs>
-        <filter id="silkBlur" x="-30%" y="-30%" width="160%" height="160%">
-          <feGaussianBlur stdDeviation="16" />
-        </filter>
-        <linearGradient
-          id="silkStroke"
-          x1="0"
-          y1="0"
-          x2="1600"
-          y2="900"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.9" />
-          <stop offset="45%" stopColor="#BBDDB2" stopOpacity="0.55" />
-          <stop offset="100%" stopColor="#8FC48A" stopOpacity="0.75" />
-        </linearGradient>
-      </defs>
-      {Array.from({ length: 12 }).map((_, i) => (
-        <path
-          key={i}
-          d={`M-120 ${100 + i * 78} C 380 ${20 + i * 84}, 760 ${190 + i * 74}, 1720 ${40 + i * 82}`}
-          stroke="url(#silkStroke)"
-          strokeWidth={54}
-          filter="url(#silkBlur)"
-          opacity={0.18 + (i % 3) * 0.06}
-        />
-      ))}
-    </svg>
+      {/* 3D Layered Papercut Texture: Clean sculpted white waves + website brand green ribbons */}
+      <img
+        src="/assets/section_papercut_emerald_light_bg.jpg"
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover object-center select-none"
+      />
+    </div>
 
-    {/* Top blend overlay: smooth melt from previous section (#FBFCF8) */}
+    {/* Subtle soft light overlay: preserves the authentic green ribbons while ensuring smooth text contrast */}
+    <div className="absolute inset-0 bg-white/10 pointer-events-none" />
+
+    {/* Top blend overlay: generous progressive ease from #FBFCF8 melting into the section */}
     {topFade && (
       <div
-        className="absolute top-0 inset-x-0 h-16 sm:h-20 lg:h-24 pointer-events-none"
+        className="absolute top-0 inset-x-0 h-32 sm:h-44 lg:h-56 pointer-events-none"
         style={{
           background:
-            'linear-gradient(to bottom, #FBFCF8 0%, rgba(251, 252, 248, 0.75) 45%, rgba(251, 252, 248, 0) 100%)',
+            'linear-gradient(to bottom, #FBFCF8 0%, #FBFCF8 15%, rgba(251, 252, 248, 0.85) 45%, rgba(251, 252, 248, 0.4) 75%, transparent 100%)',
         }}
       />
     )}
 
-    {/* Bottom transition: starts just before contents end, sweeping upwards on the right
-        so the gradient passes behind the frosted glass cards to reveal maximum glass refraction */}
+    {/* Bottom blend overlay: generous progressive ease melting out cleanly into the following section */}
     {bottomFade && (
-      <>
-        {/* Angled transition (sloping up on right) */}
-        <div
-          className="absolute inset-x-0 bottom-0 h-44 sm:h-52 lg:h-60 pointer-events-none"
-          style={{
-            background:
-              'linear-gradient(168deg, transparent 40%, rgba(251, 252, 248, 0.4) 65%, rgba(251, 252, 248, 0.85) 85%, #FBFCF8 100%)',
-          }}
-        />
-
-        {/* Bottom-right swoop curve matching the reference curve */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              'radial-gradient(85% 75% at 100% 100%, #FBFCF8 0%, rgba(251, 252, 248, 0.75) 45%, rgba(251, 252, 248, 0) 80%)',
-          }}
-        />
-
-        {/* Base bottom blend into next #FBFCF8 section */}
-        <div
-          className="absolute inset-x-0 bottom-0 h-24 sm:h-32 lg:h-36 pointer-events-none"
-          style={{
-            background:
-              'linear-gradient(to top, #FBFCF8 0%, rgba(251, 252, 248, 0.9) 35%, rgba(251, 252, 248, 0) 100%)',
-          }}
-        />
-      </>
+      <div
+        className="absolute bottom-0 inset-x-0 h-36 sm:h-48 lg:h-64 pointer-events-none"
+        style={{
+          background:
+            'linear-gradient(to top, #FBFCF8 0%, #FBFCF8 18%, rgba(251, 252, 248, 0.88) 48%, rgba(251, 252, 248, 0.4) 75%, transparent 100%)',
+        }}
+      />
     )}
   </div>
 );
@@ -217,7 +174,7 @@ export const BrandLogo: React.FC<{ light?: boolean }> = () => (
 );
 
 export const HeroStudioVisual: React.FC = () => (
-  <div className="relative w-full h-full min-h-[380px] lg:min-h-[450px] rounded-3xl overflow-hidden bg-gradient-to-br from-[#0D4A25] via-[#0B3B1E] to-[#062211] border border-white/15 p-6 flex flex-col justify-between">
+  <div className="relative w-full h-full min-h-[380px] lg:min-h-[450px] rounded-[32px] overflow-hidden bg-gradient-to-br from-[#0D4A25] via-[#0B3B1E] to-[#062211] border border-white/15 p-6 flex flex-col justify-between">
     {/* Subtle technical circuit grid backdrop */}
     <svg
       className="absolute inset-0 w-full h-full opacity-20 pointer-events-none"
@@ -336,7 +293,7 @@ export const TrustCampusScene: React.FC<{ variant: 'lab' | 'seminar' | 'convocat
 }) => {
   if (variant === 'lab') {
     return (
-      <div className="relative w-full h-full min-h-[168px] rounded-2xl overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 p-5 flex flex-col justify-between">
+      <div className="relative w-full h-full min-h-[168px] rounded-[32px] overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 p-5 flex flex-col justify-between">
         <svg viewBox="0 0 360 150" className="w-full h-28 opacity-95" fill="none">
           <rect x="12" y="16" width="96" height="62" rx="8" fill="#0F172A" stroke="#22C55E" strokeOpacity="0.5" />
           <rect x="20" y="24" width="80" height="40" rx="4" fill="#1E293B" />
@@ -363,7 +320,7 @@ export const TrustCampusScene: React.FC<{ variant: 'lab' | 'seminar' | 'convocat
 
   if (variant === 'seminar') {
     return (
-      <div className="relative w-full h-full min-h-[156px] rounded-2xl overflow-hidden bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-900 p-4 flex flex-col justify-between">
+      <div className="relative w-full h-full min-h-[156px] rounded-[32px] overflow-hidden bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-900 p-4 flex flex-col justify-between">
         <svg viewBox="0 0 240 110" className="w-full h-24" fill="none">
           <rect x="12" y="12" width="216" height="58" rx="8" fill="#064E3B" stroke="#6EE7B7" strokeOpacity="0.35" />
           <rect x="26" y="24" width="90" height="8" rx="4" fill="#A7F3D0" />
@@ -379,7 +336,7 @@ export const TrustCampusScene: React.FC<{ variant: 'lab' | 'seminar' | 'convocat
   }
 
   return (
-    <div className="relative w-full h-full min-h-[156px] rounded-2xl overflow-hidden bg-gradient-to-br from-amber-950 via-stone-900 to-emerald-950 p-4 flex flex-col justify-between">
+    <div className="relative w-full h-full min-h-[156px] rounded-[32px] overflow-hidden bg-gradient-to-br from-amber-950 via-stone-900 to-emerald-950 p-4 flex flex-col justify-between">
       <svg viewBox="0 0 240 110" className="w-full h-24" fill="none">
         <rect x="22" y="14" width="196" height="54" rx="8" fill="#1C1917" stroke="#FBBF24" strokeOpacity="0.4" />
         <path d="M120 26L146 38L120 50L94 38L120 26Z" fill="#F59E0B" />
@@ -469,7 +426,7 @@ export const CoursePosterBanner: React.FC<{
 
   return (
     <div
-      className={`relative w-full aspect-[16/9] rounded-[22px] overflow-hidden bg-gradient-to-br ${palettes[theme]} p-5 flex items-center justify-between text-white`}
+      className={`relative w-full aspect-[16/9] rounded-[24px] overflow-hidden bg-gradient-to-br ${palettes[theme]} p-5 flex items-center justify-between text-white`}
     >
       {/* Subtle geometric accent */}
       <div className="absolute -right-8 -top-8 w-40 h-40 rounded-full bg-white/10 blur-xl pointer-events-none" />
@@ -481,7 +438,7 @@ export const CoursePosterBanner: React.FC<{
         <p className="text-xs text-white/80 mt-1.5">{sub}</p>
       </div>
       {/* Right miniature UI / Device Graphic */}
-      <div className="relative z-10 w-24 h-20 rounded-xl bg-white/10 border border-white/20 backdrop-blur-sm p-2.5 flex flex-col justify-between shrink-0">
+      <div className="relative z-10 w-24 h-20 rounded-[24px] bg-white/10 border border-white/20 backdrop-blur-sm p-2.5 flex flex-col justify-between shrink-0">
         <div className="flex items-center gap-1">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
           <span className="w-1.5 h-1.5 rounded-full bg-sky-300" />
@@ -528,7 +485,7 @@ export const PortraitAvatar: React.FC<{
   if (imageSrc) {
     return (
       <div
-        className={`relative w-full ${className || defaultHeight} rounded-[22px] overflow-hidden bg-slate-100 flex items-center justify-center`}
+        className={`relative w-full ${className || defaultHeight} rounded-[24px] overflow-hidden bg-slate-100 flex items-center justify-center`}
         role="img"
         aria-label={`Portrait of ${name}`}
       >
@@ -543,7 +500,7 @@ export const PortraitAvatar: React.FC<{
 
   return (
     <div
-      className={`relative w-full ${className || defaultHeight} rounded-2xl overflow-hidden bg-gradient-to-br ${bgMap[hue]} flex items-end justify-center`}
+      className={`relative w-full ${className || defaultHeight} rounded-[24px] overflow-hidden bg-gradient-to-br ${bgMap[hue]} flex items-end justify-center`}
       role="img"
       aria-label={`Portrait of ${name}`}
     >
@@ -582,9 +539,8 @@ export const EditorialVisual: React.FC<{
 
   return (
     <div
-      className={`relative w-full ${
-        large ? 'h-72 lg:h-80' : 'h-40'
-      } rounded-2xl overflow-hidden bg-gradient-to-br ${toneStyles[tone]} p-5 flex flex-col justify-between`}
+      className={`relative w-full ${large ? 'h-72 lg:h-80' : 'h-40'
+        } rounded-[24px] overflow-hidden bg-gradient-to-br ${toneStyles[tone]} p-5 flex flex-col justify-between`}
     >
       {isLight ? (
         <div className="w-full h-full flex flex-col justify-between">

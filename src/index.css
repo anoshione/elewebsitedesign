@@ -1,14 +1,36 @@
 @import "tailwindcss";
 
+/* Kalpurush Bengali Font: Local primary with fallback */
+@font-face {
+  font-family: 'Kalpurush';
+  src: url('/fonts/kalpurush.woff2') format('woff2'),
+       url('/fonts/kalpurush.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Map Kalpurush directly onto Poppins for Bengali character range U+0980-U+09FF so any element using Poppins automatically renders Bangla in Kalpurush */
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/kalpurush.woff2') format('woff2'),
+       url('/fonts/kalpurush.ttf') format('truetype');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0980-09FF, U+200C-200D, U+25CC;
+}
+
 @theme {
-  --font-display: "Poppins", system-ui, -apple-system, sans-serif;
-  --font-sans: "Poppins", system-ui, -apple-system, sans-serif;
-  --font-body: "Poppins", system-ui, -apple-system, sans-serif;
+  --font-display: "Poppins", "Kalpurush", system-ui, -apple-system, sans-serif;
+  --font-sans: "Poppins", "Kalpurush", system-ui, -apple-system, sans-serif;
+  --font-body: "Poppins", "Kalpurush", system-ui, -apple-system, sans-serif;
+  --font-bangla: "Kalpurush", system-ui, -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, monospace;
-  --color-slate-900: #1D1D1D;
-  --color-slate-950: #1D1D1D;
-  --color-slate-800: #1D1D1D;
-  --color-black: #1D1D1D;
+  --color-slate-900: #2D3748;
+  --color-slate-950: #242D3D;
+  --color-slate-800: #334155;
+  --color-black: #2D3748;
 }
 
 @layer base {
@@ -16,7 +38,7 @@
   body {
     scroll-behavior: smooth;
     font-family: var(--font-sans);
-    color: #1D1D1D;
+    color: #2D3748;
     background-color: #FBFCF8;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -30,17 +52,25 @@
   h5,
   h6 {
     font-family: var(--font-display);
-    color: #1D1D1D;
+    color: #2D3748;
   }
 }
 
-/* User requirement: All pure black ink / dark text across website mapped to #1D1D1D */
+/* User requirement: All Bangla fonts use Kalpurush font */
+:lang(bn),
+[lang="bn"],
+.font-bangla,
+.font-bengali {
+  font-family: 'Kalpurush', system-ui, -apple-system, sans-serif !important;
+}
+
+/* User requirement: Softer charcoal slate for dark headings and text across website, avoiding harsh deep pitch-black */
 .text-slate-900,
 .text-slate-950,
 .text-slate-800,
 .text-black,
 .card-title {
-  color: #1D1D1D !important;
+  color: #2D3748 !important;
 }
 
 .container-1520 {
@@ -62,10 +92,11 @@
   padding-bottom: 40px;
 }
 
-/* Green section rhythm: ensures green background fully covers from title to bottom of content, then fades off in top/bottom padding */
+/* Green Section Rhythm: ensures green background fully covers from title to bottom of content, then fades off in top/bottom padding */
 .section-band-green {
   padding-top: 56px;
   padding-bottom: 56px;
+  position: relative;
 }
 
 @media (min-width: 640px) {
@@ -262,24 +293,26 @@
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.22);
-  -webkit-backdrop-filter: blur(20px) saturate(115%);
-  backdrop-filter: blur(20px) saturate(115%);
-  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.62) 0%, rgba(255, 255, 255, 0.28) 46%, rgba(255, 255, 255, 0.44) 100%);
+  -webkit-backdrop-filter: blur(24px) saturate(135%);
+  backdrop-filter: blur(24px) saturate(135%);
+  border: 1.5px solid rgba(255, 255, 255, 0.85);
   box-shadow:
-    0 8px 32px rgba(0, 0, 0, 0.08),
-    inset 0 1.5px 0 rgba(255, 255, 255, 0.8),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.25);
-  transition: all 0.25s ease;
+    0 18px 42px -10px rgba(0, 36, 16, 0.10),
+    0 4px 16px -2px rgba(0, 0, 0, 0.04),
+    inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 1px 0 rgba(255, 255, 255, 0.35);
+  transition: all 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass:hover {
-  background: rgba(255, 255, 255, 0.32);
-  border-color: rgba(255, 255, 255, 0.75);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.76) 0%, rgba(255, 255, 255, 0.38) 46%, rgba(255, 255, 255, 0.56) 100%);
+  border-color: rgba(255, 255, 255, 1);
   box-shadow:
-    0 14px 40px rgba(0, 0, 0, 0.12),
-    inset 0 1.5px 0 rgba(255, 255, 255, 0.95),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.3);
+    0 24px 50px -10px rgba(0, 143, 47, 0.18),
+    0 8px 22px -4px rgba(0, 0, 0, 0.06),
+    inset 0 2px 1.5px 0 rgba(255, 255, 255, 1),
+    inset 0 -1px 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 /* Same exact drop shadow as .glass for cards with media/image backgrounds */

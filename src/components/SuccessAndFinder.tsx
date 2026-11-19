@@ -211,6 +211,12 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
       courses = [...courses].sort((a, b) => (a.level === 'Intermediate' || a.level === 'Advanced' ? -1 : 1));
     }
 
+    // Always guarantee exactly 3 recommended courses for now
+    if (courses.length < 3) {
+      const remaining = COURSES.filter((c) => !courses.some((item) => item.id === c.id));
+      courses = [...courses, ...remaining];
+    }
+
     return courses.slice(0, 3);
   }, [selectedTopic, selectedExperience]);
 
@@ -271,7 +277,7 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
               <article
                 key={story.id}
                 onClick={() => setActiveVideoModal(story)}
-                className="group relative rounded-[26px] overflow-hidden glass border border-white/30 shadow-lg cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl"
+                className="group relative rounded-[32px] overflow-hidden glass border border-white/30 shadow-lg cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl"
               >
                 {/* 16:9 Video Frame */}
                 <div className="relative aspect-[16/9.5] w-full overflow-hidden bg-slate-900">
@@ -282,7 +288,7 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   {/* Subtle dark gradient overlay at bottom for title contrast */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 via-40% to-transparent pointer-events-none" />
 
                   {/* Center Play Button: Transparent glass with green filled play icon */}
                   <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
@@ -293,7 +299,7 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
 
                   {/* Title at the bottom of the video */}
                   <div className="absolute bottom-0 inset-x-0 p-4 sm:p-5 text-left pointer-events-none">
-                    <h3 className="font-display text-sm sm:text-[15px] font-bold text-white leading-snug drop-shadow-md group-hover:text-emerald-300 transition-colors">
+                    <h3 className="font-display text-base sm:text-[18px] lg:text-[19px] font-bold text-white leading-snug drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] group-hover:text-emerald-300 transition-colors">
                       {story.title}
                     </h3>
                   </div>
@@ -310,11 +316,11 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
             onClick={() => setActiveVideoModal(null)}
           >
             <div
-              className="relative w-full max-w-3xl rounded-[28px] overflow-hidden glass p-4 bg-slate-900/95 border border-white/20 shadow-2xl"
+              className="relative w-full max-w-3xl rounded-[32px] overflow-hidden glass p-4 bg-slate-900/95 border border-white/20 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="flex items-center justify-between pb-3 px-2 border-b border-white/10">
-                <h3 className="font-display text-base font-bold text-white truncate max-w-xl">
+                <h3 className="font-display text-base sm:text-lg font-bold text-white truncate max-w-xl">
                   {activeVideoModal.title}
                 </h3>
                 <button
@@ -325,7 +331,7 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
                   <X className="w-4 h-4" />
                 </button>
               </div>
-              <div className="relative aspect-video w-full rounded-2xl overflow-hidden mt-3 bg-black flex items-center justify-center">
+              <div className="relative aspect-video w-full rounded-[24px] overflow-hidden mt-3 bg-black flex items-center justify-center">
                 <img
                   src={activeVideoModal.thumbnail}
                   alt={activeVideoModal.title}
@@ -345,24 +351,12 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
         )}
       </section>
 
-      {/* SECTION 7: COURSE FINDER (2 Separate Cards Side-by-Side on Silky Green Backdrop, matching FAQ layout) */}
-      <section id="course-finder" className="relative overflow-hidden section-band-green text-slate-900">
-        <SilkBackdrop />
+      {/* SECTION 7: COURSE FINDER / SELECTOR (Clean Blank White Background, No Visual Pattern) */}
+      <section id="course-finder" className="relative overflow-hidden bg-[#FBFCF8] text-slate-900 section-band py-16 lg:py-20">
         <div className="container-1520 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-6 xl:gap-7 items-stretch">
-            {/* Card 1: Left Column (4 cols on lg) - Dedicated Card with Title, Subtitle & 3D Background Visual */}
-            <div className="lg:col-span-4 relative rounded-[28px] sm:rounded-[32px] overflow-hidden p-6 sm:p-8 lg:p-9 flex flex-col justify-between min-h-[520px] lg:min-h-[580px] h-full border border-emerald-100/70 shadow-[0_20px_45px_-15px_rgba(0,143,47,0.12)] bg-white">
-              {/* Background Visual Image full-bleed without hard cutoff */}
-              <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-                <img
-                  src="/assets/course_finder_visual.jpg"
-                  alt="Find the course that suits you"
-                  className="w-full h-full object-cover object-bottom select-none"
-                />
-                {/* Transparent white fade overlay over upper text area ensuring crisp legibility without cutting off the artwork */}
-                <div className="absolute inset-0 bg-gradient-to-b from-white via-white/85 via-40% to-transparent pointer-events-none" />
-              </div>
-
+            {/* Card 1: Left Column (4 cols on lg) - Dedicated Card with Blank White Background (No Visual Pattern Image) */}
+            <div className="lg:col-span-4 relative rounded-[32px] overflow-hidden p-6 sm:p-8 lg:p-9 flex flex-col justify-between min-h-[520px] lg:min-h-[580px] h-full border border-slate-200/90 shadow-[0_16px_36px_-12px_rgba(15,23,42,0.08)] bg-white">
               {/* Top: Title & Description Section */}
               <div className="relative z-10">
                 <div className="mb-2.5">
@@ -376,14 +370,36 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
                   Find the course that suits you
                 </h2>
 
-                <p className="text-xs sm:text-sm lg:text-[14px] leading-relaxed text-slate-600">
+                <p className="text-xs sm:text-sm lg:text-[14px] leading-relaxed text-slate-600 mb-6">
                   Tell us what you enjoy and how much experience you have, and we&apos;ll suggest the courses that fit you best. If you&apos;d like a second opinion, you can talk to one of our advisors right away.
                 </p>
+              </div>
+
+              {/* Bottom: Clean Checklist on Blank White Background */}
+              <div className="relative z-10 pt-6 border-t border-slate-100 flex flex-col gap-3.5">
+                <div className="flex items-center gap-3 text-xs sm:text-sm font-medium text-slate-700">
+                  <div className="w-5 h-5 rounded-full bg-emerald-50 text-[#008F2F] border border-emerald-200/60 flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5" />
+                  </div>
+                  <span>Personalized career roadmap</span>
+                </div>
+                <div className="flex items-center gap-3 text-xs sm:text-sm font-medium text-slate-700">
+                  <div className="w-5 h-5 rounded-full bg-emerald-50 text-[#008F2F] border border-emerald-200/60 flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5" />
+                  </div>
+                  <span>1-on-1 advisor consultation</span>
+                </div>
+                <div className="flex items-center gap-3 text-xs sm:text-sm font-medium text-slate-700">
+                  <div className="w-5 h-5 rounded-full bg-emerald-50 text-[#008F2F] border border-emerald-200/60 flex items-center justify-center shrink-0">
+                    <Check className="w-3.5 h-3.5" />
+                  </div>
+                  <span>100% free guidance</span>
+                </div>
               </div>
             </div>
 
             {/* Card 2: Right Column (8 cols on lg) - Dedicated Selector Card with Dropdowns, Suggested Courses & Advisor CTA */}
-            <div className="lg:col-span-8 relative rounded-[28px] sm:rounded-[32px] p-7 sm:p-9 lg:p-10 flex flex-col justify-between min-h-[520px] lg:min-h-[580px] h-full border border-emerald-100/70 shadow-[0_20px_45px_-15px_rgba(0,143,47,0.12)] bg-white/95 backdrop-blur-xl">
+            <div className="lg:col-span-8 relative rounded-[32px] p-7 sm:p-9 lg:p-10 flex flex-col justify-between min-h-[520px] lg:min-h-[580px] h-full border border-slate-200/90 shadow-[0_16px_36px_-12px_rgba(15,23,42,0.08)] bg-white">
               <div>
                 {/* Two Questions with Glass Dropdown Fields */}
                 <div ref={dropdownRef} className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-6">
@@ -397,26 +413,24 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
                     <button
                       type="button"
                       onClick={() => setOpenDropdown(openDropdown === 'topic' ? null : 'topic')}
-                      className={`w-full h-[50px] px-4 rounded-2xl bg-white/80 backdrop-blur-xl border shadow-[0_4px_16px_-4px_rgba(0,0,0,0.06)] transition-all flex items-center justify-between text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/40 relative z-30 ${
-                        openDropdown === 'topic'
+                      className={`w-full h-[50px] px-4 rounded-[24px] bg-white/80 backdrop-blur-xl border shadow-[0_4px_16px_-4px_rgba(0,0,0,0.06)] transition-all flex items-center justify-between text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/40 relative z-30 ${openDropdown === 'topic'
                           ? 'border-emerald-500 bg-white shadow-md'
                           : 'border-slate-200/90 hover:bg-white hover:border-emerald-400/60'
-                      }`}
+                        }`}
                     >
                       <span className={`text-xs sm:text-sm font-medium truncate pr-2 ${selectedTopic ? 'text-slate-900 font-semibold' : 'text-slate-500'}`}>
                         {TOPIC_OPTIONS.find((t) => t.id === selectedTopic)?.label || 'Select what you want to learn...'}
                       </span>
                       <ChevronDown
-                        className={`w-4 h-4 text-slate-500 transition-transform duration-200 shrink-0 ${
-                          openDropdown === 'topic' ? 'rotate-180 text-emerald-700' : ''
-                        }`}
+                        className={`w-4 h-4 text-slate-500 transition-transform duration-200 shrink-0 ${openDropdown === 'topic' ? 'rotate-180 text-emerald-700' : ''
+                          }`}
                         strokeWidth={2}
                       />
                     </button>
 
                     {/* Glass Blurred Dropdown Menu */}
                     {openDropdown === 'topic' && (
-                      <div className="absolute top-[calc(100%+6px)] left-0 right-0 z-50 rounded-2xl bg-white/90 backdrop-blur-2xl border border-white/90 shadow-[0_20px_45px_-10px_rgba(0,0,0,0.16)] ring-1 ring-black/5 p-1.5 flex flex-col gap-0.5 animate-in fade-in zoom-in-95 duration-150 max-h-[280px] overflow-y-auto">
+                      <div className="absolute top-[calc(100%+6px)] left-0 right-0 z-50 rounded-[24px] bg-white/90 backdrop-blur-2xl border border-white/90 shadow-[0_20px_45px_-10px_rgba(0,0,0,0.16)] ring-1 ring-black/5 p-1.5 flex flex-col gap-0.5 animate-in fade-in zoom-in-95 duration-150 max-h-[280px] overflow-y-auto">
                         {TOPIC_OPTIONS.map((opt) => {
                           const isSelected = selectedTopic === opt.id;
                           return (
@@ -427,11 +441,10 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
                                 setSelectedTopic(opt.id);
                                 setOpenDropdown(null);
                               }}
-                              className={`w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all flex items-center justify-between text-left cursor-pointer ${
-                                isSelected
+                              className={`w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all flex items-center justify-between text-left cursor-pointer ${isSelected
                                   ? 'bg-[#008F2F] text-white shadow-xs font-semibold'
                                   : 'text-slate-700 hover:bg-white/90 hover:text-emerald-700'
-                              }`}
+                                }`}
                             >
                               <span>{opt.label}</span>
                               {isSelected && <Check className="w-4 h-4 text-white shrink-0" strokeWidth={2.5} />}
@@ -452,26 +465,24 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
                     <button
                       type="button"
                       onClick={() => setOpenDropdown(openDropdown === 'experience' ? null : 'experience')}
-                      className={`w-full h-[50px] px-4 rounded-2xl bg-white/80 backdrop-blur-xl border shadow-[0_4px_16px_-4px_rgba(0,0,0,0.06)] transition-all flex items-center justify-between text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/40 relative z-30 ${
-                        openDropdown === 'experience'
+                      className={`w-full h-[50px] px-4 rounded-[24px] bg-white/80 backdrop-blur-xl border shadow-[0_4px_16px_-4px_rgba(0,0,0,0.06)] transition-all flex items-center justify-between text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-emerald-500/40 relative z-30 ${openDropdown === 'experience'
                           ? 'border-emerald-500 bg-white shadow-md'
                           : 'border-slate-200/90 hover:bg-white hover:border-emerald-400/60'
-                      }`}
+                        }`}
                     >
                       <span className={`text-xs sm:text-sm font-medium truncate pr-2 ${selectedExperience ? 'text-slate-900 font-semibold' : 'text-slate-500'}`}>
                         {EXPERIENCE_OPTIONS.find((e) => e.id === selectedExperience)?.label || 'Select your experience level...'}
                       </span>
                       <ChevronDown
-                        className={`w-4 h-4 text-slate-500 transition-transform duration-200 shrink-0 ${
-                          openDropdown === 'experience' ? 'rotate-180 text-emerald-700' : ''
-                        }`}
+                        className={`w-4 h-4 text-slate-500 transition-transform duration-200 shrink-0 ${openDropdown === 'experience' ? 'rotate-180 text-emerald-700' : ''
+                          }`}
                         strokeWidth={2}
                       />
                     </button>
 
                     {/* Glass Blurred Dropdown Menu */}
                     {openDropdown === 'experience' && (
-                      <div className="absolute top-[calc(100%+6px)] left-0 right-0 z-50 rounded-2xl bg-white/90 backdrop-blur-2xl border border-white/90 shadow-[0_20px_45px_-10px_rgba(0,0,0,0.16)] ring-1 ring-black/5 p-1.5 flex flex-col gap-0.5 animate-in fade-in zoom-in-95 duration-150 max-h-[280px] overflow-y-auto">
+                      <div className="absolute top-[calc(100%+6px)] left-0 right-0 z-50 rounded-[24px] bg-white/90 backdrop-blur-2xl border border-white/90 shadow-[0_20px_45px_-10px_rgba(0,0,0,0.16)] ring-1 ring-black/5 p-1.5 flex flex-col gap-0.5 animate-in fade-in zoom-in-95 duration-150 max-h-[280px] overflow-y-auto">
                         {EXPERIENCE_OPTIONS.map((opt) => {
                           const isSelected = selectedExperience === opt.id;
                           return (
@@ -482,11 +493,10 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
                                 setSelectedExperience(opt.id);
                                 setOpenDropdown(null);
                               }}
-                              className={`w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all flex items-center justify-between text-left cursor-pointer ${
-                                isSelected
+                              className={`w-full px-3.5 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-all flex items-center justify-between text-left cursor-pointer ${isSelected
                                   ? 'bg-[#008F2F] text-white shadow-xs font-semibold'
                                   : 'text-slate-700 hover:bg-white/90 hover:text-emerald-700'
-                              }`}
+                                }`}
                             >
                               <span>{opt.label}</span>
                               {isSelected && <Check className="w-4 h-4 text-white shrink-0" strokeWidth={2.5} />}
@@ -501,14 +511,27 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
                 {/* Suggested Courses: Blank until user selects both dropdowns, then shows max 3 courses */}
                 {selectedTopic && selectedExperience && matchedCourses.length > 0 && (
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
-                    {matchedCourses.map((course) => (
+                    {matchedCourses.map((course, idx) => (
                       <article
                         key={course.id}
                         onClick={() => onInspectCourse(course)}
-                        className="group rounded-[22px] bg-white/80 backdrop-blur-xl border border-white/80 p-3.5 sm:p-4 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_-10px_rgba(0,143,47,0.18)] hover:border-emerald-400/60 hover:bg-white transition-all duration-300 hover:-translate-y-1 cursor-pointer flex items-center gap-3.5 sm:gap-4 relative overflow-hidden"
+                        className={`group rounded-[24px] bg-white/80 backdrop-blur-xl border p-3.5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_-10px_rgba(0,143,47,0.18)] hover:border-emerald-400/60 hover:bg-white transition-all duration-300 hover:-translate-y-1 cursor-pointer flex items-center gap-3.5 sm:gap-4 relative overflow-hidden ${
+                          idx === 0
+                            ? 'border-emerald-400/60 bg-white/90 shadow-[0_6px_24px_-4px_rgba(0,143,47,0.1)]'
+                            : 'border-white/80'
+                        }`}
                       >
+                        {/* Recommended tag on the first card on the top right over the card */}
+                        {idx === 0 && (
+                          <div className="absolute -top-2.5 right-4 sm:right-5 z-20 pointer-events-none">
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10.5px] sm:text-[11px] font-bold tracking-wide uppercase text-[#008F2F] bg-white/90 backdrop-blur-md border border-emerald-300/80 shadow-[0_4px_12px_-2px_rgba(0,143,47,0.22)]">
+                              Recommended
+                            </span>
+                          </div>
+                        )}
+
                         {/* Left: Course icon / mini thumbnail */}
-                        <div className="w-16 h-16 sm:w-[70px] sm:h-[70px] rounded-2xl overflow-hidden shrink-0 bg-gradient-to-br from-emerald-50 via-white to-emerald-100/50 border border-emerald-100/80 p-2 flex items-center justify-center relative shadow-xs group-hover:scale-105 transition-transform duration-300">
+                        <div className="w-16 h-16 sm:w-[70px] sm:h-[70px] rounded-[24px] overflow-hidden shrink-0 bg-gradient-to-br from-emerald-50 via-white to-emerald-100/50 border border-emerald-100/80 p-2 flex items-center justify-center relative shadow-xs group-hover:scale-105 transition-transform duration-300">
                           <img
                             src={`/assets/departments/${course.departmentId}.png`}
                             alt=""

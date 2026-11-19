@@ -69,15 +69,15 @@ export const StudentTestimonials: React.FC = () => {
         </div>
 
         {/* Testimonials Cards Grid (Reference Layout: Avatar overlapping top-left, review quote, divider, name + course + stars) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 pt-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-7 pt-8 sm:pt-9">
           {visibleReviews.map((item) => (
             <article
               key={item.id}
-              className="group relative rounded-[26px] glass pt-10 pb-6 px-6 sm:px-7 flex flex-col justify-between min-h-[250px] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_16px_36px_-12px_rgba(23,80,40,0.18)]"
+              className="group relative rounded-[32px] glass pt-13 sm:pt-14 pb-6 px-6 sm:px-7 flex flex-col justify-between min-h-[260px] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_16px_36px_-12px_rgba(23,80,40,0.18)]"
             >
               {/* User Image: Floats at the top-left overlapping the card top border */}
-              <div className="absolute -top-7 left-6 sm:left-7 z-20">
-                <div className="w-14 h-14 sm:w-15 sm:h-15 rounded-full overflow-hidden shadow-md ring-4 ring-white border border-white/60 bg-emerald-50">
+              <div className="absolute -top-8 sm:-top-9 left-6 sm:left-7 z-20">
+                <div className="w-16 h-16 sm:w-[72px] sm:h-[72px] rounded-full overflow-hidden shadow-lg ring-4 ring-white border border-white/80 bg-emerald-50">
                   <CircleStudentAvatar
                     name={item.name}
                     hue={item.hue}
@@ -88,7 +88,7 @@ export const StudentTestimonials: React.FC = () => {
               </div>
 
               {/* Review Text */}
-              <div className="pt-1">
+              <div className="pt-2 sm:pt-2.5">
                 <p className="text-slate-700 text-[13.5px] sm:text-sm leading-relaxed text-left line-clamp-4">
                   &ldquo;{item.quote}&rdquo;
                 </p>

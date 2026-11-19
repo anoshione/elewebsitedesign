@@ -192,7 +192,7 @@ export const Modals: React.FC<ModalsProps> = ({
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="relative w-full max-w-xl rounded-[30px] bg-gradient-to-br from-[#07152B]/95 via-[#092730]/95 to-[#121D54]/95 backdrop-blur-2xl text-white shadow-[0_0_52px_rgba(16,185,129,0.22)] border border-emerald-400/30 max-h-[90vh] overflow-y-auto p-6 sm:p-8">
+      <div className="relative w-full max-w-xl rounded-[32px] bg-gradient-to-br from-[#07152B]/95 via-[#092730]/95 to-[#121D54]/95 backdrop-blur-2xl text-white shadow-[0_0_52px_rgba(16,185,129,0.22)] border border-emerald-400/30 max-h-[90vh] overflow-y-auto p-6 sm:p-8">
         <button
           type="button"
           onClick={onClose}
@@ -225,7 +225,7 @@ export const Modals: React.FC<ModalsProps> = ({
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search e.g. Cyber Security, Laravel, Graphics, Digital Marketing..."
-                className="w-full pl-11 pr-4 py-3 text-sm text-white placeholder:text-slate-400 rounded-2xl bg-white/[0.08] border border-emerald-400/30 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                className="w-full pl-11 pr-4 py-3 text-sm text-white placeholder:text-slate-400 rounded-[24px] bg-white/[0.08] border border-emerald-400/30 focus:outline-none focus:ring-2 focus:ring-emerald-400"
               />
             </div>
 
@@ -245,7 +245,7 @@ export const Modals: React.FC<ModalsProps> = ({
                         key={course.id}
                         type="button"
                         onClick={() => onSelectCourseFromSearch(course)}
-                        className="w-full text-left rounded-2xl border border-emerald-400/25 bg-white/[0.06] hover:border-emerald-400/60 hover:bg-emerald-500/15 p-3.5 flex items-center justify-between gap-3 transition-colors cursor-pointer"
+                        className="w-full text-left rounded-[24px] border border-emerald-400/25 bg-white/[0.06] hover:border-emerald-400/60 hover:bg-emerald-500/15 p-3.5 flex items-center justify-between gap-3 transition-colors cursor-pointer"
                       >
                         <div>
                           <div className="text-xs font-semibold text-emerald-300">
@@ -381,7 +381,7 @@ export const Modals: React.FC<ModalsProps> = ({
               )}
 
               {loginStatus.type === 'success' && (
-                <div className="rounded-2xl bg-emerald-500/15 border border-emerald-400/40 p-4 flex items-start gap-2.5">
+                <div className="rounded-[24px] bg-emerald-500/15 border border-emerald-400/40 p-4 flex items-start gap-2.5">
                   <UserCheck className="w-5 h-5 text-emerald-300 shrink-0 mt-0.5" />
                   <p className="text-xs text-emerald-100 leading-relaxed">
                     {loginStatus.message}
@@ -412,7 +412,7 @@ export const Modals: React.FC<ModalsProps> = ({
             </div>
 
             {submitted ? (
-              <div className="mt-6 rounded-2xl bg-emerald-500/15 border border-emerald-400/35 p-6 text-center">
+              <div className="mt-6 rounded-[24px] bg-emerald-500/15 border border-emerald-400/35 p-6 text-center">
                 <CheckCircle2 className="w-10 h-10 text-emerald-300 mx-auto" />
                 <h4 className="mt-3 font-display text-xl font-bold text-white">
                   Registration Confirmed
@@ -650,7 +650,7 @@ export const Modals: React.FC<ModalsProps> = ({
                 Inside e-Learning &amp; Earning Ltd. Dhaka Studio
               </h3>
             </div>
-            <div className="relative mt-5 rounded-2xl overflow-hidden bg-[#06182F] border border-emerald-400/25 p-8 text-white text-center min-h-[240px] flex flex-col items-center justify-center">
+            <div className="relative mt-5 rounded-[24px] overflow-hidden bg-[#06182F] border border-emerald-400/25 p-8 text-white text-center min-h-[240px] flex flex-col items-center justify-center">
               <img
                 src="/src/assets/images/campus_lab_training_1794815462732.jpg"
                 alt="Dhaka IT training lab workstations"

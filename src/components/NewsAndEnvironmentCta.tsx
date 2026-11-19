@@ -34,7 +34,7 @@ const NewsPhoto: React.FC<{ id: string; title?: string; large?: boolean }> = ({
   if (failed) {
     return (
       <div
-        className={`w-full ${aspect} rounded-[16px] bg-gradient-to-br from-emerald-100 via-white to-emerald-200/80 flex items-center justify-center`}
+        className={`w-full ${aspect} rounded-[24px] bg-gradient-to-br from-emerald-100 via-white to-emerald-200/80 flex items-center justify-center`}
         aria-hidden="true"
       >
         <Newspaper className="w-8 h-8 text-emerald-600/35" strokeWidth={1.5} />
@@ -49,7 +49,7 @@ const NewsPhoto: React.FC<{ id: string; title?: string; large?: boolean }> = ({
       draggable={false}
       loading="lazy"
       onError={() => setFailed(true)}
-      className={`w-full ${aspect} object-cover rounded-[16px] select-none`}
+      className={`w-full ${aspect} object-cover rounded-[24px] select-none`}
     />
   );
 };
@@ -137,11 +137,11 @@ export const NewsAndEnvironmentCta: React.FC<NewsAndEnvironmentCtaProps> = ({
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
             {/* Featured News Story */}
-            <article className="rounded-[26px] glass p-3.5 flex flex-col transition-all duration-300 hover:border-emerald-500/40 hover:shadow-lg">
+            <article className="rounded-[32px] glass p-3.5 flex flex-col transition-all duration-300 hover:border-emerald-500/40 hover:shadow-lg">
               <button
                 type="button"
                 onClick={() => onSelectNews(featuredNews)}
-                className="w-full text-left cursor-pointer rounded-[16px] block overflow-hidden shadow-sm"
+                className="w-full text-left cursor-pointer rounded-[24px] block overflow-hidden shadow-sm"
                 aria-label={`Read ${featuredNews.title}`}
               >
                 <NewsPhoto id={featuredNews.id} title={featuredNews.title} large />
@@ -172,19 +172,19 @@ export const NewsAndEnvironmentCta: React.FC<NewsAndEnvironmentCtaProps> = ({
               {orderedSecondary.map((item) => (
                 <article
                   key={item.id}
-                  className="rounded-[24px] glass p-3 flex flex-col transition-all duration-300 hover:border-emerald-500/40 hover:shadow-lg"
+                  className="rounded-[32px] glass p-3.5 flex flex-col justify-between transition-all duration-300 hover:border-emerald-500/40 hover:shadow-lg"
                 >
                   <button
                     type="button"
                     onClick={() => onSelectNews(item)}
-                    className="w-full text-left cursor-pointer rounded-[16px] block overflow-hidden shadow-sm"
+                    className="w-full text-left cursor-pointer rounded-[24px] block overflow-hidden shadow-sm shrink-0"
                     aria-label={`Read ${item.title}`}
                   >
                     <NewsPhoto id={item.id} title={item.title} />
                   </button>
 
-                  <div className="mt-auto px-1.5 pt-3 pb-0.5 flex items-end justify-between gap-2.5">
-                    <h3 className="font-display text-[15px] font-bold text-slate-900 leading-snug line-clamp-3 min-w-0 flex-1">
+                  <div className="px-2 pt-3.5 pb-2 flex items-center justify-between gap-3 grow">
+                    <h3 className="font-display text-[16px] sm:text-[17px] font-bold text-slate-900 leading-[1.38] line-clamp-3 min-w-0 flex-1">
                       {item.title}
                     </h3>
                     <GlassArrowButton
@@ -203,7 +203,7 @@ export const NewsAndEnvironmentCta: React.FC<NewsAndEnvironmentCtaProps> = ({
       {/* SECTION 11: 1:1 CAREER CONSULTATION CTA BANNER (Solid #FBFCF8 Band + Brand Green Gradient 3D Banner) */}
       <section id="career-consultation" className="section-band bg-[#FBFCF8] text-slate-900">
         <div className="container-1520">
-          <div className="relative overflow-hidden rounded-[32px] sm:rounded-[36px] bg-gradient-to-br from-[#EEFBF4] via-[#DFF4EB] to-[#BFE8CF] border border-[#008F2F]/25 shadow-[0_20px_50px_-20px_rgba(0,143,47,0.22)] text-slate-900">
+          <div className="relative overflow-hidden rounded-[32px] bg-gradient-to-br from-[#EEFBF4] via-[#DFF4EB] to-[#BFE8CF] border border-[#008F2F]/25 shadow-[0_20px_50px_-20px_rgba(0,143,47,0.22)] text-slate-900">
             {/* Ambient Brand Emerald Glows */}
             <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#2AD568]/20 rounded-full blur-3xl pointer-events-none" />
             <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#008F2F]/16 rounded-full blur-3xl pointer-events-none" />
@@ -242,13 +242,14 @@ export const NewsAndEnvironmentCta: React.FC<NewsAndEnvironmentCtaProps> = ({
 
                   <a
                     href="tel:01550666900"
+                    aria-label="Call 01550-666900"
                     className="inline-flex items-center gap-3 text-slate-900 hover:text-emerald-700 transition-colors group cursor-pointer"
                   >
                     <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-full glass bg-white/80 border border-white/80 flex items-center justify-center text-emerald-600 shadow-sm group-hover:scale-105 group-hover:text-emerald-700 transition-all shrink-0">
                       <Phone className="w-4 h-4 sm:w-5 sm:h-5 text-[#16A34A]" strokeWidth={2} />
                     </div>
                     <span className="text-sm sm:text-base font-bold text-slate-900 tracking-tight tabular-nums group-hover:text-[#16A34A] transition-colors">
-                      Call: 01550-666900
+                      01550-666900
                     </span>
                   </a>
                 </div>

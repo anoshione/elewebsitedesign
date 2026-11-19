@@ -83,7 +83,7 @@ export const TrainersAndAtAGlance: React.FC<TrainersAndAtAGlanceProps> = () => {
               return (
                 <article
                   key={trainer.id}
-                  className="relative rounded-[32px] sm:rounded-[36px] bg-white border border-[#EBECEF] p-4 sm:p-5 lg:p-6 flex flex-col sm:flex-row items-center sm:items-stretch shadow-[0_10px_35px_-12px_rgba(0,0,0,0.06)] overflow-hidden"
+                  className="relative rounded-[32px] bg-white border border-[#EBECEF] p-3.5 flex flex-col sm:flex-row items-center sm:items-stretch shadow-[0_10px_35px_-12px_rgba(0,0,0,0.06)] overflow-hidden"
                 >
                   {/* Left: Cutout Teacher Photo (Bigger, Positioned on Left) */}
                   <div className="relative z-0 w-[240px] sm:w-[270px] md:w-[290px] lg:w-[310px] xl:w-[330px] shrink-0 flex items-end justify-center self-center sm:self-end pt-2 sm:pt-4">
@@ -96,7 +96,7 @@ export const TrainersAndAtAGlance: React.FC<TrainersAndAtAGlanceProps> = () => {
                   </div>
 
                   {/* Right: Inner Details Section with Transparent Blur Glass Effect Over Teacher */}
-                  <div className="relative z-10 w-full flex-1 -mt-8 sm:mt-0 sm:-ml-16 md:-ml-20 lg:-ml-24 rounded-[24px] sm:rounded-[28px] glass p-5 sm:p-6 lg:p-6.5 flex flex-col justify-between">
+                  <div className="relative z-10 w-full flex-1 -mt-8 sm:mt-0 sm:-ml-16 md:-ml-20 lg:-ml-24 rounded-[24px] glass p-5 sm:p-6 lg:p-6.5 flex flex-col justify-between">
                     <div>
                       {/* Top Badge Row */}
                       <div className="flex items-center justify-between gap-2">
@@ -124,7 +124,7 @@ export const TrainersAndAtAGlance: React.FC<TrainersAndAtAGlanceProps> = () => {
                       </p>
 
                       {/* Stats Box */}
-                      <div className="mt-4 rounded-2xl bg-[#F8F9FA]/80 border border-[#F0F1F3]/90 px-3.5 sm:px-4 py-3 flex items-center justify-between text-center backdrop-blur-sm">
+                      <div className="mt-4 rounded-[24px] bg-[#F8F9FA]/80 border border-[#F0F1F3]/90 px-3.5 sm:px-4 py-3 flex items-center justify-between text-center backdrop-blur-sm">
                         <div className="flex-1 min-w-0">
                           <div className="font-display font-extrabold text-sm sm:text-base text-slate-900 tabular-nums">
                             {trainer.projects}

@@ -107,13 +107,13 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
             {displayedBlogs.map((post) => (
               <article
                 key={post.id}
-                className="group rounded-[28px] glass p-4 sm:p-5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1"
+                className="group rounded-[32px] glass p-3.5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1"
               >
                 <div>
                   {/* News section image for the blog image with top-right glass category tag */}
                   <div
                     onClick={() => onSelectBlog(post)}
-                    className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-[20px] overflow-hidden bg-slate-100 cursor-pointer block shadow-sm group/img"
+                    className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-[24px] overflow-hidden bg-slate-100 cursor-pointer block shadow-sm group/img"
                     role="button"
                     tabIndex={0}
                     onKeyDown={(e) => {
@@ -140,7 +140,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
                   </div>
 
                   {/* Title */}
-                  <h3 className="mt-4 sm:mt-5 font-display text-xl sm:text-[22px] font-bold text-slate-900 leading-snug line-clamp-2">
+                  <h3 className="mt-3.5 px-1 font-display text-xl sm:text-[22px] font-medium text-slate-900 leading-snug line-clamp-2">
                     <button
                       type="button"
                       onClick={() => onSelectBlog(post)}
@@ -152,7 +152,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
                 </div>
 
                 {/* Bottom Row: Date on left, circular arrow button on right */}
-                <div className="mt-6 pt-3 flex items-center justify-between gap-3 border-t border-slate-900/10">
+                <div className="mt-5 pt-3 px-1 flex items-center justify-between gap-3 border-t border-slate-900/10">
                   <div className="flex items-center gap-2 text-xs sm:text-sm text-slate-600 font-medium tabular-nums">
                     <Calendar className="w-4 h-4 text-slate-500 shrink-0" strokeWidth={1.75} />
                     <span>{post.date}</span>
@@ -226,7 +226,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
             {displayedBranches.map((branch) => (
               <article
                 key={branch.id}
-                className="group relative rounded-[28px] sm:rounded-[32px] card-glass-drop hover:-translate-y-1 transition-all duration-300 flex flex-col justify-end min-h-[500px] sm:min-h-[530px] overflow-hidden"
+                className="group relative rounded-[32px] card-glass-drop hover:-translate-y-1 transition-all duration-300 flex flex-col justify-end min-h-[500px] sm:min-h-[530px] overflow-hidden"
               >
                 {/* Full-Card Height Map Background (with pin in top middle) */}
                 <div className="absolute inset-0 z-0">
@@ -236,16 +236,15 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
                     className="w-full h-full object-cover object-top select-none transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
-                  {/* Green transparent shade from the bottom background (max height ~30% from bottom) */}
-                  <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#008F2F]/65 via-[#16B84A]/30 to-transparent pointer-events-none" />
+                  {/* Darker / greyer green transparent shade from the bottom background */}
+                  <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#1C2C23]/90 via-[#2D4236]/45 to-transparent pointer-events-none" />
                 </div>
 
                 {/* Bottom: Translucent White Frosted Glass Info Card with Drop Shadow */}
-                <div className="relative z-10 p-3 sm:p-3.5">
-                  <div className="rounded-[22px] sm:rounded-[24px] branch-glass-card p-5 sm:p-6 flex flex-col gap-3.5">
-                    {/* Header: Centered Building Icon & Branch Name */}
-                    <div className="flex items-center justify-center gap-2.5 text-center mb-0.5">
-                      <Building2 className="w-5 h-5 text-slate-800 shrink-0" strokeWidth={2.2} />
+                <div className="relative z-10 p-3.5">
+                  <div className="rounded-[24px] branch-glass-card p-5 sm:p-6 flex flex-col gap-3.5">
+                    {/* Header: Centered Branch Name */}
+                    <div className="text-center mb-0.5">
                       <h3 className="font-display text-xl sm:text-[22px] font-bold text-slate-900 tracking-tight leading-none drop-shadow-sm">
                         {branch.city}
                       </h3>
@@ -299,7 +298,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
         <div className="container-1520 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-14 items-stretch">
             {/* Left Column: Visual Card with FAQ Title at Top & Just the CTA at Bottom */}
-            <div className="lg:col-span-5 relative rounded-[28px] sm:rounded-[32px] overflow-hidden p-7 sm:p-9 lg:p-10 flex flex-col justify-between min-h-[520px] lg:min-h-[580px] h-full border border-emerald-100/70 shadow-[0_20px_45px_-15px_rgba(0,143,47,0.12)]">
+            <div className="faq-white-card lg:col-span-5 relative rounded-[32px] overflow-hidden p-7 sm:p-9 lg:p-10 flex flex-col justify-between min-h-[520px] lg:min-h-[580px] h-full border border-emerald-100/70 shadow-[0_20px_45px_-15px_rgba(0,143,47,0.12)] bg-white">
               {/* Background Visual Image */}
               <div className="absolute inset-0 z-0">
                 <img
@@ -350,9 +349,9 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
                 return (
                   <div
                     key={faq.id}
-                    className={`rounded-[22px] transition-all duration-200 glass border ${isOpen
-                      ? 'border-emerald-500/40 shadow-md bg-white/80'
-                      : 'border-white/60 shadow-sm hover:border-white/90 hover:shadow-md'
+                    className={`rounded-[24px] transition-all duration-200 glass border ${isOpen
+                      ? 'border-emerald-400/60 shadow-lg bg-white/15'
+                      : 'border-white/25 shadow-sm hover:border-white/50'
                       }`}
                   >
                     <button
@@ -361,21 +360,21 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
                       onClick={() => setOpenFaqId(isOpen ? '' : faq.id)}
                       className="group w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                     >
-                      <span className="font-display text-base sm:text-[17px] font-bold text-slate-900 leading-snug pr-2">
+                      <span className="font-display text-base sm:text-[17px] font-bold text-white leading-snug pr-2">
                         {faq.question}
                       </span>
                       <div
                         className="w-9 h-9 sm:w-10 sm:h-10 rounded-full arrow-btn flex items-center justify-center shrink-0"
                       >
                         {isOpen ? (
-                          <ChevronUp className="w-4.5 h-4.5" strokeWidth={2.2} />
+                          <ChevronUp className="w-4.5 h-4.5 text-white" strokeWidth={2.2} />
                         ) : (
-                          <ChevronDown className="w-4.5 h-4.5" strokeWidth={2.2} />
+                          <ChevronDown className="w-4.5 h-4.5 text-white" strokeWidth={2.2} />
                         )}
                       </div>
                     </button>
                     {isOpen && (
-                      <div className="px-5 sm:px-6 pb-6 pt-0 text-sm sm:text-[15px] leading-relaxed text-slate-600 animate-in fade-in duration-200">
+                      <div className="px-5 sm:px-6 pb-6 pt-0 text-sm sm:text-[15px] leading-relaxed text-white/85 border-t border-white/10 pt-4 animate-in fade-in duration-200">
                         {faq.answer}
                       </div>
                     )}
@@ -421,7 +420,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
               {[...PARTNERS_AND_CLIENTS, ...PARTNERS_AND_CLIENTS].map((partner, idx) => (
                 <div
                   key={`top-${partner.id}-${idx}`}
-                  className="group rounded-[22px] sm:rounded-[26px] bg-white border border-slate-200/70 shadow-[0_6px_22px_-6px_rgba(0,0,0,0.06)] p-4 sm:p-5 flex items-center justify-center w-[220px] sm:w-[250px] lg:w-[270px] h-[92px] sm:h-[104px] shrink-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_-8px_rgba(16,185,129,0.2)] hover:border-emerald-300/80 cursor-pointer select-none"
+                  className="group rounded-[32px] bg-white border border-slate-200/70 shadow-[0_6px_22px_-6px_rgba(0,0,0,0.06)] p-4 sm:p-5 flex items-center justify-center w-[220px] sm:w-[250px] lg:w-[270px] h-[92px] sm:h-[104px] shrink-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_-8px_rgba(16,185,129,0.2)] hover:border-emerald-300/80 cursor-pointer select-none"
                   title={partner.name}
                 >
                   <img
@@ -447,7 +446,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
               ].map((partner, idx) => (
                 <div
                   key={`bottom-${partner.id}-${idx}`}
-                  className="group rounded-[22px] sm:rounded-[26px] bg-white border border-slate-200/70 shadow-[0_6px_22px_-6px_rgba(0,0,0,0.06)] p-4 sm:p-5 flex items-center justify-center w-[220px] sm:w-[250px] lg:w-[270px] h-[92px] sm:h-[104px] shrink-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_-8px_rgba(16,185,129,0.2)] hover:border-emerald-300/80 cursor-pointer select-none"
+                  className="group rounded-[32px] bg-white border border-slate-200/70 shadow-[0_6px_22px_-6px_rgba(0,0,0,0.06)] p-4 sm:p-5 flex items-center justify-center w-[220px] sm:w-[250px] lg:w-[270px] h-[92px] sm:h-[104px] shrink-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_-8px_rgba(16,185,129,0.2)] hover:border-emerald-300/80 cursor-pointer select-none"
                   title={partner.name}
                 >
                   <img
@@ -468,7 +467,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
       <div className="bg-gradient-to-r from-[#03361B] via-[#04242D] to-[#08154A] text-white">
         <div className="container-1520 pt-10 sm:pt-14 pb-8">
           {/* TOP CARD: Admission Going On */}
-          <div className="rounded-[28px] sm:rounded-[32px] glass px-6 py-6 sm:px-10 sm:py-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div className="rounded-[32px] glass px-6 py-6 sm:px-10 sm:py-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
             <div className="max-w-2xl">
               <h2 className="text-2xl sm:text-[28px] lg:text-[32px] font-bold text-white tracking-tight leading-tight">
                 Admission Going On
@@ -549,7 +548,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
               <div className="lg:col-span-3 space-y-4">
                 <a
                   href="#top"
-                  className="inline-flex items-center bg-white rounded-2xl px-4 py-2.5 shadow-md transition-transform hover:scale-[1.02]"
+                  className="inline-flex items-center bg-white rounded-[24px] px-4 py-2.5 shadow-md transition-transform hover:scale-[1.02]"
                   aria-label="e-Learning & Earning Ltd. Home"
                 >
                   <img

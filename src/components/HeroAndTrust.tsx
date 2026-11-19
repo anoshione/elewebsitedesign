@@ -49,12 +49,12 @@ const TRUST_TILE_MIN_H = 'min-h-[230px] lg:min-h-[250px]';
 
 const TrustStatTile: React.FC<{ value: string; label: string }> = ({ value, label }) => (
   <div
-    className={`rounded-[20px] ${TRUST_TILE_MIN_H} flex flex-col items-center justify-center text-center px-6 py-8 bg-[#F1F2F4]/85 backdrop-blur-md border border-white/85 shadow-[0_10px_30px_-14px_rgba(15,23,42,0.18)] transition-transform duration-200 hover:-translate-y-1`}
+    className={`rounded-[32px] ${TRUST_TILE_MIN_H} flex flex-col items-center justify-center text-center px-6 py-8 bg-[#F1F2F4]/85 backdrop-blur-md border border-white/85 shadow-[0_10px_30px_-14px_rgba(15,23,42,0.18)] transition-transform duration-200 hover:-translate-y-1`}
   >
-    <span className="font-display text-4xl lg:text-[2.6rem] font-extrabold tracking-tight text-[#008F2F] leading-none tabular-nums">
+    <span className="font-display text-4xl lg:text-[2.6rem] font-medium tracking-tight text-[#008F2F] leading-none tabular-nums">
       {value}
     </span>
-    <span className="mt-2.5 font-display text-base lg:text-lg font-bold uppercase tracking-[0.02em] text-slate-800">
+    <span className="mt-2.5 font-display text-base lg:text-lg font-medium uppercase tracking-[0.03em] text-slate-800">
       {label}
     </span>
   </div>
@@ -62,7 +62,7 @@ const TrustStatTile: React.FC<{ value: string; label: string }> = ({ value, labe
 
 const TrustFeaturedTile: React.FC<{ value: string; label: string }> = ({ value, label }) => (
   <div
-    className={`relative rounded-[22px] ${TRUST_TILE_MIN_H} overflow-hidden bg-[#1E4319] shadow-[0_16px_38px_-12px_rgba(20,60,25,0.6)] transition-transform duration-200 hover:-translate-y-1`}
+    className={`relative rounded-[32px] ${TRUST_TILE_MIN_H} overflow-hidden bg-[#1E4319] shadow-[0_16px_38px_-12px_rgba(20,60,25,0.6)] transition-transform duration-200 hover:-translate-y-1`}
   >
     {/* 3D Papercut Ribbon Background Artwork: Positioned so the fanning fins on the right and sweeping ribbons are prominent */}
     <div className="absolute inset-0 z-0 overflow-hidden">
@@ -75,12 +75,12 @@ const TrustFeaturedTile: React.FC<{ value: string; label: string }> = ({ value, 
 
     {/* Floating Frosted Glass Panel: Sharp ribbons show around the perimeter, softly blurred inside */}
     <div
-      className="absolute inset-[10px] sm:inset-[12px] rounded-[16px] sm:rounded-[18px] border border-white/40 bg-white/[0.05] backdrop-blur-[7px] shadow-[inset_0_1.5px_1.5px_rgba(255,255,255,0.55),0_10px_24px_-6px_rgba(0,0,0,0.35)] z-10 flex flex-col items-center justify-center text-center text-white px-4"
+      className="absolute inset-[14px] rounded-[24px] border border-white/40 bg-white/[0.05] backdrop-blur-[7px] shadow-[inset_0_1.5px_1.5px_rgba(255,255,255,0.55),0_10px_24px_-6px_rgba(0,0,0,0.35)] z-10 flex flex-col items-center justify-center text-center text-white px-4"
     >
-      <span className="font-display text-4xl sm:text-[2.65rem] lg:text-[2.85rem] font-black tracking-tight leading-none tabular-nums text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
+      <span className="font-display text-4xl sm:text-[2.65rem] lg:text-[2.85rem] font-medium tracking-tight leading-none tabular-nums text-white drop-shadow-[0_2px_8px_rgba(0,0,0,0.3)]">
         {value}
       </span>
-      <span className="mt-2.5 font-display text-sm sm:text-base lg:text-[17px] font-bold uppercase tracking-[0.05em] text-white/95 drop-shadow-[0_1px_4px_rgba(0,0,0,0.25)]">
+      <span className="mt-2.5 font-display text-sm sm:text-base lg:text-[17px] font-medium uppercase tracking-[0.05em] text-white/95 drop-shadow-[0_1px_4px_rgba(0,0,0,0.25)]">
         {label}
       </span>
     </div>
@@ -92,7 +92,7 @@ const TrustPhotoTile: React.FC<{ src: string; alt: string; className?: string }>
   alt,
   className = '',
 }) => (
-  <div className={`relative rounded-[20px] overflow-hidden ${TRUST_TILE_MIN_H} ${className}`}>
+  <div className={`relative rounded-[32px] overflow-hidden ${TRUST_TILE_MIN_H} ${className}`}>
     <ResilientPhoto src={src} alt={alt} className="absolute inset-0 w-full h-full object-cover" />
   </div>
 );
