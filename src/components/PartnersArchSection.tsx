@@ -25,23 +25,26 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
   const sectionRef = useRef<HTMLElement>(null);
   const [isInView, setIsInView] = useState(false);
 
-  // IntersectionObserver to trigger animation when scrolled into view
+  // IntersectionObserver to trigger animation once when scrolled into view
   useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsInView(true);
+          // Disconnect once triggered so it never re-fires or causes layout thrashing
+          observer.disconnect();
         }
       },
       {
-        threshold: 0.2,
-        rootMargin: '0px 0px -40px 0px',
+        threshold: 0.15,
+        rootMargin: '0px 0px -20px 0px',
       }
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
+    observer.observe(node);
 
     return () => {
       observer.disconnect();
@@ -139,15 +142,15 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
                 }}
               />
 
-              {/* Pulsing Signal Dot at the Tip of the Line */}
+              {/* Glowing Signal Dot at the Tip of the Line */}
               <g
-                className="transition-all duration-700"
+                className="transition-opacity duration-500"
                 style={{
                   opacity: isInView ? 1 : 0,
                   transitionDelay: '1.95s',
                 }}
               >
-                <circle cx="965" cy="65" r="7" fill="#10B981" opacity="0.35" className="animate-ping" />
+                <circle cx="965" cy="65" r="7" fill="#10B981" opacity="0.3" />
                 <circle cx="965" cy="65" r="4" fill="#008F2F" />
                 <circle cx="965" cy="65" r="1.5" fill="#FFFFFF" />
               </g>
@@ -163,6 +166,7 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
                 opacity: isInView ? 1 : 0,
                 transform: `translate(-50%, -50%) scale(${isInView ? 1 : 0.6})`,
                 transitionDelay: '0.6s',
+                willChange: 'transform, opacity',
               }}
             >
               <div
@@ -182,6 +186,7 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
                 opacity: isInView ? 1 : 0,
                 transform: `translate(-50%, -50%) scale(${isInView ? 1 : 0.6})`,
                 transitionDelay: '1.05s',
+                willChange: 'transform, opacity',
               }}
             >
               <div
@@ -201,6 +206,7 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
                 opacity: isInView ? 1 : 0,
                 transform: `translate(-50%, -50%) scale(${isInView ? 1 : 0.6})`,
                 transitionDelay: '1.35s',
+                willChange: 'transform, opacity',
               }}
             >
               <div
@@ -247,6 +253,8 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
                         ? 'translateY(0) scale(1)'
                         : 'translateY(16px) scale(0.85)',
                       transitionDelay: `${layout.delay}s`,
+                      willChange: 'transform, opacity',
+                      backfaceVisibility: 'hidden',
                     }}
                     role="button"
                     tabIndex={0}
@@ -267,7 +275,7 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
                     <img
                       src={partner.logo}
                       alt={partner.name}
-                      loading="lazy"
+                      decoding="async"
                       draggable={false}
                       className="max-h-[28px] sm:max-h-[34px] lg:max-h-[36px] max-w-[60px] sm:max-w-[70px] lg:max-w-[78px] w-auto h-auto object-contain select-none transition-transform duration-300 group-hover:scale-108"
                     />
@@ -297,18 +305,22 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
                     ? 'translateY(0) scale(1) rotate(-3deg)'
                     : 'translateY(16px) scale(0.75) rotate(0deg)',
                   transitionDelay: '1.60s',
+                  willChange: 'transform, opacity',
+                  backfaceVisibility: 'hidden',
                 }}
                 title="Strategic Trust &amp; Institutional Partnership"
               >
-                {/* 3D Handshake: One Hand Solid Soft Green, One Hand Blur Transparent Glass */}
+                {/* 3D Handshake: Static cached URL, decoding async, hardware-accelerated */}
                 <img
-                  src={`/assets/partners/handshake_glass_3d.png?v=${Date.now()}`}
+                  src="/assets/partners/handshake_glass_3d.png"
                   alt="3D Futuristic Handshake - Solid Soft Green &amp; Transparent Glass"
                   className="w-full h-auto object-contain select-none transition-transform duration-300 group-hover:scale-112 group-hover:-rotate-2"
                   style={{
                     filter: 'drop-shadow(0 6px 14px rgba(0, 143, 47, 0.12))',
+                    transform: 'translateZ(0)',
+                    backfaceVisibility: 'hidden',
                   }}
-                  loading="lazy"
+                  decoding="async"
                 />
               </div>
             </div>
