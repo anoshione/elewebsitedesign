@@ -532,36 +532,27 @@
   transform: translate3d(75%, 75%, 0) rotate(22deg);
 }
 
-/* Nationwide Campus Branch Card: Less Transparent Frosted Glass (matching FAQ question cards) */
+/* Nationwide Campus Branch Card: Translucent Frosted Glass (matching navbar) */
 .branch-glass-card {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.94) 0%,
-    rgba(255, 255, 255, 0.88) 100%
-  );
-  -webkit-backdrop-filter: blur(28px) saturate(140%);
-  backdrop-filter: blur(28px) saturate(140%);
-  border: 1.5px solid rgba(255, 255, 255, 0.95);
+  background: rgba(255, 255, 255, 0.17);
+  -webkit-backdrop-filter: blur(19px) saturate(100%);
+  backdrop-filter: blur(19px) saturate(100%);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   box-shadow:
-    0 18px 42px -10px rgba(0, 36, 16, 0.10),
-    0 4px 16px -2px rgba(0, 0, 0, 0.04),
-    inset 0 1.5px 1px 0 rgba(255, 255, 255, 1),
-    inset 0 -1px 1px 0 rgba(255, 255, 255, 0.4);
+    0 8px 32px rgba(0, 0, 0, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.15);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .branch-glass-card:hover,
 .group:hover .branch-glass-card {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 255, 255, 0.98) 0%,
-    rgba(255, 255, 255, 0.92) 100%
-  );
-  border-color: rgba(255, 255, 255, 1);
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.55);
   box-shadow:
-    0 24px 50px -10px rgba(0, 143, 47, 0.18),
-    0 8px 22px -4px rgba(0, 0, 0, 0.06),
-    inset 0 2px 1.5px 0 rgba(255, 255, 255, 1);
+    0 12px 36px rgba(0, 0, 0, 0.16),
+    inset 0 1.5px 0 rgba(255, 255, 255, 0.75),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.2);
 }
 
 .glass-btn {
