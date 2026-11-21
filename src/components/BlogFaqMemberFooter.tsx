@@ -141,7 +141,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
                   </div>
 
                   {/* Title */}
-                  <h3 className="mt-3.5 px-1 font-display text-xl sm:text-[22px] font-medium text-slate-900 leading-snug line-clamp-2">
+                  <h3 className="mt-3.5 px-1 font-display text-sm sm:text-[14px] font-medium text-slate-900 leading-snug line-clamp-2">
                     <button
                       type="button"
                       onClick={() => onSelectBlog(post)}
