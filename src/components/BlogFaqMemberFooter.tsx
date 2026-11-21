@@ -227,10 +227,10 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
             {displayedBranches.map((branch) => (
               <article
                 key={branch.id}
-                className="group relative rounded-[32px] card-glass-drop hover:-translate-y-1 hover:shadow-xl transition-all duration-300 flex flex-col justify-end min-h-[500px] sm:min-h-[530px] overflow-hidden"
+                className="group relative rounded-[32px] card-glass-drop hover:-translate-y-1 transition-all duration-300 flex flex-col justify-end min-h-[500px] sm:min-h-[530px] overflow-hidden"
               >
                 {/* Full-Card Height Map Background (with pin in top middle) */}
-                <div className="absolute inset-0 z-0 banner-sheen">
+                <div className="absolute inset-0 z-0">
                   <img
                     src={branch.mapImage}
                     alt={`${branch.city} branch campus map location`}
@@ -301,7 +301,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
             {/* Left Column: Visual Card with FAQ Title at Top & Just the CTA at Bottom */}
             <div className="faq-white-card lg:col-span-5 relative rounded-[32px] overflow-hidden p-7 sm:p-9 lg:p-10 flex flex-col justify-between min-h-[520px] lg:min-h-[580px] h-full border border-emerald-100/70 shadow-[0_20px_45px_-15px_rgba(0,143,47,0.12)] bg-white group">
               {/* Background Visual Image */}
-              <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none banner-sheen">
+              <div className="absolute inset-0 z-0">
                 <img
                   src="/assets/faq/faq_visual.jpg"
                   alt="FAQ Education & Career Counseling Visual"
