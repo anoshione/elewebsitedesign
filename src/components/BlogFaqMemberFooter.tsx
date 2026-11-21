@@ -18,6 +18,7 @@ import {
 } from 'lucide-react';
 import { BLOG_POSTS, BlogItem, BRANCH_ITEMS, BranchItem, FAQS, PARTNERS_AND_CLIENTS } from '../data/homeData';
 import { EditorialVisual, SilkBackdrop } from './Graphics';
+import { PartnersArchSection } from './PartnersArchSection';
 
 interface BlogFaqMemberFooterProps {
   onSelectBlog: (post: BlogItem) => void;
@@ -386,82 +387,8 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
         </div>
       </section>
 
-      {/* SECTION 15: PARTNERS & CLIENTS (Solid #FBFCF8 + Infinite Dual Marquee) */}
-      <section id="partners" className="section-band bg-[#FBFCF8] text-slate-900 overflow-hidden">
-        <div className="container-1520 mb-8 sm:mb-10 text-left">
-          <p className="section-tag">PARTNERS</p>
-          <h2 className="heading-gradient-green">
-            Our Trusted Partners &amp; Clients
-          </h2>
-          <p className="section-subtitle-max2 mt-2">
-            We&apos;re proud to collaborate with leading government divisions, international NGOs, and technology enterprises.
-          </p>
-        </div>
-
-        {/* Dual Marquee Track Container with Soft Edge Fades & Unclipped Shadow Padding */}
-        <div className="relative w-full overflow-hidden py-4 sm:py-6 space-y-1 sm:space-y-2">
-          {/* Left & Right Edge Fades to #FBFCF8 */}
-          <div
-            className="absolute left-0 top-0 bottom-0 w-16 sm:w-28 lg:w-40 z-20 pointer-events-none"
-            style={{
-              background: 'linear-gradient(to right, #FBFCF8 0%, rgba(251, 252, 248, 0) 100%)',
-            }}
-          />
-          <div
-            className="absolute right-0 top-0 bottom-0 w-16 sm:w-28 lg:w-40 z-20 pointer-events-none"
-            style={{
-              background: 'linear-gradient(to left, #FBFCF8 0%, rgba(251, 252, 248, 0) 100%)',
-            }}
-          />
-
-          {/* Row 1: Top Row animates from Left to Right (--->) */}
-          <div className="flex">
-            <div className="animate-marquee-right flex items-center gap-4 sm:gap-5 py-4 sm:py-5">
-              {[...PARTNERS_AND_CLIENTS, ...PARTNERS_AND_CLIENTS].map((partner, idx) => (
-                <div
-                  key={`top-${partner.id}-${idx}`}
-                  className="group rounded-[32px] bg-white border border-slate-200/70 shadow-[0_6px_22px_-6px_rgba(0,0,0,0.06)] p-4 sm:p-5 flex items-center justify-center w-[220px] sm:w-[250px] lg:w-[270px] h-[92px] sm:h-[104px] shrink-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_-8px_rgba(16,185,129,0.2)] hover:border-emerald-300/80 cursor-pointer select-none"
-                  title={partner.name}
-                >
-                  <img
-                    src={partner.logo}
-                    alt={partner.name}
-                    loading="lazy"
-                    draggable={false}
-                    className="max-h-[48px] sm:max-h-[54px] max-w-[130px] sm:max-w-[145px] w-auto h-auto object-contain select-none transition-transform duration-300 group-hover:scale-105"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Row 2: Bottom Row animates in Opposite Direction, Right to Left (<---) */}
-          <div className="flex">
-            <div className="animate-marquee-left flex items-center gap-4 sm:gap-5 py-4 sm:py-5">
-              {[
-                ...PARTNERS_AND_CLIENTS.slice(5),
-                ...PARTNERS_AND_CLIENTS.slice(0, 5),
-                ...PARTNERS_AND_CLIENTS.slice(5),
-                ...PARTNERS_AND_CLIENTS.slice(0, 5),
-              ].map((partner, idx) => (
-                <div
-                  key={`bottom-${partner.id}-${idx}`}
-                  className="group rounded-[32px] bg-white border border-slate-200/70 shadow-[0_6px_22px_-6px_rgba(0,0,0,0.06)] p-4 sm:p-5 flex items-center justify-center w-[220px] sm:w-[250px] lg:w-[270px] h-[92px] sm:h-[104px] shrink-0 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_14px_30px_-8px_rgba(16,185,129,0.2)] hover:border-emerald-300/80 cursor-pointer select-none"
-                  title={partner.name}
-                >
-                  <img
-                    src={partner.logo}
-                    alt={partner.name}
-                    loading="lazy"
-                    draggable={false}
-                    className="max-h-[48px] sm:max-h-[54px] max-w-[130px] sm:max-w-[145px] w-auto h-auto object-contain select-none transition-transform duration-300 group-hover:scale-105"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {/* SECTION 15: PARTNERS & CLIENTS (Curved Arch Animation + 3D Glass Futuristic Handshake) */}
+      <PartnersArchSection />
 
       {/* SECTION 15: ADMISSION BANNER & SECTION 16: FOOTER (Luminous Deep Indigo & Emerald Background) */}
       <div className="footer-bg text-white">
