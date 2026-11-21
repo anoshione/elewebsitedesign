@@ -424,13 +424,13 @@ export const DepartmentsAndCourses: React.FC<DepartmentsAndCoursesProps> = ({
               {filteredCourses.map((course) => (
                 <article
                   key={course.id}
-                  className="rounded-[32px] glass p-3.5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-0.5"
+                  className="rounded-[32px] glass p-3.5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-0.5 card-cta-glow group/course"
                 >
                   <div>
                     <button
                       type="button"
                       onClick={() => onInspectCourse(course)}
-                      className="w-full text-left cursor-pointer rounded-[24px] block overflow-hidden shadow-sm"
+                      className="w-full text-left cursor-pointer rounded-[24px] block overflow-hidden shadow-sm card-cta-glow"
                       aria-label={`View syllabus for ${course.title}`}
                     >
                       <CoursePosterBanner

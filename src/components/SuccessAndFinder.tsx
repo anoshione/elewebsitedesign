@@ -289,7 +289,7 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
               <article
                 key={story.id}
                 onClick={() => setActiveVideoModal(story)}
-                className="group relative rounded-[32px] overflow-hidden glass border border-white/30 shadow-lg cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl"
+                className="group relative rounded-[32px] overflow-hidden glass border border-white/30 shadow-lg cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl card-cta-glow"
               >
                 {/* 16:9 Video Frame */}
                 <div className="relative aspect-[16/9.5] w-full overflow-hidden bg-slate-900">
@@ -368,7 +368,7 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
         <div className="container-1520 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-6 xl:gap-7 items-stretch">
             {/* Card 1: Left Column (4 cols on lg) - Dedicated Visual Card with 3D Glass Course Finder Visual */}
-            <div className="lg:col-span-4 relative rounded-[32px] overflow-hidden p-6 sm:p-8 lg:p-9 flex flex-col justify-between min-h-[520px] lg:min-h-[580px] h-full border border-emerald-100/70 shadow-[0_20px_45px_-15px_rgba(0,143,47,0.12)] bg-white">
+            <div className="lg:col-span-4 relative rounded-[32px] overflow-hidden p-6 sm:p-8 lg:p-9 flex flex-col justify-between min-h-[520px] lg:min-h-[580px] h-full border border-emerald-100/70 shadow-[0_20px_45px_-15px_rgba(0,143,47,0.12)] bg-white card-cta-glow group">
               {/* Background Visual Image positioned in the lower area below description */}
               <div className="absolute left-0 right-0 bottom-0 top-[40%] sm:top-[38%] lg:top-[39%] z-0 overflow-hidden pointer-events-none">
                 <img

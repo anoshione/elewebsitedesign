@@ -152,11 +152,11 @@ export const NewsAndEnvironmentCta: React.FC<NewsAndEnvironmentCtaProps> = ({
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
             {/* Featured News Story */}
-            <article className="rounded-[32px] glass p-3.5 flex flex-col transition-all duration-300 hover:border-emerald-500/40 hover:shadow-lg">
+            <article className="rounded-[32px] glass p-3.5 flex flex-col transition-all duration-300 hover:border-emerald-500/40 hover:shadow-lg card-cta-glow group/news">
               <button
                 type="button"
                 onClick={() => onSelectNews(featuredNews)}
-                className="w-full text-left cursor-pointer rounded-[24px] block overflow-hidden shadow-sm"
+                className="w-full text-left cursor-pointer rounded-[24px] block overflow-hidden shadow-sm card-cta-glow"
                 aria-label={`Read ${featuredNews.title}`}
               >
                 <NewsPhoto id={featuredNews.id} title={featuredNews.title} large />
@@ -187,12 +187,12 @@ export const NewsAndEnvironmentCta: React.FC<NewsAndEnvironmentCtaProps> = ({
               {orderedSecondary.map((item) => (
                 <article
                   key={item.id}
-                  className="rounded-[32px] glass p-3.5 flex flex-col justify-between transition-all duration-300 hover:border-emerald-500/40 hover:shadow-lg"
+                  className="rounded-[32px] glass p-3.5 flex flex-col justify-between transition-all duration-300 hover:border-emerald-500/40 hover:shadow-lg card-cta-glow group/news"
                 >
                   <button
                     type="button"
                     onClick={() => onSelectNews(item)}
-                    className="w-full text-left cursor-pointer rounded-[24px] block overflow-hidden shadow-sm shrink-0"
+                    className="w-full text-left cursor-pointer rounded-[24px] block overflow-hidden shadow-sm shrink-0 card-cta-glow"
                     aria-label={`Read ${item.title}`}
                   >
                     <NewsPhoto id={item.id} title={item.title} />
