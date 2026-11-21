@@ -74,13 +74,14 @@ const GlassArrowButton: React.FC<{
   onClick: () => void;
   label: string;
   small?: boolean;
-}> = ({ onClick, label, small = false }) => (
+  className?: string;
+}> = ({ onClick, label, small = false, className = '' }) => (
   <button
     type="button"
     onClick={onClick}
     aria-label={label}
     className={`shrink-0 aspect-square inline-flex items-center justify-center rounded-full arrow-btn card-arrow-btn cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 ${small ? 'w-9 h-9 min-w-[36px] min-h-[36px]' : 'w-11 h-11 min-w-[44px] min-h-[44px]'
-      }`}
+      } ${className}`}
   >
     <ArrowRight className={small ? 'w-4 h-4' : 'w-4.5 h-4.5'} strokeWidth={2.2} />
   </button>
@@ -198,12 +199,13 @@ export const NewsAndEnvironmentCta: React.FC<NewsAndEnvironmentCtaProps> = ({
                     <NewsPhoto id={item.id} title={item.title} />
                   </button>
 
-                  <div className="px-2 pt-3.5 pb-2 flex items-center justify-between gap-3 grow">
-                    <h3 className="font-display text-[16px] sm:text-[17px] font-medium text-slate-900 leading-[1.38] line-clamp-3 min-w-0 flex-1">
+                  <div className="px-2 pt-3.5 pb-1.5 flex items-end justify-between gap-3 grow">
+                    <h3 className="font-display text-[16px] sm:text-[17px] font-medium text-slate-900 leading-[1.38] line-clamp-3 min-w-0 flex-1 self-start">
                       {renderMixedTitle(item.title)}
                     </h3>
                     <GlassArrowButton
                       small
+                      className="self-end mt-auto"
                       onClick={() => onSelectNews(item)}
                       label={`Read ${item.title}`}
                     />
