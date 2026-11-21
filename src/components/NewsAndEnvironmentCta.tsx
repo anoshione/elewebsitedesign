@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { NEWS_ITEMS, NewsItem } from '../data/homeData';
 import { GENERATED_ASSETS, ResilientPhoto, SilkBackdrop } from './Graphics';
+import { MentorConsultationVisual } from './MentorConsultationVisual';
 
 interface NewsAndEnvironmentCtaProps {
   onSelectNews: (item: NewsItem) => void;
@@ -224,12 +225,8 @@ export const NewsAndEnvironmentCta: React.FC<NewsAndEnvironmentCtaProps> = ({
             <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-[#008F2F]/16 rounded-full blur-3xl pointer-events-none" />
 
             {/* Desktop Full-Bleed 3D Visual: Seamlessly integrated into right side */}
-            <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-[47%] h-full pointer-events-none select-none z-0">
-              <img
-                src="/assets/cta/cta_mentor_3d.jpg"
-                alt="1:1 Career Consultation with Lead Mentor"
-                className="w-full h-full object-cover object-left [mask-image:linear-gradient(to_right,transparent_0%,black_16%,black_100%)]"
-              />
+            <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-[47%] h-full pointer-events-auto select-none z-0">
+              <MentorConsultationVisual className="w-full h-full [mask-image:linear-gradient(to_right,transparent_0%,black_16%,black_100%)]" />
             </div>
 
             <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center p-8 sm:p-10 lg:p-12 lg:py-14">
@@ -272,12 +269,8 @@ export const NewsAndEnvironmentCta: React.FC<NewsAndEnvironmentCtaProps> = ({
 
               {/* Mobile/Tablet Fallback Visual */}
               <div className="lg:hidden relative flex items-center justify-center mt-2">
-                <div className="relative w-full max-w-[460px] overflow-hidden rounded-[24px] border border-emerald-300/50 shadow-md">
-                  <img
-                    src="/assets/cta/cta_mentor_3d.jpg"
-                    alt="1:1 Career Consultation with Lead Mentor"
-                    className="w-full h-auto object-cover select-none"
-                  />
+                <div className="relative w-full max-w-[460px] aspect-[1200/896] overflow-hidden rounded-[24px] border border-emerald-300/50 shadow-md">
+                  <MentorConsultationVisual isMobile className="w-full h-full" />
                 </div>
               </div>
             </div>
