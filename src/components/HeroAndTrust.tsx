@@ -9,11 +9,14 @@ interface HeroAndTrustProps {
 }
 
 /** Hook for smooth, tangible count-up on scroll */
-function useCountUp(end: number, isVisible: boolean, duration: number = 2800): string {
+function useCountUp(end: number, isVisible: boolean, duration: number = 2400): string {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible) {
+      setCount(0);
+      return;
+    }
 
     let startTime: number | null = null;
     let animationFrameId: number;
@@ -103,29 +106,48 @@ export const HeroAndTrust: React.FC<HeroAndTrustProps> = ({
 }) => {
   const statsRef = useRef<HTMLDivElement | null>(null);
   const [statsVisible, setStatsVisible] = useState(false);
+  const lastTriggerTimeRef = useRef<number>(0);
 
+  // IntersectionObserver to re-trigger count-up every time #trust scrolls into view (and reset when leaving)
   useEffect(() => {
+    const node = statsRef.current;
+    if (!node) return;
+
     const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
+      ([entry]) => {
+        if (entry.isIntersecting) {
           setStatsVisible(true);
-          observer.disconnect();
+          lastTriggerTimeRef.current = Date.now();
+        } else {
+          setStatsVisible(false);
+          lastTriggerTimeRef.current = 0;
         }
       },
-      { threshold: 0.15 }
+      { threshold: 0.15, rootMargin: '0px 0px -20px 0px' }
     );
 
-    if (statsRef.current) {
-      observer.observe(statsRef.current);
-    }
+    observer.observe(node);
 
     return () => observer.disconnect();
   }, []);
 
-  const countEntrepreneurs = useCountUp(4000, statsVisible, 2600);
-  const countStudents = useCountUp(100000, statsVisible, 3000);
-  const countFreelancers = useCountUp(42100, statsVisible, 2800);
-  const countJobs = useCountUp(18000, statsVisible, 2700);
+  // Re-trigger count-up on container hover if previous count has finished
+  const handleStatsMouseEnter = () => {
+    if (!statsVisible) return;
+    const now = Date.now();
+    if (now - lastTriggerTimeRef.current < 2600) return;
+
+    lastTriggerTimeRef.current = now;
+    setStatsVisible(false);
+    setTimeout(() => {
+      setStatsVisible(true);
+    }, 60);
+  };
+
+  const countEntrepreneurs = useCountUp(4000, statsVisible, 2000);
+  const countStudents = useCountUp(100000, statsVisible, 2400);
+  const countFreelancers = useCountUp(42100, statsVisible, 2200);
+  const countJobs = useCountUp(18000, statsVisible, 2100);
   return (
     <>
       {/* SECTION 1 (HERO): 1920x1080 full-bleed hero banner */}
@@ -214,7 +236,11 @@ export const HeroAndTrust: React.FC<HeroAndTrustProps> = ({
             </p>
           </div>
 
-          <div ref={statsRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div
+            ref={statsRef}
+            onMouseEnter={handleStatsMouseEnter}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
+          >
             <TrustStatTile value={countEntrepreneurs} label="ENTREPRENEURS" />
             <TrustFeaturedTile value={countStudents} label="STUDENTS TRAINED" />
             <TrustPhotoTile
