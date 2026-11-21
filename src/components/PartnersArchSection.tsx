@@ -24,8 +24,9 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
 }) => {
   const sectionRef = useRef<HTMLElement>(null);
   const [isInView, setIsInView] = useState(false);
+  const lastTriggerTimeRef = useRef<number>(0);
 
-  // IntersectionObserver to trigger animation once when scrolled into view
+  // IntersectionObserver to trigger animation every time it scrolls into view (and reset when it leaves)
   useEffect(() => {
     const node = sectionRef.current;
     if (!node) return;
@@ -34,12 +35,14 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsInView(true);
-          // Disconnect once triggered so it never re-fires or causes layout thrashing
-          observer.disconnect();
+          lastTriggerTimeRef.current = Date.now();
+        } else {
+          setIsInView(false);
+          lastTriggerTimeRef.current = 0;
         }
       },
       {
-        threshold: 0.15,
+        threshold: 0.12,
         rootMargin: '0px 0px -20px 0px',
       }
     );
@@ -50,6 +53,20 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
       observer.disconnect();
     };
   }, []);
+
+  // Re-trigger animation on mouse enter if it has settled
+  const handleContainerMouseEnter = () => {
+    if (!isInView) return;
+    const now = Date.now();
+    // Allow replaying after previous animation has completed (2.3s)
+    if (now - lastTriggerTimeRef.current < 2300) return;
+
+    lastTriggerTimeRef.current = now;
+    setIsInView(false);
+    setTimeout(() => {
+      setIsInView(true);
+    }, 120);
+  };
 
   // 6 Featured Partners
   const featuredPartners = FEATURED_PARTNER_IDS.map(
@@ -94,8 +111,14 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
       </div>
 
       {/* Main Arch Visual Stage - Shifted up, eliminating blank space */}
-      <div className="container-1520 relative">
-        <div className="w-full overflow-x-auto lg:overflow-visible pb-2 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none">
+      <div
+        className="container-1520 relative"
+        onMouseEnter={handleContainerMouseEnter}
+      >
+        <div
+          className="w-full overflow-x-auto lg:overflow-visible pb-2 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none"
+          onMouseEnter={handleContainerMouseEnter}
+        >
           <div className="relative min-w-[900px] lg:min-w-0 w-full aspect-[1100/210]">
             {/* SVG Background: The Arch Line that draws smoothly on scroll */}
             <svg
@@ -137,17 +160,20 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
                 strokeDasharray={1}
                 strokeDashoffset={isInView ? 0 : 1}
                 style={{
-                  transition: 'stroke-dashoffset 2.0s cubic-bezier(0.4, 0, 0.2, 1)',
+                  transition: isInView
+                    ? 'stroke-dashoffset 2.0s cubic-bezier(0.4, 0, 0.2, 1)'
+                    : 'stroke-dashoffset 0.15s ease-out',
                   willChange: 'stroke-dashoffset',
                 }}
               />
 
               {/* Glowing Signal Dot at the Tip of the Line */}
               <g
-                className="transition-opacity duration-500"
                 style={{
                   opacity: isInView ? 1 : 0,
-                  transitionDelay: '1.95s',
+                  transition: isInView
+                    ? 'opacity 0.5s ease 1.95s'
+                    : 'opacity 0.15s ease 0s',
                 }}
               >
                 <circle cx="965" cy="65" r="7" fill="#10B981" opacity="0.3" />
@@ -159,13 +185,15 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
             {/* Decorative Floating Trust Badges along the Arch */}
             {/* Badge 1: Above EDGE card */}
             <div
-              className="absolute -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-500"
+              className="absolute -translate-x-1/2 -translate-y-1/2 z-10"
               style={{
                 left: '34.27%',
                 top: '32%',
                 opacity: isInView ? 1 : 0,
                 transform: `translate(-50%, -50%) scale(${isInView ? 1 : 0.6})`,
-                transitionDelay: '0.6s',
+                transition: isInView
+                  ? 'all 0.5s ease-out 0.6s'
+                  : 'all 0.15s ease-out 0s',
                 willChange: 'transform, opacity',
               }}
             >
@@ -179,13 +207,15 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
 
             {/* Badge 2: Below DU card */}
             <div
-              className="absolute -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-500"
+              className="absolute -translate-x-1/2 -translate-y-1/2 z-10"
               style={{
                 left: '55.27%',
                 top: '84%',
                 opacity: isInView ? 1 : 0,
                 transform: `translate(-50%, -50%) scale(${isInView ? 1 : 0.6})`,
-                transitionDelay: '1.05s',
+                transition: isInView
+                  ? 'all 0.5s ease-out 1.05s'
+                  : 'all 0.15s ease-out 0s',
                 willChange: 'transform, opacity',
               }}
             >
@@ -199,13 +229,15 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
 
             {/* Badge 3: Above Swisscontact card */}
             <div
-              className="absolute -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-500"
+              className="absolute -translate-x-1/2 -translate-y-1/2 z-10"
               style={{
                 left: '65.73%',
                 top: '30%',
                 opacity: isInView ? 1 : 0,
                 transform: `translate(-50%, -50%) scale(${isInView ? 1 : 0.6})`,
-                transitionDelay: '1.35s',
+                transition: isInView
+                  ? 'all 0.5s ease-out 1.35s'
+                  : 'all 0.15s ease-out 0s',
                 willChange: 'transform, opacity',
               }}
             >
@@ -238,7 +270,6 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
                       p-2.5 sm:p-3
                       flex items-center justify-center
                       cursor-pointer
-                      transition-all duration-500 ease-out
                       group relative select-none
                     `}
                     style={{
@@ -252,7 +283,9 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
                       transform: isInView
                         ? 'translateY(0) scale(1)'
                         : 'translateY(16px) scale(0.85)',
-                      transitionDelay: `${layout.delay}s`,
+                      transition: isInView
+                        ? `all 0.5s ease-out ${layout.delay}s`
+                        : 'all 0.15s ease-out 0s',
                       willChange: 'transform, opacity',
                       backfaceVisibility: 'hidden',
                     }}
@@ -298,13 +331,15 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
               }}
             >
               <div
-                className="w-22 sm:w-26 lg:w-30 flex items-center justify-center transition-all duration-700 ease-out group select-none cursor-pointer"
+                className="w-22 sm:w-26 lg:w-30 flex items-center justify-center group select-none cursor-pointer"
                 style={{
                   opacity: isInView ? 1 : 0,
                   transform: isInView
                     ? 'translateY(0) scale(1) rotate(-3deg)'
                     : 'translateY(16px) scale(0.75) rotate(0deg)',
-                  transitionDelay: '1.60s',
+                  transition: isInView
+                    ? 'all 0.7s ease-out 1.60s'
+                    : 'all 0.15s ease-out 0s',
                   willChange: 'transform, opacity',
                   backfaceVisibility: 'hidden',
                 }}
