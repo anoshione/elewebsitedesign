@@ -236,8 +236,8 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
                     className="w-full h-full object-cover object-top select-none transition-transform duration-500 group-hover:scale-105"
                     loading="lazy"
                   />
-                  {/* Darker / greyer green transparent shade from the bottom background */}
-                  <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#1C2C23]/90 via-[#2D4236]/45 to-transparent pointer-events-none" />
+                  {/* 50% transparent shade from the bottom background */}
+                  <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#1C2C23]/50 via-[#2D4236]/25 to-transparent pointer-events-none" />
                 </div>
 
                 {/* Bottom: Translucent White Frosted Glass Info Card with Drop Shadow */}
