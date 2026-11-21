@@ -34,8 +34,8 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
         }
       },
       {
-        threshold: 0.25,
-        rootMargin: '0px 0px -50px 0px',
+        threshold: 0.2,
+        rootMargin: '0px 0px -40px 0px',
       }
     );
 
@@ -53,55 +53,50 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
     (id) => PARTNERS_AND_CLIENTS.find((p) => p.id === id) || PARTNERS_AND_CLIENTS[0]
   );
 
-  // Middle-aligned arch positions in percentage of 1100x320 viewBox
-  // Symmetrical around 50% midpoint:
-  // Card 0 & 5: 23.82% and 76.18% (midpoint = 50%)
-  // Card 1 & 4: 34.27% and 65.73% (midpoint = 50%)
-  // Card 2 & 3: 44.73% and 55.27% (midpoint = 50%)
+  // Shifted UP coordinates in 1100x210 viewBox to remove empty blank vertical space
   const cardLayout = [
-    { xPct: 23.82, yPct: 54.69, delay: 0.15 }, // Card 0: ICT Division
-    { xPct: 34.27, yPct: 60.00, delay: 0.38 }, // Card 1: EDGE
-    { xPct: 44.73, yPct: 63.13, delay: 0.61 }, // Card 2: Bangladesh Army
-    { xPct: 55.27, yPct: 63.13, delay: 0.84 }, // Card 3: Dhaka University
-    { xPct: 65.73, yPct: 60.00, delay: 1.07 }, // Card 4: BITM
-    { xPct: 76.18, yPct: 54.69, delay: 1.30 }, // Card 5: Swisscontact
+    { xPct: 23.82, yPct: 49.0, delay: 0.15 }, // Card 0: ICT Division
+    { xPct: 34.27, yPct: 56.5, delay: 0.38 }, // Card 1: EDGE
+    { xPct: 44.73, yPct: 61.0, delay: 0.61 }, // Card 2: Bangladesh Army
+    { xPct: 55.27, yPct: 61.0, delay: 0.84 }, // Card 3: Dhaka University
+    { xPct: 65.73, yPct: 56.5, delay: 1.07 }, // Card 4: BITM
+    { xPct: 76.18, yPct: 49.0, delay: 1.30 }, // Card 5: Swisscontact
   ];
 
-  // SVG Arch Path: flows through centered cards, swoops around on the right, and points directly to the 3D handshake
+  // SVG Arch Path shifted up to match tighter vertical spacing
   const archPathD =
-    'M 130,158 C 170,164 215,170 262,175 C 300,180 340,188 377,192 C 415,196 455,202 492,202 C 530,202 570,202 608,202 C 645,202 685,196 723,192 C 760,188 800,180 838,175 C 875,170 915,185 945,210 C 980,235 1030,230 1045,185 C 1055,145 1015,115 965,105';
+    'M 130,90 C 170,96 215,100 262,103 C 300,106 340,114 377,118 C 415,122 455,128 492,128 C 530,128 570,128 608,128 C 645,128 685,122 723,118 C 760,114 800,106 838,103 C 875,98 915,112 945,134 C 980,160 1030,154 1045,116 C 1055,82 1015,60 965,65';
 
   return (
     <section
       id="partners"
       ref={sectionRef}
-      className="section-band bg-[#FBFCF8] text-slate-900 overflow-hidden relative"
+      className="py-12 sm:py-16 bg-[#FBFCF8] text-slate-900 overflow-hidden relative"
     >
-      {/* Background Ambient Aura */}
+      {/* Background Soft Ambient Glow */}
       <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[300px] bg-emerald-500/5 rounded-full blur-[90px] pointer-events-none"
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[260px] bg-emerald-500/6 rounded-full blur-[90px] pointer-events-none"
         aria-hidden="true"
       />
 
-      {/* Title Block - Kept exactly as requested */}
-      <div className="container-1520 mb-6 sm:mb-9 text-left">
+      {/* Title Block - Kept text exactly as requested with tightened vertical spacing */}
+      <div className="container-1520 mb-4 sm:mb-6 text-left">
         <p className="section-tag">PARTNERS</p>
         <h2 className="heading-gradient-green">
           Our Trusted Partners &amp; Clients
         </h2>
-        <p className="section-subtitle-max2 mt-2">
+        <p className="section-subtitle-max2 mt-1.5">
           We&apos;re proud to collaborate with leading government divisions, international NGOs, and technology enterprises.
         </p>
       </div>
 
-      {/* Main Arch Visual Stage */}
+      {/* Main Arch Visual Stage - Shifted up, eliminating blank space */}
       <div className="container-1520 relative">
-        {/* Scrollable Container on Mobile, Fluid on Desktop */}
-        <div className="w-full overflow-x-auto lg:overflow-visible pb-4 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none">
-          <div className="relative min-w-[920px] lg:min-w-0 w-full aspect-[1100/320]">
+        <div className="w-full overflow-x-auto lg:overflow-visible pb-2 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-none">
+          <div className="relative min-w-[900px] lg:min-w-0 w-full aspect-[1100/210]">
             {/* SVG Background: The Arch Line that draws smoothly on scroll */}
             <svg
-              viewBox="0 0 1100 320"
+              viewBox="0 0 1100 210"
               className="absolute inset-0 w-full h-full pointer-events-none z-0"
               fill="none"
               preserveAspectRatio="xMidYMid meet"
@@ -119,7 +114,7 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
 
                 {/* Soft glow filter */}
                 <filter id="archLineGlow" x="-20%" y="-20%" width="140%" height="140%">
-                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feGaussianBlur stdDeviation="2.8" result="blur" />
                   <feMerge>
                     <feMergeNode in="blur" />
                     <feMergeNode in="SourceGraphic" />
@@ -131,7 +126,7 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
               <path
                 d={archPathD}
                 stroke="#E2E8F0"
-                strokeWidth="2.5"
+                strokeWidth="2.2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 opacity="0.65"
@@ -162,9 +157,9 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
                   transitionDelay: '1.95s',
                 }}
               >
-                <circle cx="965" cy="105" r="7" fill="#10B981" opacity="0.35" className="animate-ping" />
-                <circle cx="965" cy="105" r="4" fill="#008F2F" />
-                <circle cx="965" cy="105" r="1.5" fill="#FFFFFF" />
+                <circle cx="965" cy="65" r="7" fill="#10B981" opacity="0.35" className="animate-ping" />
+                <circle cx="965" cy="65" r="4" fill="#008F2F" />
+                <circle cx="965" cy="65" r="1.5" fill="#FFFFFF" />
               </g>
             </svg>
 
@@ -174,14 +169,14 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
               className="absolute -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-500"
               style={{
                 left: '34.27%',
-                top: '41%',
+                top: '32%',
                 opacity: isInView ? 1 : 0,
                 transform: `translate(-50%, -50%) scale(${isInView ? 1 : 0.6})`,
                 transitionDelay: '0.6s',
               }}
             >
               <div
-                className="w-6 h-6 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-[0_3px_10px_rgba(0,0,0,0.07)] flex items-center justify-center text-slate-500 hover:text-emerald-700 hover:scale-110 transition-all cursor-default"
+                className="w-5.5 h-5.5 sm:w-6 sm:h-6 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-[0_2px_8px_rgba(0,0,0,0.06)] flex items-center justify-center text-slate-500 hover:text-emerald-700 hover:scale-110 transition-all cursor-default"
                 title="Accredited Partner"
               >
                 <Check className="w-3 h-3 text-emerald-600" strokeWidth={2.6} />
@@ -193,14 +188,14 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
               className="absolute -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-500"
               style={{
                 left: '55.27%',
-                top: '79%',
+                top: '84%',
                 opacity: isInView ? 1 : 0,
                 transform: `translate(-50%, -50%) scale(${isInView ? 1 : 0.6})`,
                 transitionDelay: '1.05s',
               }}
             >
               <div
-                className="w-6 h-6 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-[0_3px_10px_rgba(0,0,0,0.07)] flex items-center justify-center text-slate-500 hover:text-emerald-700 hover:scale-110 transition-all cursor-default"
+                className="w-5.5 h-5.5 sm:w-6 sm:h-6 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-[0_2px_8px_rgba(0,0,0,0.06)] flex items-center justify-center text-slate-500 hover:text-emerald-700 hover:scale-110 transition-all cursor-default"
                 title="Official MoU"
               >
                 <Sparkles className="w-3 h-3 text-amber-500" strokeWidth={2.2} />
@@ -212,21 +207,21 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
               className="absolute -translate-x-1/2 -translate-y-1/2 z-10 transition-all duration-500"
               style={{
                 left: '65.73%',
-                top: '39%',
+                top: '30%',
                 opacity: isInView ? 1 : 0,
                 transform: `translate(-50%, -50%) scale(${isInView ? 1 : 0.6})`,
                 transitionDelay: '1.35s',
               }}
             >
               <div
-                className="w-6 h-6 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-[0_3px_10px_rgba(0,0,0,0.07)] flex items-center justify-center text-slate-500 hover:text-emerald-700 hover:scale-110 transition-all cursor-default"
+                className="w-5.5 h-5.5 sm:w-6 sm:h-6 rounded-full bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-[0_2px_8px_rgba(0,0,0,0.06)] flex items-center justify-center text-slate-500 hover:text-emerald-700 hover:scale-110 transition-all cursor-default"
                 title="International Trust"
               >
                 <Shield className="w-3 h-3 text-emerald-600" strokeWidth={2.2} />
               </div>
             </div>
 
-            {/* 6 Middle-Aligned Transparent Blur Cards (Refined Compact Sizing) */}
+            {/* 6 Middle-Aligned Transparent Blur Cards (Shifted UP) */}
             {featuredPartners.map((partner, idx) => {
               const layout = cardLayout[idx];
               return (
@@ -241,8 +236,8 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
                   <div
                     onClick={() => onPartnerClick?.(partner)}
                     className={`
-                      w-[86px] sm:w-[96px] lg:w-[104px]
-                      h-[66px] sm:h-[74px] lg:h-[80px]
+                      w-[84px] sm:w-[94px] lg:w-[102px]
+                      h-[64px] sm:h-[72px] lg:h-[78px]
                       rounded-[18px] sm:rounded-[22px]
                       p-2.5 sm:p-3
                       flex items-center justify-center
@@ -260,7 +255,7 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
                       opacity: isInView ? 1 : 0,
                       transform: isInView
                         ? 'translateY(0) scale(1)'
-                        : 'translateY(20px) scale(0.85)',
+                        : 'translateY(16px) scale(0.85)',
                       transitionDelay: `${layout.delay}s`,
                     }}
                     role="button"
@@ -284,11 +279,11 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
                       alt={partner.name}
                       loading="lazy"
                       draggable={false}
-                      className="max-h-[30px] sm:max-h-[35px] lg:max-h-[38px] max-w-[62px] sm:max-w-[72px] lg:max-w-[80px] w-auto h-auto object-contain select-none transition-transform duration-300 group-hover:scale-108"
+                      className="max-h-[28px] sm:max-h-[34px] lg:max-h-[36px] max-w-[60px] sm:max-w-[70px] lg:max-w-[78px] w-auto h-auto object-contain select-none transition-transform duration-300 group-hover:scale-108"
                     />
 
                     {/* Tooltip on Hover */}
-                    <div className="absolute -bottom-9 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 z-30 whitespace-nowrap bg-slate-900/90 text-white text-[10px] font-medium px-2.5 py-0.5 rounded-full shadow-lg">
+                    <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 z-30 whitespace-nowrap bg-slate-900/90 text-white text-[10px] font-medium px-2.5 py-0.5 rounded-full shadow-lg">
                       {partner.name}
                     </div>
                   </div>
@@ -296,32 +291,32 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
               );
             })}
 
-            {/* Futuristic 3D Glass Handshake Visual: Minimal, Pure Transparent Graphic, No Card */}
+            {/* Futuristic 3D Handshake Visual: Dual Material (Solid Soft Green + Translucent Glass) */}
             <div
               className="absolute -translate-x-1/2 -translate-y-1/2 z-20 pointer-events-auto"
               style={{
                 left: '87.73%',
-                top: '23.44%',
+                top: '28.0%',
               }}
             >
               <div
-                className="w-20 sm:w-24 lg:w-28 flex items-center justify-center transition-all duration-700 ease-out group select-none cursor-pointer"
+                className="w-22 sm:w-26 lg:w-30 flex items-center justify-center transition-all duration-700 ease-out group select-none cursor-pointer"
                 style={{
                   opacity: isInView ? 1 : 0,
                   transform: isInView
-                    ? 'translateY(0) scale(1) rotate(-4deg)'
-                    : 'translateY(20px) scale(0.75) rotate(0deg)',
-                  transitionDelay: '1.65s',
+                    ? 'translateY(0) scale(1) rotate(-3deg)'
+                    : 'translateY(16px) scale(0.75) rotate(0deg)',
+                  transitionDelay: '1.60s',
                 }}
                 title="Strategic Trust &amp; Institutional Partnership"
               >
-                {/* Pure Transparent 3D Glass Handshake Visual - Minimal without card */}
+                {/* 3D Handshake: One Hand Solid Soft Green, One Hand Blur Transparent Glass */}
                 <img
-                  src="/assets/partners/handshake_glass_3d.png"
-                  alt="3D Glass Futuristic Handshake - Trust &amp; Partnership"
-                  className="w-full h-auto object-contain select-none transition-transform duration-300 group-hover:scale-112 group-hover:-rotate-3"
+                  src={`/assets/partners/handshake_glass_3d.png?v=${Date.now()}`}
+                  alt="3D Futuristic Handshake - Solid Soft Green &amp; Transparent Glass"
+                  className="w-full h-auto object-contain select-none transition-transform duration-300 group-hover:scale-112 group-hover:-rotate-2"
                   style={{
-                    filter: 'drop-shadow(0 6px 14px rgba(0, 143, 47, 0.14))',
+                    filter: 'drop-shadow(0 6px 14px rgba(0, 143, 47, 0.12))',
                   }}
                   loading="lazy"
                 />
