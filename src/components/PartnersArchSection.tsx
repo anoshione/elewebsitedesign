@@ -122,17 +122,7 @@ export const PartnersArchSection: React.FC<PartnersArchSectionProps> = ({
                 </filter>
               </defs>
 
-              {/* Faint Background Guide Line */}
-              <path
-                d={archPathD}
-                stroke="#E2E8F0"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                opacity="0.65"
-              />
-
-              {/* Animated Foreground Drawing Line */}
+              {/* Animated Foreground Drawing Line (Invisible/Blank until drawn) */}
               <path
                 d={archPathD}
                 stroke="url(#archLineGradient)"
