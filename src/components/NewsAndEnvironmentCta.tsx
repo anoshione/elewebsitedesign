@@ -18,6 +18,21 @@ interface NewsAndEnvironmentCtaProps {
   onBookCampusVisit: () => void;
 }
 
+/** Renders titles containing mixed Latin and Bengali text with uniform font weight so Latin acronyms don't appear bold */
+export const renderMixedTitle = (title: string) => {
+  const parts = title.split(/(\([A-Za-z0-9\s-]+\)|[A-Za-z0-9-]+)/g);
+  return parts.map((part, i) => {
+    if (/^[A-Za-z0-9() -]+$/.test(part) && /[A-Za-z]/.test(part)) {
+      return (
+        <span key={i} className="font-normal font-sans tracking-normal opacity-90 inline">
+          {part}
+        </span>
+      );
+    }
+    return part;
+  });
+};
+
 /** News photo slot — loads images from `public/assets/news/<id>.png`. Falls back to a soft gradient tile while a file is missing. */
 const NewsPhoto: React.FC<{ id: string; title?: string; large?: boolean }> = ({
   id,
@@ -148,8 +163,8 @@ export const NewsAndEnvironmentCta: React.FC<NewsAndEnvironmentCtaProps> = ({
               </button>
 
               <div className="px-2 pt-4 pb-1.5 flex flex-col grow">
-                <h3 className="font-display text-xl lg:text-[1.35rem] font-bold text-slate-900 leading-snug">
-                  {featuredNews.title}
+                <h3 className="font-display text-xl lg:text-[1.35rem] font-medium text-slate-900 leading-snug">
+                  {renderMixedTitle(featuredNews.title)}
                 </h3>
                 <p className="mt-2 text-sm text-slate-600 leading-[1.6] line-clamp-2">
                   {featuredNews.excerpt}
@@ -184,8 +199,8 @@ export const NewsAndEnvironmentCta: React.FC<NewsAndEnvironmentCtaProps> = ({
                   </button>
 
                   <div className="px-2 pt-3.5 pb-2 flex items-center justify-between gap-3 grow">
-                    <h3 className="font-display text-[16px] sm:text-[17px] font-bold text-slate-900 leading-[1.38] line-clamp-3 min-w-0 flex-1">
-                      {item.title}
+                    <h3 className="font-display text-[16px] sm:text-[17px] font-medium text-slate-900 leading-[1.38] line-clamp-3 min-w-0 flex-1">
+                      {renderMixedTitle(item.title)}
                     </h3>
                     <GlassArrowButton
                       small

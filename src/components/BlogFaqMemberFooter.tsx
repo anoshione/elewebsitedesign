@@ -360,21 +360,21 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
                       onClick={() => setOpenFaqId(isOpen ? '' : faq.id)}
                       className="group w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                     >
-                      <span className="font-display text-base sm:text-[17px] font-bold text-white leading-snug pr-2">
+                      <span className="font-display text-base sm:text-[17px] font-medium text-slate-900 group-hover:text-emerald-800 transition-colors leading-snug pr-2">
                         {faq.question}
                       </span>
                       <div
                         className="w-9 h-9 sm:w-10 sm:h-10 rounded-full arrow-btn flex items-center justify-center shrink-0"
                       >
                         {isOpen ? (
-                          <ChevronUp className="w-4.5 h-4.5 text-white" strokeWidth={2.2} />
+                          <ChevronUp className="w-4.5 h-4.5 text-slate-800" strokeWidth={2.2} />
                         ) : (
-                          <ChevronDown className="w-4.5 h-4.5 text-white" strokeWidth={2.2} />
+                          <ChevronDown className="w-4.5 h-4.5 text-slate-800" strokeWidth={2.2} />
                         )}
                       </div>
                     </button>
                     {isOpen && (
-                      <div className="px-5 sm:px-6 pb-6 pt-0 text-sm sm:text-[15px] leading-relaxed text-white/85 border-t border-white/10 pt-4 animate-in fade-in duration-200">
+                      <div className="px-5 sm:px-6 pb-6 pt-0 text-sm sm:text-[15px] leading-relaxed text-slate-700 border-t border-slate-900/10 pt-4 animate-in fade-in duration-200">
                         {faq.answer}
                       </div>
                     )}
@@ -463,11 +463,36 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
         </div>
       </section>
 
-      {/* SECTION 15: ADMISSION BANNER & SECTION 16: FOOTER (Pixel-Perfect Reference Recreation) */}
-      <div className="bg-gradient-to-r from-[#03361B] via-[#04242D] to-[#08154A] text-white">
-        <div className="container-1520 pt-10 sm:pt-14 pb-8">
+      {/* SECTION 15: ADMISSION BANNER & SECTION 16: FOOTER (Luminous Deep Indigo & Emerald Background) */}
+      <div className="footer-bg text-white">
+        <div className="footer-bg__accent" />
+
+        <svg className="footer-bg__grid" aria-hidden="true">
+          <defs>
+            <pattern id="footerGlassGrid" width="36" height="36" patternUnits="userSpaceOnUse">
+              <path d="M 36 0 L 0 0 0 36" fill="none" stroke="#FFFFFF" strokeWidth="1" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#footerGlassGrid)" />
+        </svg>
+
+        <div className="footer-bg__orb footer-bg__orb--top-left" aria-hidden="true" />
+        <div className="footer-bg__orb footer-bg__orb--right" aria-hidden="true" />
+        <div className="footer-bg__orb footer-bg__orb--bottom" aria-hidden="true" />
+
+        <div className="footer-bg__content container-1520 pt-10 sm:pt-14 pb-8">
           {/* TOP CARD: Admission Going On */}
-          <div className="rounded-[32px] glass px-6 py-6 sm:px-10 sm:py-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div
+            className="rounded-[32px] glass px-6 py-6 sm:px-10 sm:py-8 flex flex-col md:flex-row md:items-center justify-between gap-6"
+            style={{
+              background: 'rgba(255, 255, 255, 0.17)',
+              backdropFilter: 'blur(19px) saturate(100%)',
+              WebkitBackdropFilter: 'blur(19px) saturate(100%)',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              boxShadow:
+                '0 8px 32px rgba(0, 0, 0, 0.13), inset 0 1px 0 rgba(255, 255, 255, 0.6), inset 0 -1px 0 rgba(255, 255, 255, 0.15)',
+            }}
+          >
             <div className="max-w-2xl">
               <h2 className="text-2xl sm:text-[28px] lg:text-[32px] font-bold text-white tracking-tight leading-tight">
                 Admission Going On

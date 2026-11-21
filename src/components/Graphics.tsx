@@ -128,9 +128,9 @@ export const SilkBackdrop: React.FC<{
           'linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.3) 50px, black 150px, black calc(100% - 160px), rgba(0,0,0,0.3) calc(100% - 50px), transparent 100%)',
       }}
     >
-      {/* 3D Layered Papercut Texture: Clean sculpted white waves + website brand green ribbons */}
+      {/* 3D Layered Papercut Texture: Distinct pastel green, soft blue, and white/cream sculpted ribbons */}
       <img
-        src="/assets/section_papercut_emerald_light_bg.jpg"
+        src="/assets/section_papercut_pastel_green_blue_white.jpg"
         alt=""
         className="absolute inset-0 w-full h-full object-cover object-center select-none"
       />

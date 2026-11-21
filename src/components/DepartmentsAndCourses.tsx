@@ -146,10 +146,10 @@ const DeptArt: React.FC<{
           right: `${cfg.shadowRight}px`,
           bottom: `${Math.max(6, 12 - cfg.bottomOffset)}px`,
           transform: isHovered
-            ? 'scale(1.3) translateY(8px)'
-            : 'scale(0.95) translateY(0px)',
-          opacity: isHovered ? 0.55 : 0.22,
-          transition: 'all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)',
+            ? 'scale(1.12, 0.88) translateY(4px)'
+            : 'scale(0.95, 0.95) translateY(0px)',
+          opacity: isHovered ? 0.35 : 0.18,
+          transition: 'all 0.35s ease-out',
         }}
       />
 
@@ -162,12 +162,12 @@ const DeptArt: React.FC<{
           right: `${cfg.shadowRight}px`,
           bottom: '10px',
           background:
-            'radial-gradient(circle, rgba(34, 197, 94, 0.42) 0%, rgba(168, 85, 247, 0.25) 50%, transparent 75%)',
-          opacity: isHovered ? 0.95 : 0.25,
+            'radial-gradient(circle, rgba(16, 185, 129, 0.40) 0%, rgba(56, 189, 248, 0.25) 45%, transparent 75%)',
+          opacity: isHovered ? 0.45 : 0.15,
           transform: isHovered
-            ? 'scale(1.4) translate3d(-6px, -14px, 0)'
-            : 'scale(0.9) translate3d(0, 0, 0)',
-          transition: 'all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1)',
+            ? 'scale(1.15) translate3d(-4px, -6px, 0)'
+            : 'scale(0.85) translate3d(0, 0, 0)',
+          transition: 'all 0.35s ease-out',
         }}
       />
 
@@ -176,15 +176,13 @@ const DeptArt: React.FC<{
         className="relative w-full h-full flex items-end justify-end dept-3d-floating-icon"
         style={{
           transform: isHovered
-            ? `perspective(600px) rotateX(${tiltRx.toFixed(1)}deg) rotateY(${tiltRy.toFixed(1)}deg) translate3d(${(-6 + parallaxX).toFixed(1)}px, ${(-16 + parallaxY).toFixed(1)}px, 45px) scale(${cfg.hoverScale * 1.08})`
-            : 'perspective(600px) rotateX(0deg) rotateY(0deg) translate3d(0px, 0px, 0px) scale(1)',
+            ? `perspective(600px) rotateX(${tiltRx.toFixed(1)}deg) rotateY(${tiltRy.toFixed(1)}deg) translate3d(${(-2 + parallaxX * 0.15).toFixed(1)}px, ${(-6 + parallaxY * 0.15).toFixed(1)}px, 0px) scale(1.05) rotate(-1.5deg)`
+            : 'perspective(600px) rotateX(0deg) rotateY(0deg) translate3d(0px, 0px, 0px) scale(1) rotate(0deg)',
           transformStyle: 'preserve-3d',
           filter: isHovered
-            ? 'drop-shadow(0 20px 24px rgba(5, 30, 15, 0.30)) drop-shadow(0 8px 14px rgba(0, 143, 47, 0.24)) brightness(1.08) contrast(1.04)'
-            : 'drop-shadow(0 8px 14px rgba(10, 40, 20, 0.12))',
-          transition: isHovered
-            ? 'transform 0.08s ease-out, filter 0.3s ease'
-            : 'transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.45s ease',
+            ? 'drop-shadow(0 14px 18px rgba(0, 30, 15, 0.20)) drop-shadow(0 4px 8px rgba(0, 143, 47, 0.16)) brightness(1.04)'
+            : 'drop-shadow(0 8px 14px rgba(10, 40, 20, 0.10))',
+          transition: 'transform 0.35s ease-out, filter 0.3s ease',
         }}
       >
         <img
@@ -212,6 +210,7 @@ const DeptCard: React.FC<{
 }> = ({ dept, onJump }) => {
   const cardRef = React.useRef<HTMLButtonElement>(null);
   const [logoTilt, setLogoTilt] = useState({ rx: 0, ry: 0, px: 0, py: 0 });
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovered, setIsHovered] = useState(false);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -219,13 +218,14 @@ const DeptCard: React.FC<{
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
+    setMousePos({ x, y });
     const cx = rect.width / 2;
     const cy = rect.height / 2;
-    // 3D tilt & parallax applied strictly to the logo
-    const rx = ((y - cy) / cy) * -8;
-    const ry = ((x - cx) / cx) * 8;
-    const px = ((x - cx) / cx) * 8;
-    const py = ((y - cy) / cy) * 8;
+    // subtle 3D tilt
+    const rx = ((y - cy) / cy) * -4;
+    const ry = ((x - cx) / cx) * 4;
+    const px = ((x - cx) / cx) * 4;
+    const py = ((y - cy) / cy) * 4;
     setLogoTilt({ rx, ry, px, py });
   };
 
@@ -246,21 +246,50 @@ const DeptCard: React.FC<{
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className="group relative text-left rounded-[32px] glass pt-5 px-6 pb-6 min-h-[248px] flex flex-col overflow-hidden cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition-all duration-300 hover:-translate-y-1"
+      className="group relative text-left rounded-[32px] dept-glass-card pt-6 px-6 pb-6 min-h-[252px] flex flex-col overflow-hidden cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition-all duration-300 hover:-translate-y-1.5"
     >
-      <div>
-        <h3 className="text-slate-900 text-[26px] font-semibold tracking-tight leading-snug">{dept.title}</h3>
-        <p className="mt-2 text-sm text-slate-500 leading-[1.5] max-w-[65%]">
+      {/* 1. Dynamic Specular Light Sheen Sweep Across Glass Surface on Hover */}
+      <div className="dept-surface-sheen" aria-hidden="true" />
+
+      {/* 2. Frosted Glass Surface Glow on Hover */}
+      <div
+        className="absolute inset-0 rounded-[32px] pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100 bg-gradient-to-br from-white/35 via-white/10 to-transparent"
+        aria-hidden="true"
+      />
+
+      {/* 3. Top Specular Edge Highlight on Hover (Crisp White Glass Rim) */}
+      <div
+        className="absolute top-0 inset-x-8 h-[1.5px] bg-gradient-to-r from-transparent via-white/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        aria-hidden="true"
+      />
+
+      {/* 4. Interactive Cursor Specular Spotlight on the Frosted Glass */}
+      <div
+        className="absolute inset-0 rounded-[32px] pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+        style={{
+          background: `radial-gradient(320px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.12) 35%, transparent 70%)`,
+        }}
+        aria-hidden="true"
+      />
+
+      {/* 5. Title & Description: Moves down smoothly on hover */}
+      <div className="relative z-20 transition-transform duration-300 ease-out transform group-hover:translate-y-2">
+        <h3 className="text-slate-900 text-[22px] font-semibold tracking-tight leading-snug transition-colors duration-300 group-hover:text-[#008F2F]">
+          {dept.title}
+        </h3>
+        <p className="mt-2 text-sm text-slate-600 leading-[1.5] max-w-[65%] transition-colors duration-300 group-hover:text-slate-800">
           {dept.subtitle}
         </p>
       </div>
 
+      {/* 6. Arrow Action Button */}
       <span
-        className="relative z-20 mt-auto shrink-0 aspect-square inline-flex w-11 h-11 min-w-[44px] min-h-[44px] rounded-full card-arrow-btn arrow-btn items-center justify-center"
+        className="relative z-20 mt-auto shrink-0 aspect-square inline-flex w-11 h-11 min-w-[44px] min-h-[44px] rounded-full card-arrow-btn arrow-btn items-center justify-center transition-all duration-300 group-hover:scale-105"
       >
         <ArrowRight className="w-4.5 h-4.5 shrink-0" strokeWidth={2.2} />
       </span>
 
+      {/* 7. 3D Department Icon */}
       <DeptArt
         id={dept.id}
         isHovered={isHovered}

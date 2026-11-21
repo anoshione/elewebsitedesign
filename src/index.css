@@ -434,8 +434,92 @@
 }
 
 .group:hover .dept-icon-glow {
-  transform: scale(1.35) translate3d(-8px, -14px, 0);
-  opacity: 0.85;
+  transform: scale(1.55) translate3d(-10px, -20px, 0);
+  opacity: 0.95;
+}
+
+/* Ground Floor Shadow under 3D department icon */
+.dept-floor-shadow {
+  position: absolute;
+  height: 22px;
+  border-radius: 9999px;
+  background: radial-gradient(ellipse at center, rgba(6, 40, 20, 0.52) 0%, rgba(6, 40, 20, 0.16) 50%, transparent 75%);
+  filter: blur(8px);
+  pointer-events: none;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+/* Specular glass reflection sweep across 3D department icon */
+.dept-glass-shimmer {
+  position: absolute;
+  inset: -15%;
+  pointer-events: none;
+  background: linear-gradient(
+    135deg,
+    transparent 25%,
+    rgba(255, 255, 255, 0.45) 48%,
+    rgba(255, 255, 255, 0.8) 50%,
+    rgba(255, 255, 255, 0.45) 52%,
+    transparent 75%
+  );
+  opacity: 0;
+  transform: translateX(-120%) rotate(25deg);
+  transition: opacity 0.3s ease, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.group:hover .dept-glass-shimmer {
+  opacity: 1;
+  transform: translateX(120%) rotate(25deg);
+}
+
+/* Department Glass Cards: Genuine Translucent Frosted Glassmorphism */
+.dept-glass-card {
+  background: rgba(255, 255, 255, 0.15);
+  -webkit-backdrop-filter: blur(16px) saturate(120%);
+  backdrop-filter: blur(16px) saturate(120%);
+  border: 1.5px solid rgba(255, 255, 255, 0.65);
+  box-shadow:
+    0 8px 32px rgba(0, 30, 15, 0.08),
+    0 2px 8px rgba(0, 0, 0, 0.03),
+    inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.75),
+    inset 0 -1px 1px 0 rgba(255, 255, 255, 0.20);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dept-glass-card:hover {
+  background: rgba(255, 255, 255, 0.22);
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow:
+    0 20px 42px -10px rgba(0, 36, 16, 0.12),
+    0 6px 18px -4px rgba(0, 0, 0, 0.04),
+    inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+/* Specular light sheen sweep across the glass card on hover */
+.dept-surface-sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: 32px;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 15%,
+    rgba(255, 255, 255, 0.30) 45%,
+    rgba(255, 255, 255, 0.60) 50%,
+    rgba(255, 255, 255, 0.30) 55%,
+    transparent 85%
+  );
+  opacity: 0;
+  transform: translateX(-100%);
+  transition: opacity 0.3s ease, transform 0.75s ease;
+}
+
+.dept-glass-card:hover .dept-surface-sheen,
+.group:hover .dept-surface-sheen {
+  opacity: 1;
+  transform: translateX(100%);
 }
 
 /* Nationwide Campus Branch Card: Translucent White Frosted Glass */
@@ -673,6 +757,66 @@
   background: linear-gradient(135deg, #00A638 0%, #18C650 55%, #34E573 100%);
   box-shadow: 0 14px 30px -4px rgba(0, 143, 47, 0.6);
   transform: translateY(-1px);
+}
+
+/* Luminous Deep Indigo & Emerald Footer Background */
+.footer-bg {
+  position: relative;
+  overflow: hidden;
+  background-color: #16133B;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  min-height: 400px;
+}
+
+.footer-bg__accent {
+  height: 3px;
+  width: 100%;
+  background-color: #159E42;
+}
+
+.footer-bg__grid {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.07;
+  pointer-events: none;
+}
+
+.footer-bg__orb {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(64px);
+  pointer-events: none;
+}
+
+.footer-bg__orb--top-left {
+  top: -4rem;
+  left: 8%;
+  width: 22rem;
+  height: 22rem;
+  background-color: rgba(21, 158, 66, 0.4);
+}
+
+.footer-bg__orb--right {
+  top: 24%;
+  right: 10%;
+  width: 24rem;
+  height: 24rem;
+  background-color: rgba(61, 55, 143, 0.6);
+}
+
+.footer-bg__orb--bottom {
+  bottom: -6rem;
+  left: 36%;
+  width: 22rem;
+  height: 22rem;
+  background-color: rgba(21, 158, 66, 0.3);
+}
+
+.footer-bg__content {
+  position: relative;
+  z-index: 10;
 }
 
 @media (prefers-reduced-motion: reduce) {

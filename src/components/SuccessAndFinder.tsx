@@ -5,6 +5,7 @@ import {
   Check,
   ChevronDown,
   Clock,
+  Headphones,
   Play,
   Star,
   X,
@@ -117,8 +118,14 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
 
   const [selectedTopic, setSelectedTopic] = useState<TopicOptionId | null>(null);
   const [selectedExperience, setSelectedExperience] = useState<ExperienceOptionId | null>(null);
+  const [selectedCourseId, setSelectedCourseId] = useState<string | null>(null);
   const [openDropdown, setOpenDropdown] = useState<'topic' | 'experience' | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Reset course selection whenever dropdown criteria change
+  useEffect(() => {
+    setSelectedCourseId(null);
+  }, [selectedTopic, selectedExperience]);
 
   useEffect(() => {
     if (!openDropdown) return;
@@ -219,6 +226,11 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
 
     return courses.slice(0, 3);
   }, [selectedTopic, selectedExperience]);
+
+  const selectedCourse = useMemo(() => {
+    if (!selectedCourseId) return null;
+    return matchedCourses.find((c) => c.id === selectedCourseId) || null;
+  }, [matchedCourses, selectedCourseId]);
 
   return (
     <>
@@ -355,8 +367,19 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
       <section id="course-finder" className="relative overflow-hidden bg-[#FBFCF8] text-slate-900 section-band py-16 lg:py-20">
         <div className="container-1520 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-6 lg:gap-6 xl:gap-7 items-stretch">
-            {/* Card 1: Left Column (4 cols on lg) - Dedicated Card with Blank White Background (No Visual Pattern Image) */}
-            <div className="lg:col-span-4 relative rounded-[32px] overflow-hidden p-6 sm:p-8 lg:p-9 flex flex-col justify-between min-h-[520px] lg:min-h-[580px] h-full border border-slate-200/90 shadow-[0_16px_36px_-12px_rgba(15,23,42,0.08)] bg-white">
+            {/* Card 1: Left Column (4 cols on lg) - Dedicated Visual Card with 3D Glass Course Finder Visual */}
+            <div className="lg:col-span-4 relative rounded-[32px] overflow-hidden p-6 sm:p-8 lg:p-9 flex flex-col justify-between min-h-[520px] lg:min-h-[580px] h-full border border-emerald-100/70 shadow-[0_20px_45px_-15px_rgba(0,143,47,0.12)] bg-white">
+              {/* Background Visual Image positioned in the lower area below description */}
+              <div className="absolute left-0 right-0 bottom-0 top-[40%] sm:top-[38%] lg:top-[39%] z-0 overflow-hidden pointer-events-none">
+                <img
+                  src="/assets/course_finder_visual.jpg"
+                  alt="Find the course that suits you visual"
+                  className="w-full h-full object-cover object-center select-none"
+                />
+                {/* Seamless white fade at top edge to blend into white card background */}
+                <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white via-white/80 to-transparent pointer-events-none" />
+              </div>
+
               {/* Top: Title & Description Section */}
               <div className="relative z-10">
                 <div className="mb-2.5">
@@ -370,31 +393,21 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
                   Find the course that suits you
                 </h2>
 
-                <p className="text-xs sm:text-sm lg:text-[14px] leading-relaxed text-slate-600 mb-6">
+                <p className="text-xs sm:text-sm lg:text-[14px] leading-relaxed text-slate-600">
                   Tell us what you enjoy and how much experience you have, and we&apos;ll suggest the courses that fit you best. If you&apos;d like a second opinion, you can talk to one of our advisors right away.
                 </p>
               </div>
 
-              {/* Bottom: Clean Checklist on Blank White Background */}
-              <div className="relative z-10 pt-6 border-t border-slate-100 flex flex-col gap-3.5">
-                <div className="flex items-center gap-3 text-xs sm:text-sm font-medium text-slate-700">
-                  <div className="w-5 h-5 rounded-full bg-emerald-50 text-[#008F2F] border border-emerald-200/60 flex items-center justify-center shrink-0">
-                    <Check className="w-3.5 h-3.5" />
-                  </div>
-                  <span>Personalized career roadmap</span>
-                </div>
-                <div className="flex items-center gap-3 text-xs sm:text-sm font-medium text-slate-700">
-                  <div className="w-5 h-5 rounded-full bg-emerald-50 text-[#008F2F] border border-emerald-200/60 flex items-center justify-center shrink-0">
-                    <Check className="w-3.5 h-3.5" />
-                  </div>
-                  <span>1-on-1 advisor consultation</span>
-                </div>
-                <div className="flex items-center gap-3 text-xs sm:text-sm font-medium text-slate-700">
-                  <div className="w-5 h-5 rounded-full bg-emerald-50 text-[#008F2F] border border-emerald-200/60 flex items-center justify-center shrink-0">
-                    <Check className="w-3.5 h-3.5" />
-                  </div>
-                  <span>100% free guidance</span>
-                </div>
+              {/* Bottom: Talk to an advisor button with transparent blur background */}
+              <div className="relative z-10 mt-auto pt-8">
+                <button
+                  type="button"
+                  onClick={() => onEnrollCourse(matchedCourses[0] || COURSES[0], 'seminar')}
+                  className="inline-flex items-center justify-center gap-2.5 h-[50px] px-7 rounded-full text-sm font-semibold text-slate-800 glass-btn transition-all duration-200 cursor-pointer hover:text-emerald-800 hover:scale-[1.02] shadow-[0_6px_20px_-4px_rgba(0,0,0,0.08)]"
+                >
+                  <Headphones className="w-4 h-4 text-emerald-600" strokeWidth={2} />
+                  <span>Talk to an advisor</span>
+                </button>
               </div>
             </div>
 
@@ -510,81 +523,99 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
 
                 {/* Suggested Courses: Blank until user selects both dropdowns, then shows max 3 courses */}
                 {selectedTopic && selectedExperience && matchedCourses.length > 0 && (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
-                    {matchedCourses.map((course, idx) => (
-                      <article
-                        key={course.id}
-                        onClick={() => onInspectCourse(course)}
-                        className={`group rounded-[24px] bg-white/80 backdrop-blur-xl border p-3.5 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06)] hover:shadow-[0_16px_36px_-10px_rgba(0,143,47,0.18)] hover:border-emerald-400/60 hover:bg-white transition-all duration-300 hover:-translate-y-1 cursor-pointer flex items-center gap-3.5 sm:gap-4 relative overflow-hidden ${
-                          idx === 0
-                            ? 'border-emerald-400/60 bg-white/90 shadow-[0_6px_24px_-4px_rgba(0,143,47,0.1)]'
-                            : 'border-white/80'
-                        }`}
-                      >
-                        {/* Recommended tag on the first card on the top right over the card */}
-                        {idx === 0 && (
-                          <div className="absolute -top-2.5 right-4 sm:right-5 z-20 pointer-events-none">
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10.5px] sm:text-[11px] font-bold tracking-wide uppercase text-[#008F2F] bg-white/90 backdrop-blur-md border border-emerald-300/80 shadow-[0_4px_12px_-2px_rgba(0,143,47,0.22)]">
-                              Recommended
-                            </span>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-3 animate-in fade-in slide-in-from-top-2 duration-300">
+                    {matchedCourses.map((course, idx) => {
+                      const isChosen = selectedCourseId === course.id;
+                      return (
+                        <article
+                          key={course.id}
+                          onClick={() => setSelectedCourseId(course.id)}
+                          role="button"
+                          tabIndex={0}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter' || e.key === ' ') {
+                              e.preventDefault();
+                              setSelectedCourseId(course.id);
+                            }
+                          }}
+                          aria-pressed={isChosen}
+                          className={`group rounded-[24px] backdrop-blur-xl border p-3.5 transition-all duration-300 hover:-translate-y-1 cursor-pointer flex items-center gap-3.5 sm:gap-4 relative select-none ${
+                            isChosen
+                              ? 'border-[#008F2F] bg-white ring-2 ring-emerald-500/35 shadow-[0_10px_28px_-4px_rgba(0,143,47,0.22)]'
+                              : idx === 0
+                              ? 'border-emerald-300/80 bg-white/90 shadow-[0_6px_24px_-4px_rgba(0,143,47,0.08)] hover:bg-white hover:border-emerald-400'
+                              : 'border-slate-200/80 bg-white/80 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.06)] hover:bg-white hover:border-emerald-400/60'
+                          }`}
+                        >
+                          {/* Recommended tag on the first card floating over the top edge of the card */}
+                          {idx === 0 && (
+                            <div className="absolute -top-3 right-4 sm:right-5 z-30 pointer-events-none">
+                              <span className="inline-flex items-center px-3 py-0.5 rounded-full text-[10px] sm:text-[10.5px] font-bold tracking-wider uppercase text-[#008F2F] bg-white border border-emerald-300 shadow-[0_4px_12px_-2px_rgba(0,143,47,0.25)]">
+                                Recommended
+                              </span>
+                            </div>
+                          )}
+
+                          {/* Left: Course icon / mini thumbnail */}
+                          <div className={`w-16 h-16 sm:w-[70px] sm:h-[70px] rounded-[24px] overflow-hidden shrink-0 border p-2 flex items-center justify-center relative shadow-xs group-hover:scale-105 transition-transform duration-300 ${
+                            isChosen
+                              ? 'bg-gradient-to-br from-emerald-100/60 via-white to-emerald-200/50 border-emerald-300'
+                              : 'bg-gradient-to-br from-emerald-50 via-white to-emerald-100/50 border-emerald-100/80'
+                          }`}>
+                            <img
+                              src={`/assets/departments/${course.departmentId}.png`}
+                              alt=""
+                              className="w-full h-full object-contain filter drop-shadow-[0_4px_6px_rgba(0,0,0,0.08)] select-none"
+                              onError={(e) => {
+                                (e.currentTarget as HTMLImageElement).src = '/assets/departments/graphics.png';
+                              }}
+                            />
                           </div>
-                        )}
 
-                        {/* Left: Course icon / mini thumbnail */}
-                        <div className="w-16 h-16 sm:w-[70px] sm:h-[70px] rounded-[24px] overflow-hidden shrink-0 bg-gradient-to-br from-emerald-50 via-white to-emerald-100/50 border border-emerald-100/80 p-2 flex items-center justify-center relative shadow-xs group-hover:scale-105 transition-transform duration-300">
-                          <img
-                            src={`/assets/departments/${course.departmentId}.png`}
-                            alt=""
-                            className="w-full h-full object-contain filter drop-shadow-[0_4px_6px_rgba(0,0,0,0.08)] select-none"
-                            onError={(e) => {
-                              (e.currentTarget as HTMLImageElement).src = '/assets/departments/graphics.png';
-                            }}
-                          />
-                        </div>
-
-                        {/* Middle: Title, Length, Fee */}
-                        <div className="flex-1 min-w-0 pr-1">
-                          <h4 className="font-display font-bold text-slate-900 text-sm sm:text-[15px] leading-snug group-hover:text-emerald-700 transition-colors truncate">
-                            {course.title}
-                          </h4>
-                          <p className="text-xs text-slate-500 font-medium mt-1 flex items-center gap-1.5">
-                            <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" strokeWidth={1.8} />
-                            <span>{course.durationMonths} Months</span>
-                          </p>
-                          <div className="mt-1 font-display text-sm sm:text-[15px] font-bold text-[#008F2F] tabular-nums">
-                            {course.offlineFee}
+                          {/* Middle: Title, Length, Fee */}
+                          <div className="flex-1 min-w-0 pr-1">
+                            <h4 className={`font-display font-bold text-sm sm:text-[15px] leading-snug transition-colors truncate ${
+                              isChosen ? 'text-[#008F2F]' : 'text-slate-900 group-hover:text-emerald-700'
+                            }`}>
+                              {course.title}
+                            </h4>
+                            <p className="text-xs text-slate-500 font-medium mt-1 flex items-center gap-1.5">
+                              <Clock className="w-3.5 h-3.5 text-slate-400 shrink-0" strokeWidth={1.8} />
+                              <span>{course.durationMonths} Months</span>
+                            </p>
+                            <div className="mt-1 font-display text-sm sm:text-[15px] font-bold text-[#008F2F] tabular-nums">
+                              {course.offlineFee}
+                            </div>
                           </div>
-                        </div>
-
-                        {/* Right: Signature Glass Arrow Action matching rest of website */}
-                        <span className="w-9 h-9 sm:w-10 sm:h-10 rounded-full arrow-btn card-arrow-btn shrink-0 aspect-square flex items-center justify-center cursor-pointer">
-                          <ArrowRight className="w-4 h-4 shrink-0" strokeWidth={2.2} />
-                        </span>
-                      </article>
-                    ))}
+                        </article>
+                      );
+                    })}
                   </div>
                 )}
               </div>
 
-              {/* Bottom Advisor CTA Row */}
-              <div className="mt-7 pt-5 border-t border-slate-200/60 flex flex-wrap items-center justify-between gap-4">
-                <div className="flex flex-wrap items-center gap-3 sm:gap-4">
-                  <button
-                    type="button"
-                    onClick={() => onEnrollCourse(matchedCourses[0] || COURSES[0], 'seminar')}
-                    className="inline-flex items-center justify-center h-[46px] px-6 text-sm font-semibold text-white btn-gradient-green rounded-full transition-all cursor-pointer hover:scale-[1.02]"
-                  >
-                    Talk to an advisor
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => onEnrollCourse(matchedCourses[0] || COURSES[0], 'seminar')}
-                    className="text-xs sm:text-sm font-medium text-slate-700 hover:text-emerald-700 underline decoration-slate-300 hover:decoration-emerald-600 transition-colors cursor-pointer"
-                  >
-                    Free seminars run every week — join one.
-                  </button>
+              {/* Bottom Course Action Buttons Row: Only shown after user selects a course from the suggested list */}
+              {selectedTopic && selectedExperience && selectedCourse && (
+                <div className="mt-7 pt-5 border-t border-slate-200/60 flex flex-wrap items-center justify-between gap-4 animate-in fade-in slide-in-from-top-2 duration-300">
+                  <div className="flex flex-wrap items-center gap-3 sm:gap-4">
+                    <button
+                      type="button"
+                      onClick={() => onEnrollCourse(selectedCourse, 'enroll')}
+                      className="inline-flex items-center justify-center gap-2 h-[48px] px-7 text-sm font-semibold text-white btn-gradient-green rounded-full transition-all cursor-pointer shadow-[0_10px_24px_-6px_rgba(0,143,47,0.45)] hover:shadow-[0_14px_30px_-4px_rgba(0,143,47,0.6)] hover:scale-[1.02]"
+                    >
+                      <span>Enroll Now</span>
+                      <ArrowRight className="w-4 h-4 text-white" strokeWidth={2} />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => onInspectCourse(selectedCourse)}
+                      className="inline-flex items-center justify-center gap-2 h-[48px] px-6 text-sm font-semibold text-slate-800 glass-btn rounded-full transition-all cursor-pointer hover:text-emerald-800 hover:scale-[1.02]"
+                    >
+                      <span>See Details</span>
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </div>

@@ -19,6 +19,7 @@ import {
   DEPARTMENTS,
   NewsItem,
 } from '../data/homeData';
+import { renderMixedTitle } from './NewsAndEnvironmentCta';
 
 export type ModalState =
   | { type: 'none' }
@@ -621,8 +622,8 @@ export const Modals: React.FC<ModalsProps> = ({
               <div className="text-xs font-semibold text-emerald-300">
                 {modal.item.category} · {modal.item.date} · {modal.item.readTime}
               </div>
-              <h3 className="mt-2 font-display text-2xl font-bold text-white leading-[1.3]">
-                {modal.item.title}
+              <h3 className="mt-2 font-display text-2xl font-medium text-white leading-[1.3]">
+                {renderMixedTitle(modal.item.title)}
               </h3>
             </div>
 
