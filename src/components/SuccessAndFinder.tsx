@@ -370,11 +370,11 @@ export const SuccessAndFinder: React.FC<SuccessAndFinderProps> = ({
             {/* Card 1: Left Column (4 cols on lg) - Dedicated Visual Card with 3D Glass Course Finder Visual */}
             <div className="lg:col-span-4 relative rounded-[32px] overflow-hidden p-6 sm:p-8 lg:p-9 flex flex-col justify-between min-h-[520px] lg:min-h-[580px] h-full border border-emerald-100/70 shadow-[0_20px_45px_-15px_rgba(0,143,47,0.12)] bg-white group">
               {/* Background Visual Image positioned in the lower area below description */}
-              <div className="absolute left-0 right-0 bottom-0 top-[40%] sm:top-[38%] lg:top-[39%] z-0 overflow-hidden pointer-events-none">
+              <div className="absolute left-0 right-0 bottom-0 top-[40%] sm:top-[38%] lg:top-[39%] z-0 overflow-hidden pointer-events-none banner-sheen">
                 <img
                   src="/assets/course_finder_visual.jpg"
                   alt="Find the course that suits you visual"
-                  className="w-full h-full object-cover object-center select-none"
+                  className="w-full h-full object-cover object-center select-none transition-transform duration-500 group-hover:scale-105"
                 />
                 {/* Seamless white fade at top edge to blend into white card background */}
                 <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-b from-white via-white/80 to-transparent pointer-events-none" />
