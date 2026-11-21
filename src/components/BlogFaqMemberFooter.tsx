@@ -301,7 +301,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
             {/* Left Column: Visual Card with FAQ Title at Top & Just the CTA at Bottom */}
             <div className="faq-white-card lg:col-span-5 relative rounded-[32px] overflow-hidden p-7 sm:p-9 lg:p-10 flex flex-col justify-between min-h-[520px] lg:min-h-[580px] h-full border border-emerald-100/70 shadow-[0_20px_45px_-15px_rgba(0,143,47,0.12)] bg-white group">
               {/* Background Visual Image */}
-              <div className="absolute inset-0 z-0">
+              <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none banner-sheen">
                 <img
                   src="/assets/faq/faq_visual.jpg"
                   alt="FAQ Education & Career Counseling Visual"
