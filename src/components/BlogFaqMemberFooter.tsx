@@ -455,40 +455,40 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
               Our Payment Merchants:
             </div>
 
-            <div className="flex flex-wrap items-center gap-2.5">
-              <div className="h-8 px-3 rounded-lg bg-white text-slate-900 flex items-center gap-1.5 text-xs font-bold shadow-sm">
-                <span className="w-4 h-4 rounded bg-[#E2136E] text-white inline-flex items-center justify-center text-[10px] font-extrabold">
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="h-10 px-[18px] rounded-[10px] bg-white text-slate-900 flex items-center gap-2 text-xs sm:text-[13px] font-bold shadow-sm">
+                <span className="w-4.5 h-4.5 rounded bg-[#E2136E] text-white inline-flex items-center justify-center text-[10px] font-extrabold">
                   b
                 </span>
                 <span>bKash</span>
               </div>
-              <div className="h-8 px-3 rounded-lg bg-white text-slate-900 flex items-center gap-1.5 text-xs font-bold shadow-sm">
-                <span className="w-4 h-4 rounded-full bg-[#F7941D] text-white inline-flex items-center justify-center text-[10px] font-extrabold">
+              <div className="h-10 px-[18px] rounded-[10px] bg-white text-slate-900 flex items-center gap-2 text-xs sm:text-[13px] font-bold shadow-sm">
+                <span className="w-4.5 h-4.5 rounded-full bg-[#F7941D] text-white inline-flex items-center justify-center text-[10px] font-extrabold">
                   N
                 </span>
                 <span className="text-[#ED1C24]">Nagad</span>
               </div>
-              <div className="h-8 px-3 rounded-lg bg-white text-slate-900 flex items-center gap-1.5 text-xs font-bold shadow-sm">
-                <span className="w-4 h-4 rounded bg-[#8C3494] text-white inline-flex items-center justify-center text-[10px] font-extrabold">
+              <div className="h-10 px-[18px] rounded-[10px] bg-white text-slate-900 flex items-center gap-2 text-xs sm:text-[13px] font-bold shadow-sm">
+                <span className="w-4.5 h-4.5 rounded bg-[#8C3494] text-white inline-flex items-center justify-center text-[10px] font-extrabold">
                   R
                 </span>
                 <span className="text-[#8C3494]">Rocket</span>
               </div>
-              <div className="h-8 px-3 rounded-lg bg-white text-slate-900 flex items-center gap-1.5 text-xs font-bold shadow-sm">
-                <span className="w-4 h-4 rounded-full bg-[#005BAA] text-[#FFD100] inline-flex items-center justify-center text-[10px] font-extrabold">
+              <div className="h-10 px-[18px] rounded-[10px] bg-white text-slate-900 flex items-center gap-2 text-xs sm:text-[13px] font-bold shadow-sm">
+                <span className="w-4.5 h-4.5 rounded-full bg-[#005BAA] text-[#FFD100] inline-flex items-center justify-center text-[10px] font-extrabold">
                   U
                 </span>
                 <span className="text-[#005BAA]">Upay</span>
               </div>
-              <div className="h-8 px-3 rounded-lg bg-white text-slate-900 flex items-center gap-2 text-xs font-extrabold shadow-sm">
+              <div className="h-10 px-[18px] rounded-[10px] bg-white text-slate-900 flex items-center gap-2.5 text-xs sm:text-[13px] font-extrabold shadow-sm">
                 <span className="text-[#1A1F71] italic tracking-tight">VISA</span>
                 <span className="inline-flex items-center" aria-hidden="true">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#EB001B]" />
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#F79E1B] -ml-1.5 opacity-90" />
+                  <span className="w-3 h-3 rounded-full bg-[#EB001B]" />
+                  <span className="w-3 h-3 rounded-full bg-[#F79E1B] -ml-1.5 opacity-90" />
                 </span>
               </div>
-              <div className="h-8 px-3 rounded-lg bg-white text-slate-900 flex items-center gap-1.5 text-xs font-bold shadow-sm">
-                <Building2 className="w-3.5 h-3.5 text-emerald-700" strokeWidth={2} />
+              <div className="h-10 px-[18px] rounded-[10px] bg-white text-slate-900 flex items-center gap-2 text-xs sm:text-[13px] font-bold shadow-sm">
+                <Building2 className="w-4 h-4 text-emerald-700" strokeWidth={2} />
                 <span>Bank &amp; EFT</span>
               </div>
             </div>
@@ -501,7 +501,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
               <div className="lg:col-span-3 space-y-4">
                 <a
                   href="#top"
-                  className="inline-flex items-center bg-white rounded-[24px] px-4 py-2.5 shadow-md transition-transform hover:scale-[1.02]"
+                  className="inline-flex items-center bg-white rounded-[16px] px-4 py-2.5 shadow-md transition-transform hover:scale-[1.02]"
                   aria-label="e-Learning & Earning Ltd. Home"
                 >
                   <img
