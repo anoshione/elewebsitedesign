@@ -230,7 +230,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
                 className="group relative rounded-[32px] card-glass-drop hover:-translate-y-1 transition-all duration-300 flex flex-col justify-end min-h-[500px] sm:min-h-[530px] overflow-hidden"
               >
                 {/* Full-Card Height Map Background (with pin in top middle) */}
-                <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
                   <img
                     src={branch.mapImage}
                     alt={`${branch.city} branch campus map location`}
@@ -239,6 +239,9 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
                   />
                   {/* 50% transparent shade from the bottom background */}
                   <div className="absolute inset-x-0 bottom-0 h-[30%] bg-gradient-to-t from-[#1C2C23]/50 via-[#2D4236]/25 to-transparent pointer-events-none" />
+
+                  {/* Hover sheen sweep just over the map image */}
+                  <div className="absolute inset-0 banner-sheen pointer-events-none" />
                 </div>
 
                 {/* Bottom: Translucent White Frosted Glass Info Card with Drop Shadow */}
