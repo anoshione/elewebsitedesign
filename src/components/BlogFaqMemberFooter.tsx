@@ -406,6 +406,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
         <div className="footer-bg__orb footer-bg__orb--top-left" aria-hidden="true" />
         <div className="footer-bg__orb footer-bg__orb--right" aria-hidden="true" />
         <div className="footer-bg__orb footer-bg__orb--bottom" aria-hidden="true" />
+        <div className="footer-bg__orb footer-bg__orb--center-left" aria-hidden="true" />
 
         <div className="footer-bg__content container-1520 pt-10 sm:pt-14 pb-8">
           {/* TOP CARD: Admission Going On */}
