@@ -162,12 +162,12 @@ const DeptArt: React.FC<{
           right: `${cfg.shadowRight}px`,
           bottom: '10px',
           background:
-            'radial-gradient(circle, rgba(16, 185, 129, 0.40) 0%, rgba(56, 189, 248, 0.25) 45%, transparent 75%)',
-          opacity: isHovered ? 0.45 : 0.15,
+            'radial-gradient(circle, rgba(16, 185, 129, 0.50) 0%, rgba(56, 189, 248, 0.30) 45%, transparent 75%)',
+          opacity: isHovered ? 0.60 : 0.15,
           transform: isHovered
-            ? 'scale(1.15) translate3d(-4px, -6px, 0)'
+            ? 'scale(1.2) translate3d(-4px, -6px, 0)'
             : 'scale(0.85) translate3d(0, 0, 0)',
-          transition: 'all 0.35s ease-out',
+          transition: 'all 0.4s ease-out',
         }}
       />
 
@@ -251,23 +251,23 @@ const DeptCard: React.FC<{
       {/* 1. Dynamic Specular Light Sheen Sweep Across Glass Surface on Hover */}
       <div className="dept-surface-sheen" aria-hidden="true" />
 
-      {/* 2. Frosted Glass Surface Glow on Hover */}
+      {/* 2. Frosted Glass Surface Glow on Hover (Smooth Whole-Card Luminescent Wash) */}
       <div
-        className="absolute inset-0 rounded-[32px] pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100 bg-gradient-to-br from-white/35 via-white/10 to-transparent"
+        className="absolute inset-0 rounded-[32px] pointer-events-none transition-opacity duration-400 ease-out opacity-0 group-hover:opacity-100 bg-gradient-to-br from-white/40 via-emerald-100/20 to-teal-100/25"
         aria-hidden="true"
       />
 
       {/* 3. Top Specular Edge Highlight on Hover (Crisp White Glass Rim) */}
       <div
-        className="absolute top-0 inset-x-8 h-[1.5px] bg-gradient-to-r from-transparent via-white/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+        className="absolute top-0 inset-x-8 h-[2px] bg-gradient-to-r from-transparent via-white/95 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 ease-out pointer-events-none shadow-[0_0_10px_rgba(255,255,255,0.9)]"
         aria-hidden="true"
       />
 
       {/* 4. Interactive Cursor Specular Spotlight on the Frosted Glass */}
       <div
-        className="absolute inset-0 rounded-[32px] pointer-events-none transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+        className="absolute inset-0 rounded-[32px] pointer-events-none transition-opacity duration-300 ease-out opacity-0 group-hover:opacity-100"
         style={{
-          background: `radial-gradient(320px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.12) 35%, transparent 70%)`,
+          background: `radial-gradient(380px circle at ${mousePos.x}px ${mousePos.y}px, rgba(255, 255, 255, 0.55) 0%, rgba(52, 211, 153, 0.28) 32%, rgba(56, 189, 248, 0.15) 55%, transparent 75%)`,
         }}
         aria-hidden="true"
       />

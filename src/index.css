@@ -475,7 +475,7 @@
 
 /* Department Glass Cards: Genuine Translucent Frosted Glassmorphism */
 .dept-glass-card {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.16);
   -webkit-backdrop-filter: blur(16px) saturate(120%);
   backdrop-filter: blur(16px) saturate(120%);
   border: 1.5px solid rgba(255, 255, 255, 0.65);
@@ -484,42 +484,52 @@
     0 2px 8px rgba(0, 0, 0, 0.03),
     inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.75),
     inset 0 -1px 1px 0 rgba(255, 255, 255, 0.20);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .dept-glass-card:hover {
-  background: rgba(255, 255, 255, 0.22);
+  background: rgba(255, 255, 255, 0.32);
+  -webkit-backdrop-filter: blur(20px) saturate(135%);
+  backdrop-filter: blur(20px) saturate(135%);
   border-color: rgba(255, 255, 255, 0.95);
   box-shadow:
-    0 20px 42px -10px rgba(0, 36, 16, 0.12),
+    0 22px 48px -10px rgba(0, 143, 47, 0.22),
+    0 0 28px rgba(52, 211, 153, 0.22),
     0 6px 18px -4px rgba(0, 0, 0, 0.04),
-    inset 0 1.5px 1px 0 rgba(255, 255, 255, 0.95),
-    inset 0 -1px 1px 0 rgba(255, 255, 255, 0.35);
+    inset 0 2px 2px 0 rgba(255, 255, 255, 0.95),
+    inset 0 -1px 2px 0 rgba(255, 255, 255, 0.35);
 }
 
-/* Specular light sheen sweep across the glass card on hover */
+/* Specular light sheen sweep across the entire glass card on hover - Silky smooth glide */
 .dept-surface-sheen {
   position: absolute;
-  inset: 0;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
   border-radius: 32px;
   pointer-events: none;
   background: linear-gradient(
-    115deg,
-    transparent 15%,
-    rgba(255, 255, 255, 0.30) 45%,
-    rgba(255, 255, 255, 0.60) 50%,
-    rgba(255, 255, 255, 0.30) 55%,
-    transparent 85%
+    125deg,
+    transparent 20%,
+    rgba(255, 255, 255, 0.15) 35%,
+    rgba(52, 211, 153, 0.35) 45%,
+    rgba(255, 255, 255, 0.65) 50%,
+    rgba(56, 189, 248, 0.30) 55%,
+    rgba(255, 255, 255, 0.15) 65%,
+    transparent 80%
   );
   opacity: 0;
-  transform: translateX(-100%);
-  transition: opacity 0.3s ease, transform 0.75s ease;
+  transform: translate3d(-75%, -75%, 0) rotate(22deg);
+  filter: blur(3px);
+  transition: transform 0.95s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s ease-out;
+  will-change: transform, opacity;
 }
 
 .dept-glass-card:hover .dept-surface-sheen,
 .group:hover .dept-surface-sheen {
   opacity: 1;
-  transform: translateX(100%);
+  transform: translate3d(75%, 75%, 0) rotate(22deg);
 }
 
 /* Nationwide Campus Branch Card: Less Transparent Frosted Glass (matching FAQ question cards) */
