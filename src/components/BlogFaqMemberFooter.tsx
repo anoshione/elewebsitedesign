@@ -108,13 +108,13 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
             {displayedBlogs.map((post) => (
               <article
                 key={post.id}
-                className="group rounded-[32px] glass p-3.5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1 card-cta-glow"
+                className="group rounded-[32px] glass p-3.5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
               >
                 <div>
                   {/* News section image for the blog image with top-right glass category tag */}
                   <div
                     onClick={() => onSelectBlog(post)}
-                    className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-[24px] overflow-hidden bg-slate-100 cursor-pointer block shadow-sm group/img"
+                    className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-[24px] overflow-hidden bg-slate-100 cursor-pointer block shadow-sm group/img banner-sheen"
                     role="button"
                     tabIndex={0}
                     onKeyDown={(e) => {
@@ -227,10 +227,10 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
             {displayedBranches.map((branch) => (
               <article
                 key={branch.id}
-                className="group relative rounded-[32px] card-glass-drop hover:-translate-y-1 transition-all duration-300 flex flex-col justify-end min-h-[500px] sm:min-h-[530px] overflow-hidden card-cta-glow"
+                className="group relative rounded-[32px] card-glass-drop hover:-translate-y-1 hover:shadow-xl transition-all duration-300 flex flex-col justify-end min-h-[500px] sm:min-h-[530px] overflow-hidden"
               >
                 {/* Full-Card Height Map Background (with pin in top middle) */}
-                <div className="absolute inset-0 z-0">
+                <div className="absolute inset-0 z-0 banner-sheen">
                   <img
                     src={branch.mapImage}
                     alt={`${branch.city} branch campus map location`}
@@ -299,7 +299,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
         <div className="container-1520 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 xl:gap-14 items-stretch">
             {/* Left Column: Visual Card with FAQ Title at Top & Just the CTA at Bottom */}
-            <div className="faq-white-card lg:col-span-5 relative rounded-[32px] overflow-hidden p-7 sm:p-9 lg:p-10 flex flex-col justify-between min-h-[520px] lg:min-h-[580px] h-full border border-emerald-100/70 shadow-[0_20px_45px_-15px_rgba(0,143,47,0.12)] bg-white card-cta-glow group">
+            <div className="faq-white-card lg:col-span-5 relative rounded-[32px] overflow-hidden p-7 sm:p-9 lg:p-10 flex flex-col justify-between min-h-[520px] lg:min-h-[580px] h-full border border-emerald-100/70 shadow-[0_20px_45px_-15px_rgba(0,143,47,0.12)] bg-white group">
               {/* Background Visual Image */}
               <div className="absolute inset-0 z-0">
                 <img
@@ -411,7 +411,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
         <div className="footer-bg__content container-1520 pt-10 sm:pt-14 pb-8">
           {/* TOP CARD: Admission Going On */}
           <div
-            className="rounded-[32px] glass px-6 py-6 sm:px-10 sm:py-8 flex flex-col md:flex-row md:items-center justify-between gap-6 card-cta-glow group"
+            className="rounded-[32px] glass px-6 py-6 sm:px-10 sm:py-8 flex flex-col md:flex-row md:items-center justify-between gap-6 group"
             style={{
               background: 'rgba(255, 255, 255, 0.17)',
               backdropFilter: 'blur(19px) saturate(100%)',

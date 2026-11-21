@@ -73,10 +73,10 @@ export const StudentTestimonials: React.FC = () => {
           {visibleReviews.map((item) => (
             <article
               key={item.id}
-              className="group relative rounded-[32px] glass pt-13 sm:pt-14 pb-6 px-6 sm:px-7 flex flex-col justify-between min-h-[260px] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-[0_20px_48px_-10px_rgba(0,143,47,0.30)] hover:border-emerald-400/50"
+              className="group relative rounded-[32px] glass pt-13 sm:pt-14 pb-6 px-6 sm:px-7 flex flex-col justify-between min-h-[260px] transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl"
             >
-              {/* Card Sheen & Glow Inner Overlay */}
-              <div className="absolute inset-0 rounded-[32px] overflow-hidden pointer-events-none card-cta-glow z-0" />
+              {/* Review Card Sheen Overlay */}
+              <div className="absolute inset-0 rounded-[32px] overflow-hidden pointer-events-none review-card-sheen z-0" />
 
               {/* User Image: Floats at the top-left overlapping the card top border */}
               <div className="absolute -top-8 sm:-top-9 left-6 sm:left-7 z-20">
