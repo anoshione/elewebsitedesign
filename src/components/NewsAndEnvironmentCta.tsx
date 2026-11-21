@@ -157,7 +157,7 @@ export const NewsAndEnvironmentCta: React.FC<NewsAndEnvironmentCtaProps> = ({
               <button
                 type="button"
                 onClick={() => onSelectNews(featuredNews)}
-                className="w-full text-left cursor-pointer rounded-[24px] block overflow-hidden shadow-sm card-cta-glow"
+                className="w-full text-left cursor-pointer rounded-[24px] block overflow-hidden shadow-sm"
                 aria-label={`Read ${featuredNews.title}`}
               >
                 <NewsPhoto id={featuredNews.id} title={featuredNews.title} large />
@@ -193,7 +193,7 @@ export const NewsAndEnvironmentCta: React.FC<NewsAndEnvironmentCtaProps> = ({
                   <button
                     type="button"
                     onClick={() => onSelectNews(item)}
-                    className="w-full text-left cursor-pointer rounded-[24px] block overflow-hidden shadow-sm shrink-0 card-cta-glow"
+                    className="w-full text-left cursor-pointer rounded-[24px] block overflow-hidden shadow-sm shrink-0"
                     aria-label={`Read ${item.title}`}
                   >
                     <NewsPhoto id={item.id} title={item.title} />

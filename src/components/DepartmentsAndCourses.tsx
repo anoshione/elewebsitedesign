@@ -430,7 +430,7 @@ export const DepartmentsAndCourses: React.FC<DepartmentsAndCoursesProps> = ({
                     <button
                       type="button"
                       onClick={() => onInspectCourse(course)}
-                      className="w-full text-left cursor-pointer rounded-[24px] block overflow-hidden shadow-sm card-cta-glow"
+                      className="w-full text-left cursor-pointer rounded-[24px] block overflow-hidden shadow-sm"
                       aria-label={`View syllabus for ${course.title}`}
                     >
                       <CoursePosterBanner

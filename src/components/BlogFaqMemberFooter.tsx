@@ -114,7 +114,7 @@ export const BlogFaqMemberFooter: React.FC<BlogFaqMemberFooterProps> = ({
                   {/* News section image for the blog image with top-right glass category tag */}
                   <div
                     onClick={() => onSelectBlog(post)}
-                    className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-[24px] overflow-hidden bg-slate-100 cursor-pointer block shadow-sm group/img card-cta-glow"
+                    className="relative w-full aspect-[16/10] sm:aspect-[16/9] rounded-[24px] overflow-hidden bg-slate-100 cursor-pointer block shadow-sm group/img"
                     role="button"
                     tabIndex={0}
                     onKeyDown={(e) => {
